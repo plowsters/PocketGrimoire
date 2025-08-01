@@ -81,9 +81,6 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
         }
     };
 
-    // a getter for the DAO object, returns type UserDAO
-    public abstract UserDAO getUserDAO();
-
-    //RoomDB creates this method for us
+    //RoomDB creates this getter method for the DAO for us
     public abstract UserDAO userDAO();
 }
