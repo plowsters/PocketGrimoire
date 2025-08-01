@@ -13,9 +13,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.pocketgrimoire.LoginActivity;
 import com.example.pocketgrimoire.database.entities.User;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -31,10 +28,6 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
 
     // volatile = stored in RAM. Necessary to make it visible to all threads
     private static volatile PocketGrimoireDatabase INSTANCE;
-
-    private static final int NUMBER_OF_THREADS = 4;
-
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     // Singleton function ensuring only one instance of our DB exists in memory
     static PocketGrimoireDatabase getDatabase(final Context context) {

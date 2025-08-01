@@ -9,11 +9,14 @@ import com.example.pocketgrimoire.database.entities.User;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 @Dao
 public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(User user);
+    Completable insert(User user);
 
     @Query("SELECT * FROM " + PocketGrimoireDatabase.USER_TABLE)
-    List<User> getAllUsers();
+    Flowable<List<User>> getAllUsers();
 }

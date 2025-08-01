@@ -1,20 +1,20 @@
 package com.example.pocketgrimoire.database;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.util.Log;
 
 import com.example.pocketgrimoire.LoginActivity;
 import com.example.pocketgrimoire.database.entities.User;
 
-import java.util.ArrayList;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PocketGrimoireRepository {
 
     private UserDAO userDAO;
-    private ArrayList<User> allUsers;
 
     /**
      * The constructor for PocketGrimoireRepository
@@ -24,46 +24,39 @@ public class PocketGrimoireRepository {
     public PocketGrimoireRepository(Application application) {
         PocketGrimoireDatabase db = PocketGrimoireDatabase.getDatabase(application);
         this.userDAO = db.userDAO();
-        this.allUsers = (ArrayList<User>) this.userDAO.getAllUsers();
     }
 
     /**
-     * Retrieves all users from the database
-     * Uses Executor to run the DB query on a background thread
-     * Uses a Future<> data type to wait for the result of this query
-     * @return ArrayList of all User objects, or null if an error occurs
+     * Retrieves all Users from the DB as a "reactive stream", allowing  the "Subscriber"
+     * (module requesting data, typically a LiveData/ViewModel object) to tell the "Publisher"
+     * (module providing data, in this case the DAO method) how much data it can handle at once.
+     *
+     * NOTE: For this to work, your DAO interface method must return a "Flowable", which automatically
+     * emits a new list to the Subscriber whenever data in the table changes.
+     *
+     * @return a Flowable that emits a list of all users
      */
-    public ArrayList<User> getAllUsers() {
-        // Future stores the result of the asynchronous `Callable` task handled by Executor
-        // TODO: Convert to RxJava instead of Executor
-        Future<ArrayList<User>> future = PocketGrimoireDatabase.databaseWriteExecutor.submit(
-                // Callable task runs on background thread
-                new Callable<ArrayList<User>>() {
-                    @Override
-                    public ArrayList<User> call() throws Exception {
-                        return (ArrayList<User>) userDAO.getAllUsers();
-                    }
-                }
-        );
-        try {
-            return future.get();
-        }
-        catch (InterruptedException | ExecutionException e){
-            e.printStackTrace();
-            Log.i(LoginActivity.TAG, "Problem when retrieving all users in Repository");
-        }
-        return null;
+    public Flowable<List<User>> getAllUsers() {
+        return userDAO.getAllUsers();
     }
 
     /**
-     * Inserts a new user into the database
-     * Uses a lambda expression for async tasks, doesn't need a Future since it doesn't return anything
+     * Inserts a new user into the DB using RxJava instead of Executor.
+     * It defers execution of the userDAO.insert() method to the background threads handled by
+     * Schedulers.io(), and the DAO method returns type "Completable" to track a successful or
+     * failed completion of the task.
      * @param user
      */
+    // Ignore the linter error "Result of .subscribe() never used", not important for DB inserts
+    @SuppressLint("CheckResult")
     public void insertUser(User user) {
-        PocketGrimoireDatabase.databaseWriteExecutor.execute(()->{
-            userDAO.insert(user);
-        });
+        // subscribing to this method triggers the Scheduler to execute this operation
+        userDAO.insert(user)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        () -> Log.i(LoginActivity.TAG, "Insert successful for user: " + user.getUsername()),
+                        error -> Log.e(LoginActivity.TAG, "Insert failed for user: " + user.getUsername(), error)
+                );
     }
 
 }
