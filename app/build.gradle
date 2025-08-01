@@ -6,6 +6,10 @@ android {
     namespace 'com.example.pocketgrimoire'
     compileSdk 36
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.pocketgrimoire"
         minSdk 34

@@ -1,6 +1,7 @@
 package com.example.pocketgrimoire.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -25,6 +26,7 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
 
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    // Singleton function ensuring only one instance of our DB exists in memory
     static PocketGrimoireDatabase getDatabase(final Context context) {
         if(INSTANCE == null) {
             synchronized (PocketGrimoireDatabase.class) {
@@ -33,6 +35,7 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                             PocketGrimoireDatabase.class,
                             DB_NAME
                     )
+                            // .fallbackToDestructiveMigration() is deprecated, using it anyways
                             .fallbackToDestructiveMigration()
                             .addCallback(addDefaultValues)
                             .build();
@@ -46,11 +49,15 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+            Log.i(MainActivity.TAG, "DATABASE CREATED");
             // TODO: add databaseWriteExecutor.execute(() -> {...}
         }
     };
 
-    // a "getter" for the DAO object returns type UserDAO
+    // a getter for the DAO object, returns type UserDAO
     public abstract UserDAO getUserDAO();
+
+    //RoomDB creates this method for us
+    public abstract UserDAO userDAO();
 }
 
