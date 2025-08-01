@@ -3,7 +3,7 @@ package com.example.pocketgrimoire.database;
 import android.app.Application;
 import android.util.Log;
 
-import com.example.pocketgrimoire.MainActivity;
+import com.example.pocketgrimoire.LoginActivity;
 import com.example.pocketgrimoire.database.entities.User;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class PocketGrimoireRepository {
         }
         catch (InterruptedException | ExecutionException e){
             e.printStackTrace();
-            Log.i(MainActivity.TAG, "Problem when retrieving all users in Repository");
+            Log.i(LoginActivity.TAG, "Problem when retrieving all users in Repository");
         }
         return null;
     }
