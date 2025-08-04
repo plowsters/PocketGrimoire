@@ -5,8 +5,6 @@ import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = PocketGrimoireDatabase.CHARACTER_SHEET_TABLE)
@@ -82,13 +80,21 @@ public class CharacterSheet {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CharacterSheet that = (CharacterSheet) o;
-        return level == that.level && xpToLevel == that.xpToLevel && xp == that.xp && maxHP == that.maxHP && currentHP == that.currentHP && armorClass == that.armorClass && strength == that.strength && dexterity == that.dexterity && intelligence == that.intelligence && constitution == that.constitution && charisma == that.charisma && wisdom == that.wisdom && strSavingThrow == that.strSavingThrow && dexSavingThrow == that.dexSavingThrow && intSavingThrow == that.intSavingThrow && conSavingThrow == that.conSavingThrow && charSavingThrow == that.charSavingThrow && wisSavingThrow == that.wisSavingThrow && Objects.equals(characterName, that.characterName) && Objects.equals(race, that.race) && Objects.equals(clazz, that.clazz) && Objects.equals(notes, that.notes) && Objects.equals(background, that.background);
+        return characterID == that.characterID && level == that.level && xpToLevel == that.xpToLevel && xp == that.xp && maxHP == that.maxHP && currentHP == that.currentHP && armorClass == that.armorClass && strength == that.strength && dexterity == that.dexterity && intelligence == that.intelligence && constitution == that.constitution && charisma == that.charisma && wisdom == that.wisdom && strSavingThrow == that.strSavingThrow && dexSavingThrow == that.dexSavingThrow && intSavingThrow == that.intSavingThrow && conSavingThrow == that.conSavingThrow && charSavingThrow == that.charSavingThrow && wisSavingThrow == that.wisSavingThrow && Objects.equals(characterName, that.characterName) && Objects.equals(race, that.race) && Objects.equals(clazz, that.clazz) && Objects.equals(notes, that.notes) && Objects.equals(background, that.background);
     }
 
     //TODO: Add proficiencies, traits, languages, characteristics once fixed
     @Override
     public int hashCode() {
-        return Objects.hash(characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow);
+        return Objects.hash(characterID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow);
+    }
+
+    public int getCharacterID() {
+        return characterID;
+    }
+
+    public void setCharacterID(int characterID) {
+        this.characterID = characterID;
     }
 
     public String getCharacterName() {
