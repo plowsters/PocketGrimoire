@@ -15,6 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class PocketGrimoireRepository {
 
     private UserDAO userDAO;
+    private CharacterSheetDAO characterSheetDAO;
 
     /**
      * The constructor for PocketGrimoireRepository
@@ -24,6 +25,7 @@ public class PocketGrimoireRepository {
     public PocketGrimoireRepository(Application application) {
         PocketGrimoireDatabase db = PocketGrimoireDatabase.getDatabase(application);
         this.userDAO = db.userDAO();
+        this.characterSheetDAO = db.characterSheetDAO();
     }
 
     /**
