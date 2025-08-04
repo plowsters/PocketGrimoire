@@ -27,6 +27,7 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
     public static final String USER_TABLE = "USER_TABLE";
     public static final String CHARACTER_SHEET_TABLE = "CHARACTER_SHEET_TABLE";
+    public static final String ITEMS_TABLE = "ITEMS_TABLE";
 
     // volatile = stored in RAM. Necessary to make it visible to all threads
     private static volatile PocketGrimoireDatabase INSTANCE;
