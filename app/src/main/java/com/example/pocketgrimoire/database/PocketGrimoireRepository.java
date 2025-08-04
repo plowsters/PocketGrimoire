@@ -16,6 +16,7 @@ public class PocketGrimoireRepository {
 
     private UserDAO userDAO;
     private CharacterSheetDAO characterSheetDAO;
+    private CharacterItemsDAO characterItemsDAO;
     private ItemsDAO itemsDAO;
 
     /**
@@ -27,6 +28,7 @@ public class PocketGrimoireRepository {
         PocketGrimoireDatabase db = PocketGrimoireDatabase.getDatabase(application);
         this.userDAO = db.userDAO();
         this.characterSheetDAO = db.characterSheetDAO();
+        this.characterItemsDAO = db.characterItemsDAO();
         this.itemsDAO = db.itemsDAO();
     }
 
