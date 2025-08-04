@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PocketGrimoire">
         <activity
+            android:name=".CharacterSheetActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
