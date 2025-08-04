@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
-import com.example.pocketgrimoire.database.entities.User;
 
 import java.util.List;
 

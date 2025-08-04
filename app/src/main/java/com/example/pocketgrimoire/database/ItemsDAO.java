@@ -18,7 +18,7 @@ public interface ItemsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(Items items);
 
-    @Query("SELECT * FROM " + PocketGrimoireDatabase.ITEMS_TABLE + " ORDER BY itemID") //static reference to the name of the table that is defined in the database
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.ITEMS_TABLE + " ORDER BY itemID")
 
     Flowable<List<Items>> getAllItems();
 
