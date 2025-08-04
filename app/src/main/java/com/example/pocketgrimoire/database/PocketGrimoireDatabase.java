@@ -12,6 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.pocketgrimoire.LoginActivity;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
+import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -22,7 +23,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * @Database annotation is so RoomDB can generate concrete methods from this abstract class
  * Uses the singleton pattern to ensure only one instance of the DB is ever created in memory
  */
-@Database(entities = {User.class, CharacterSheet.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, CharacterSheet.class, Items.class}, version = 3, exportSchema = false)
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
     public static final String USER_TABLE = "USER_TABLE";
@@ -87,5 +88,6 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
     //RoomDB creates this getter method for the DAO for us
     public abstract UserDAO userDAO();
     public abstract CharacterSheetDAO characterSheetDAO();
+    public abstract ItemsDAO itemsDAO();
 
 }
