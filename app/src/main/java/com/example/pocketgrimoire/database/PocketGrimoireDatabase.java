@@ -11,6 +11,9 @@ import androidx.room.Room;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.pocketgrimoire.LoginActivity;
+import com.example.pocketgrimoire.database.entities.CharacterItems;
+import com.example.pocketgrimoire.database.entities.CharacterSheet;
+import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -21,10 +24,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * @Database annotation is so RoomDB can generate concrete methods from this abstract class
  * Uses the singleton pattern to ensure only one instance of the DB is ever created in memory
  */
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, CharacterSheet.class, CharacterItems.class, Items.class}, version = 4, exportSchema = false)
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
     public static final String USER_TABLE = "USER_TABLE";
+    public static final String CHARACTER_SHEET_TABLE = "CHARACTER_SHEET_TABLE";
+    public static final String CHARACTER_ITEMS_TABLE = "CHARACTER_ITEMS_TABLE";
+    public static final String ITEMS_TABLE = "ITEMS_TABLE";
 
     // volatile = stored in RAM. Necessary to make it visible to all threads
     private static volatile PocketGrimoireDatabase INSTANCE;
@@ -83,4 +89,8 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
 
     //RoomDB creates this getter method for the DAO for us
     public abstract UserDAO userDAO();
+    public abstract CharacterSheetDAO characterSheetDAO();
+    public abstract ItemsDAO itemsDAO();
+    public abstract CharacterItemsDAO characterItemsDAO();
+
 }
