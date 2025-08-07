@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">Pocket Grimoire</string>
     <string name="username">username</string>
+    <string name="or">OR</string>
+    <string name="make_an_account"><u>make an account</u></string>
+    <string name="login">login</string>
+    <string name="sign_in_container">Sign in Container</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="password">password</string>
+    <string name="enter_password">enter password</string>
+    <string name="green_gold_diamond_accent">green gold diamond accent</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="title_activity_admin_navbar">AdminNavbarActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="account">account</string>
+    <string name="welcome_back">WELCOME BACK</string>
+    <string name="username_all_caps">USERNAME</string>
+    <string name="choose_today">choose today?</string>
+    <string name="what_will_you">what will you</string>
+    <string name="game_master">game master</string>
+    <string name="player">player</string>
+    <string name="fragment_user_type_selection">fragment_user_type_selection</string>
 </resources>

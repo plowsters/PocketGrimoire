@@ -17,6 +17,7 @@ import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
 import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.util.PasswordUtils;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -78,7 +79,12 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
              */
             Completable.fromAction(() -> {
                 UserDAO userDao = INSTANCE.userDAO();
-                // TODO: Add default users
+                String salt = PasswordUtils.generateSalt();
+                String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
+                User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
+                // blockingAwait() ensures that this is added to the database before any other
+                // I/O operations can be done on the database
+                userDao.insert(defaultUser).blockingAwait();
             })
                     // Schedulers.io provides a thread pool for I/O operations, in this case DB access
                     .subscribeOn(Schedulers.io())

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BottomNav.Active" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">@font/inknut_antiqua</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BottomNav.Inactive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">@font/inknut_antiqua</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gold</item>
+    </style>
+
+</resources>

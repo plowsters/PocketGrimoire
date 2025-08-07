@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PocketGrimoire">
         <activity
+            android:name=".AdminNavbarActivity"
+            android:exported="false"
+            android:label="@string/title_activity_admin_navbar" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="false" />
+        <activity
             android:name=".CharacterSheetActivity"
             android:exported="false" />
         <activity

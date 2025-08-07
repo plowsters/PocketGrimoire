@@ -2,6 +2,7 @@ package com.example.pocketgrimoire.database.entities;
 
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
@@ -13,14 +14,23 @@ public class User {
 
     @PrimaryKey(autoGenerate = true)
     private int userID;
+    private String oauthSubjectID;
+
 
     private String email;
     private String username;
     private String salt;
     private String hashedPassword;
     private String oauthProvider;
+    private String authStateJson;
     private boolean isAdmin;
 
+    public User() {
+        //No argument constructor for Room
+    }
+    //@Ignore annotation tells RoomDB to use the no parameter constructor, but I can call this
+    //constructor manually
+    @Ignore
     public User(String email, String username, String salt, String hashedPassword) {
         this.email = email;
         this.username = username;
@@ -85,15 +95,31 @@ public class User {
         isAdmin = admin;
     }
 
+    public String getOauthSubjectID() {
+        return oauthSubjectID;
+    }
+
+    public void setOauthSubjectID(String oauthSubjectID) {
+        this.oauthSubjectID = oauthSubjectID;
+    }
+
+    public String getAuthStateJson() {
+        return authStateJson;
+    }
+
+    public void setAuthStateJson(String authStateJson) {
+        this.authStateJson = authStateJson;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getUserID() == user.getUserID() && isAdmin() == user.isAdmin() && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getSalt(), user.getSalt()) && Objects.equals(getHashedPassword(), user.getHashedPassword()) && Objects.equals(getOauthProvider(), user.getOauthProvider());
+        return getUserID() == user.getUserID() && isAdmin() == user.isAdmin() && Objects.equals(getOauthSubjectID(), user.getOauthSubjectID()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getSalt(), user.getSalt()) && Objects.equals(getHashedPassword(), user.getHashedPassword()) && Objects.equals(getOauthProvider(), user.getOauthProvider()) && Objects.equals(getAuthStateJson(), user.getAuthStateJson());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserID(), getEmail(), getUsername(), getSalt(), getHashedPassword(), getOauthProvider(), isAdmin());
+        return Objects.hash(getUserID(), getOauthSubjectID(), getEmail(), getUsername(), getSalt(), getHashedPassword(), getOauthProvider(), getAuthStateJson(), isAdmin());
     }
 }
