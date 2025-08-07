@@ -2,6 +2,7 @@ package com.example.pocketgrimoire.database.entities;
 
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
@@ -27,6 +28,9 @@ public class User {
     public User() {
         //No argument constructor for Room
     }
+    //@Ignore annotation tells RoomDB to use the no parameter constructor, but I can call this
+    //constructor manually
+    @Ignore
     public User(String email, String username, String salt, String hashedPassword) {
         this.email = email;
         this.username = username;
