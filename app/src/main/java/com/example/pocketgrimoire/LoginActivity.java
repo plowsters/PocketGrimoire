@@ -10,12 +10,12 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
 
-    public static final String TAG = "PocketGrimoireDB";
+    public static final String TAG = "PocketGrimoireLoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.pocketgrimoire.databinding.ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
 }

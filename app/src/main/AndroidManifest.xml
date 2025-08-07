@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PocketGrimoire">
         <activity
+            android:name=".TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="false" />
+        <activity
             android:name=".CharacterSheetActivity"
             android:exported="false" />
         <activity
