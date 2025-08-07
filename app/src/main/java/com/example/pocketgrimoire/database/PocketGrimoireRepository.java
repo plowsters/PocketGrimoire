@@ -9,6 +9,7 @@ import com.example.pocketgrimoire.database.entities.User;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -53,7 +54,9 @@ public class PocketGrimoireRepository {
      * @return A Maybe that will emit the User if found, or complete otherwise.
      */
     public Maybe<User> getUserByUsername(String username) {
-        return userDAO.getUserByUsername(username).subscribeOn(Schedulers.io());
+        return userDAO.getUserByUsername(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
