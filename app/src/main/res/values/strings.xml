@@ -10,4 +10,15 @@
     <string name="enter_password">enter password</string>
     <string name="green_gold_diamond_accent">green gold diamond accent</string>
     <string name="sign_in">SIGN IN</string>
+    <string name="title_activity_admin_navbar">AdminNavbarActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="account">account</string>
+    <string name="welcome_back">WELCOME BACK</string>
+    <string name="username_all_caps">USERNAME</string>
+    <string name="choose_today">choose today?</string>
+    <string name="what_will_you">what will you</string>
+    <string name="game_master">game master</string>
+    <string name="player">player</string>
 </resources>
