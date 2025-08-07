@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Pocket Grimoire</string>
+    <string name="character_name">character name</string>
+    <string name="characters">characters</string>
 </resources>

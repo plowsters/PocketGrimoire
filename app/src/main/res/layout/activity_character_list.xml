@@ -1,6 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background">
+
+    <ImageView
+        android:id="@+id/contentImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="100dp"
+        app:srcCompat="@drawable/middle_section"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="272dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/characterListDisplayRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        android:padding="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lineDecoratorImageView"
+        tools:listitem="@layout/character_list_recycler_item" />
+
+    <ImageView
+        android:id="@+id/userTitleImageView"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/user_type_title"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLAYER"
+        android:textColor="#BEB688"
+        android:textSize="24sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/userTitleImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/userTitleImageView"
+        app:layout_constraintRight_toRightOf="@+id/userTitleImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/userTitleImageView"/>
+
+    <ImageView
+        android:id="@+id/lineDecoratorImageView"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/line_decorator"
+        app:layout_constraintTop_toBottomOf="@+id/characterTitleTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        android:foregroundGravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/characters"
+        android:textColor="#BEB688"
+        android:textSize="20sp"
+        android:id="@+id/characterTitleTextView"
+        app:layout_constraintTop_toTopOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        />
+
+    <ImageView
+        android:id="@+id/addCharacterImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@drawable/add_new_character_button"
+        app:layout_constraintBottom_toBottomOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/addCharacterTextView"
+        android:textSize="12sp"
+        android:text="ADD NEW CHARACTER"
+        android:textColor="#BEB688"
+        app:layout_constraintTop_toTopOf="@+id/addCharacterImageView"
+        app:layout_constraintBottom_toBottomOf="@id/addCharacterImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/addCharacterImageView"
+        app:layout_constraintRight_toRightOf="@+id/addCharacterImageView"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
