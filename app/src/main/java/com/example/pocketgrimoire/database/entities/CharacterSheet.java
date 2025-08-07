@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = PocketGrimoireDatabase.CHARACTER_SHEET_TABLE)
@@ -35,13 +37,11 @@ public class CharacterSheet {
     int conSavingThrow;
     int charSavingThrow;
     int wisSavingThrow;
-    //TODO: Need help fixing these
-//    List<String> proficiencies;
-//    List<String> traits;
-//    List<String> languages;
-//    HashMap<String,String> characteristics;
+    List<String> proficiencies;
+    List<String> traits;
+    List<String> languages;
+    HashMap<String,String> characteristics;
 
-    //TODO: Re-add commented lines once fixed
     @Override
     public String toString() {
         return "CharacterSheet{" +
@@ -68,25 +68,50 @@ public class CharacterSheet {
                 ", conSavingThrow=" + conSavingThrow +
                 ", charSavingThrow=" + charSavingThrow +
                 ", wisSavingThrow=" + wisSavingThrow +
-//                ", proficiencies=" + proficiencies +
-//                ", traits=" + traits +
-//                ", languages=" + languages +
-//                ", characteristics=" + characteristics +
+                ", proficiencies=" + proficiencies +
+                ", traits=" + traits +
+                ", languages=" + languages +
+                ", characteristics=" + characteristics +
                 '}';
     }
 
-    //TODO: Re-add Objects.equals(proficiencies, that.proficiencies) && Objects.equals(traits, that.traits) && Objects.equals(languages, that.languages) && Objects.equals(characteristics, that.characteristics);
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CharacterSheet that = (CharacterSheet) o;
-        return characterID == that.characterID && level == that.level && xpToLevel == that.xpToLevel && xp == that.xp && maxHP == that.maxHP && currentHP == that.currentHP && armorClass == that.armorClass && strength == that.strength && dexterity == that.dexterity && intelligence == that.intelligence && constitution == that.constitution && charisma == that.charisma && wisdom == that.wisdom && strSavingThrow == that.strSavingThrow && dexSavingThrow == that.dexSavingThrow && intSavingThrow == that.intSavingThrow && conSavingThrow == that.conSavingThrow && charSavingThrow == that.charSavingThrow && wisSavingThrow == that.wisSavingThrow && Objects.equals(characterName, that.characterName) && Objects.equals(race, that.race) && Objects.equals(clazz, that.clazz) && Objects.equals(notes, that.notes) && Objects.equals(background, that.background);
+        return characterID == that.characterID &&
+                level == that.level &&
+                xpToLevel == that.xpToLevel &&
+                xp == that.xp &&
+                maxHP == that.maxHP &&
+                currentHP == that.currentHP &&
+                armorClass == that.armorClass &&
+                strength == that.strength &&
+                dexterity == that.dexterity &&
+                intelligence == that.intelligence &&
+                constitution == that.constitution &&
+                charisma == that.charisma &&
+                wisdom == that.wisdom &&
+                strSavingThrow == that.strSavingThrow &&
+                dexSavingThrow == that.dexSavingThrow &&
+                intSavingThrow == that.intSavingThrow &&
+                conSavingThrow == that.conSavingThrow &&
+                charSavingThrow == that.charSavingThrow &&
+                wisSavingThrow == that.wisSavingThrow &&
+                Objects.equals(characterName, that.characterName) &&
+                Objects.equals(race, that.race) &&
+                Objects.equals(clazz, that.clazz) &&
+                Objects.equals(notes, that.notes) &&
+                Objects.equals(background, that.background) &&
+                Objects.equals(proficiencies, that.proficiencies) &&
+                Objects.equals(traits, that.traits) &&
+                Objects.equals(languages, that.languages) &&
+                Objects.equals(characteristics, that.characteristics);
     }
 
-    //TODO: Add proficiencies, traits, languages, characteristics once fixed
     @Override
     public int hashCode() {
-        return Objects.hash(characterID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow);
+        return Objects.hash(characterID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow, proficiencies, traits, languages, characteristics);
     }
 
     public int getCharacterID() {
@@ -280,37 +305,35 @@ public class CharacterSheet {
     public void setWisSavingThrow(int wisSavingThrow) {
         this.wisSavingThrow = wisSavingThrow;
     }
+    public List<String> getProficiencies() {
+        return proficiencies;
+    }
 
-    //TODO: Re-add getters and setters once these are fixed
-//    public List<String> getProficiencies() {
-//        return proficiencies;
-//    }
-//
-//    public void setProficiencies(List<String> proficiencies) {
-//        this.proficiencies = proficiencies;
-//    }
-//
-//    public List<String> getTraits() {
-//        return traits;
-//    }
-//
-//    public void setTraits(List<String> traits) {
-//        this.traits = traits;
-//    }
-//
-//    public List<String> getLanguages() {
-//        return languages;
-//    }
-//
-//    public void setLanguages(List<String> languages) {
-//        this.languages = languages;
-//    }
-//
-//    public HashMap<String, String> getCharacteristics() {
-//        return characteristics;
-//    }
-//
-//    public void setCharacteristics(HashMap<String, String> characteristics) {
-//        this.characteristics = characteristics;
-//    }
+    public void setProficiencies(List<String> proficiencies) {
+        this.proficiencies = proficiencies;
+    }
+
+    public List<String> getTraits() {
+        return traits;
+    }
+
+    public void setTraits(List<String> traits) {
+        this.traits = traits;
+    }
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
+
+    public HashMap<String, String> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(HashMap<String, String> characteristics) {
+        this.characteristics = characteristics;
+    }
 }
