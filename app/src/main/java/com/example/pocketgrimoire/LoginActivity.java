@@ -1,5 +1,6 @@
 package com.example.pocketgrimoire;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -47,9 +48,13 @@ public class LoginActivity extends AppCompatActivity {
     private void observeViewModel() {
         // Observer for login success
         viewModel.getLoginSuccess().observe(this, isSuccess -> {
-            if (isSuccess) {
+            if (isSuccess != null) {
                 Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                // TODO: Navigate to the main activity
+                // Use the Intent Factory to create the intent and start the next activity
+                Intent intent = AdminNavbarActivity.newIntent(LoginActivity.this, isSuccess.getUserID());
+                startActivity(intent);
+                // Finish LoginActivity so the user can't navigate back to it
+                finish();
             }
         });
 

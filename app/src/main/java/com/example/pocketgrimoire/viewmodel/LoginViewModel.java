@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.pocketgrimoire.database.PocketGrimoireRepository;
+import com.example.pocketgrimoire.database.entities.User;
 import com.example.pocketgrimoire.util.PasswordUtils;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -22,7 +23,7 @@ public class LoginViewModel extends AndroidViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     // LiveData for communicating with the UI
-    private final MutableLiveData<Boolean> loginSuccess = new MutableLiveData<>();
+    private final MutableLiveData<User> loginSuccess = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     /**
@@ -37,9 +38,9 @@ public class LoginViewModel extends AndroidViewModel {
     /**
      * The observer within the activity uses this to decide what to do based on successful
      * or unsuccessful logins
-     * @return A LiveData object that emits true upon successful login
+     * @return A LiveData object that emits the User object upon successful login
      */
-    public LiveData<Boolean> getLoginSuccess() {
+    public LiveData<User> getLoginSuccess() {
         return loginSuccess;
     }
 
@@ -73,22 +74,22 @@ public class LoginViewModel extends AndroidViewModel {
                             // If the salted password matches the hash
                             if (PasswordUtils.verifyPassword(password, user.getHashedPassword(), user.getSalt())) {
                                 // notify the activity of a successful login
-                                loginSuccess.setValue(true);
+                                loginSuccess.setValue(user);
                             } else {
                                 // otherwise, invalid login credentials
                                 errorMessage.setValue("Invalid username or password.");
-                                loginSuccess.setValue(false);
+                                loginSuccess.setValue(null);
                             }
                         },
                         // if an exception occurs during the verification process
                         error -> {
                             errorMessage.setValue("An error occurred during login.");
-                            loginSuccess.setValue(false);
+                            loginSuccess.setValue(null);
                         },
                         // if no user was found with that username, throw error
                         () -> {
                             errorMessage.setValue("Invalid username or password.");
-                            loginSuccess.setValue(false);
+                            loginSuccess.setValue(null);
                         }
                 ));
     }
