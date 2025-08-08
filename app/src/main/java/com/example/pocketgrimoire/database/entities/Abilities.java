@@ -13,6 +13,7 @@ public class Abilities {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+<<<<<<< HEAD
     private String name;         // Ability name
     private String apiIndex;     // D&D API index (unique string)
     private String description;  // Optional short description (or blank if missing)
@@ -20,11 +21,22 @@ public class Abilities {
     private boolean traitOrFeat; // false = Feature, true = Trait
 
     public Abilities(String name, String apiIndex, String description, boolean enabled, boolean traitOrFeat) {
+=======
+    private String name;        // Ability name
+    private String apiIndex;    // D&D API index (unique string)
+    private String description; // Optional short description (or blank if missing)
+    private boolean enabled;    // Whether this ability is active for the campaign
+
+    public Abilities(String name, String apiIndex, String description, boolean enabled) {
+>>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
         this.name = name;
         this.apiIndex = apiIndex;
         this.description = description;
         this.enabled = enabled;
+<<<<<<< HEAD
         this.traitOrFeat = traitOrFeat;
+=======
+>>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
     }
 
     // ----- Getters and Setters -----
@@ -42,7 +54,10 @@ public class Abilities {
 
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
+<<<<<<< HEAD
 
     public boolean isTraitOrFeat() { return traitOrFeat; }
     public void setTraitOrFeat(boolean traitOrFeat) { this.traitOrFeat = traitOrFeat; }
+=======
+>>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
 }
