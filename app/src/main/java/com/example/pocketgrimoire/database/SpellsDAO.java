@@ -1,6 +1,7 @@
 package com.example.pocketgrimoire.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -20,17 +21,20 @@ import io.reactivex.rxjava3.core.Flowable;
 public interface SpellsDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertSpell(Spells spell);
+    Completable insert(Spells spell);
 
     @Update
-    Completable updateSpell(Spells spell);
+    Completable update(Spells spell);
 
-    @Query("SELECT * FROM spells")
+    @Delete
+    Completable delete(Spells spell);
+
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.SPELLS_TABLE)
     Flowable<List<Spells>> getAllSpells();
 
-    @Query("SELECT * FROM spells WHERE enabled = 1")
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.SPELLS_TABLE + " WHERE enabled = true")
     Flowable<List<Spells>> getEnabledSpells();
 
-    @Query("DELETE FROM spells")
+    @Query("DELETE FROM " + PocketGrimoireDatabase.SPELLS_TABLE)
     Completable clearSpells();
 }

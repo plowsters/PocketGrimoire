@@ -35,6 +35,8 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String CHARACTER_SHEET_TABLE = "CHARACTER_SHEET_TABLE";
     public static final String CHARACTER_ITEMS_TABLE = "CHARACTER_ITEMS_TABLE";
     public static final String ITEMS_TABLE = "ITEMS_TABLE";
+    public static final String SPELLS_TABLE = "SPELLS_TABLE";
+    public static final String ABILITIES_TABLE = "ABILITIES_TABLE";
 
     // volatile = stored in RAM. Necessary to make it visible to all threads
     private static volatile PocketGrimoireDatabase INSTANCE;
@@ -100,6 +102,9 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public abstract UserDAO userDAO();
     public abstract CharacterSheetDAO characterSheetDAO();
     public abstract ItemsDAO itemsDAO();
+    public abstract SpellsDAO spellsDAO();
+    public abstract AbilitiesDAO abilitiesDAO();
+
     public abstract CharacterItemsDAO characterItemsDAO();
 
 }
