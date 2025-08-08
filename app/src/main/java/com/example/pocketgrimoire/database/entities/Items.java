@@ -1,60 +1,40 @@
 package com.example.pocketgrimoire.database.entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
-import java.util.Objects;
-
-@Entity(tableName = PocketGrimoireDatabase.ITEMS_TABLE)
+/** Items table: (itemID PK, name UNIQUE, category). */
+@Entity(
+        tableName = PocketGrimoireDatabase.ITEMS_TABLE,
+        indices = { @Index(value = {"name"}, unique = true) }
+)
 public class Items {
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "itemID")
     private int itemID;
-    String name;
-    String category;
 
-    @Override
-    public String toString() {
-        return "Items{" +
-                "name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                '}';
-    }
+    @NonNull
+    @ColumnInfo(name = "name")
+    private String name;
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Items items = (Items) o;
-        return itemID == items.itemID && Objects.equals(name, items.name) && Objects.equals(category, items.category);
-    }
+    @ColumnInfo(name = "category")
+    private String category;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(itemID, name, category);
-    }
-
-    public int getItemID() {
-        return itemID;
-    }
-
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Items(@NonNull String name, String category) {
         this.name = name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
         this.category = category;
     }
+
+    public int getItemID() { return itemID; }
+    public void setItemID(int itemID) { this.itemID = itemID; }
+
+    @NonNull public String getName() { return name; }
+    public void setName(@NonNull String name) { this.name = name; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 }

@@ -133,13 +133,14 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
         }
     };
 
-    //RoomDB creates this getter method for the DAO for us
+    //RoomDB creates these getter methods for the DAOs for us
     public abstract UserDAO userDAO();
     public abstract CharacterSheetDAO characterSheetDAO();
     public abstract ItemsDAO itemsDAO();
     public abstract SpellsDAO spellsDAO();
     public abstract AbilitiesDAO abilitiesDAO();
-
     public abstract CharacterItemsDAO characterItemsDAO();
+    public abstract CharacterSpellsDAO characterSpellsDAO();
+    public abstract CharacterAbilitiesDAO characterAbilitiesDAO();
 
 }

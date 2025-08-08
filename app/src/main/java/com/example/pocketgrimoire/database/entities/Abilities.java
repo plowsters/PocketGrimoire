@@ -1,63 +1,61 @@
 package com.example.pocketgrimoire.database.entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-/**
- * Represents an ability that can be enabled or disabled in a campaign.
- * This will be used by CharacterAbilities later.
- */
-@Entity(tableName = "abilities")
+import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/** Abilities table with unique (name, traitOrFeat). */
+@Entity(
+        tableName = PocketGrimoireDatabase.ABILITIES_TABLE,
+        indices = { @Index(value = {"name", "traitOrFeat"}, unique = true) }
+)
+@TypeConverters(Converters.class)
 public class Abilities {
-
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    @ColumnInfo(name = "abilityID")
+    private int abilityID;
 
-<<<<<<< HEAD
-    private String name;         // Ability name
-    private String apiIndex;     // D&D API index (unique string)
-    private String description;  // Optional short description (or blank if missing)
-    private boolean enabled;     // Whether this ability is active for the campaign
-    private boolean traitOrFeat; // false = Feature, true = Trait
+    @NonNull
+    @ColumnInfo(name = "name")
+    private String name;
 
-    public Abilities(String name, String apiIndex, String description, boolean enabled, boolean traitOrFeat) {
-=======
-    private String name;        // Ability name
-    private String apiIndex;    // D&D API index (unique string)
-    private String description; // Optional short description (or blank if missing)
-    private boolean enabled;    // Whether this ability is active for the campaign
+    @ColumnInfo(name = "traitOrFeat")
+    private boolean traitOrFeat;
 
-    public Abilities(String name, String apiIndex, String description, boolean enabled) {
->>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
+    @ColumnInfo(name = "availableToClass")
+    private List<String> availableToClass;
+
+    @ColumnInfo(name = "availableToRace")
+    private List<String> availableToRace;
+
+    public Abilities(@NonNull String name, boolean traitOrFeat) {
         this.name = name;
-        this.apiIndex = apiIndex;
-        this.description = description;
-        this.enabled = enabled;
-<<<<<<< HEAD
         this.traitOrFeat = traitOrFeat;
-=======
->>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
+        this.availableToClass = new ArrayList<>();
+        this.availableToRace = new ArrayList<>();
     }
 
-    // ----- Getters and Setters -----
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getAbilityID() { return abilityID; }
+    public void setAbilityID(int abilityID) { this.abilityID = abilityID; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getApiIndex() { return apiIndex; }
-    public void setApiIndex(String apiIndex) { this.apiIndex = apiIndex; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public boolean isEnabled() { return enabled; }
-    public void setEnabled(boolean enabled) { this.enabled = enabled; }
-<<<<<<< HEAD
+    @NonNull public String getName() { return name; }
+    public void setName(@NonNull String name) { this.name = name; }
 
     public boolean isTraitOrFeat() { return traitOrFeat; }
     public void setTraitOrFeat(boolean traitOrFeat) { this.traitOrFeat = traitOrFeat; }
-=======
->>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
+
+    public List<String> getAvailableToClass() { return availableToClass; }
+    public void setAvailableToClass(List<String> availableToClass) { this.availableToClass = availableToClass; }
+
+    public List<String> getAvailableToRace() { return availableToRace; }
+    public void setAvailableToRace(List<String> availableToRace) { this.availableToRace = availableToRace; }
 }

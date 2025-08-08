@@ -21,6 +21,8 @@ public class PocketGrimoireRepository {
     private UserDAO userDAO;
     private CharacterSheetDAO characterSheetDAO;
     private CharacterItemsDAO characterItemsDAO;
+    private CharacterSpellsDAO characterSpellsDAO;
+    private CharacterAbilitiesDAO characterAbilitiesDAO;
     private ItemsDAO itemsDAO;
     private SpellsDAO spellsDAO;
     private AbilitiesDAO abilitiesDAO;
@@ -39,6 +41,8 @@ public class PocketGrimoireRepository {
         this.abilitiesDAO = db.abilitiesDAO();
         this.characterSheetDAO = db.characterSheetDAO();
         this.characterItemsDAO = db.characterItemsDAO();
+        this.characterSpellsDAO = db.characterSpellsDAO();
+        this.characterAbilitiesDAO = db.characterAbilitiesDAO();
     }
 
     /**

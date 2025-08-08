@@ -1,61 +1,60 @@
 package com.example.pocketgrimoire.database.entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-/**
- * Represents a spell that can be enabled or disabled in a campaign.
- * This will be used by CharacterSpells later.
- */
-@Entity(tableName = "spells")
+import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/** Spells table: (spellID PK, name UNIQUE, level, school, availableToClass). */
+@Entity(
+        tableName = PocketGrimoireDatabase.SPELLS_TABLE,
+        indices = { @Index(value = {"name"}, unique = true) }
+)
 public class Spells {
-
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    @ColumnInfo(name = "spellID")
+    private int spellID;
 
-    private String name;        // Spell name
-    private String apiIndex;    // D&D API unique identifier
-<<<<<<< HEAD
-    private int level;          // Level (0 = Cantrip, 1..9)
-    private String school;      // School of magic (e.g., "Evocation")
-    private boolean enabled;    // Whether the spell is active in the campaign
+    @NonNull
+    @ColumnInfo(name = "name")
+    private String name;
 
-    public Spells(String name, String apiIndex, int level, String school, boolean enabled) {
-=======
-    private String level;       // Level (e.g., "1", "2", "Cantrip")
-    private String school;      // School of magic (e.g., "Evocation")
-    private boolean enabled;    // Whether the spell is active in the campaign
+    @ColumnInfo(name = "level")
+    private int level;
 
-    public Spells(String name, String apiIndex, String level, String school, boolean enabled) {
->>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
+    @ColumnInfo(name = "school")
+    private String school;
+
+    @ColumnInfo(name = "availableToClass")
+    private List<String> availableToClass;
+
+    public Spells(@NonNull String name, int level, String school, List<String> availableToClass) {
         this.name = name;
-        this.apiIndex = apiIndex;
         this.level = level;
         this.school = school;
-        this.enabled = enabled;
+        this.availableToClass = (availableToClass != null) ? availableToClass : new ArrayList<>();
     }
 
-    // ----- Getters and Setters -----
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getSpellID() { return spellID; }
+    public void setSpellID(int spellID) { this.spellID = spellID; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    @NonNull public String getName() { return name; }
+    public void setName(@NonNull String name) { this.name = name; }
 
-    public String getApiIndex() { return apiIndex; }
-    public void setApiIndex(String apiIndex) { this.apiIndex = apiIndex; }
-
-<<<<<<< HEAD
     public int getLevel() { return level; }
     public void setLevel(int level) { this.level = level; }
-=======
-    public String getLevel() { return level; }
-    public void setLevel(String level) { this.level = level; }
->>>>>>> 1bb118f (add Abilities/Spells entities and DAOs from feature/db-tables)
 
     public String getSchool() { return school; }
     public void setSchool(String school) { this.school = school; }
 
-    public boolean isEnabled() { return enabled; }
-    public void setEnabled(boolean enabled) { this.enabled = enabled; }
+    public List<String> getAvailableToClass() { return availableToClass; }
+    public void setAvailableToClass(List<String> availableToClass) { this.availableToClass = availableToClass; }
 }
