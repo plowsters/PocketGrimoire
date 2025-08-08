@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PocketGrimoire">
         <activity
+            android:name=".AdminNavbarActivity"
+            android:exported="false"
+            android:label="@string/title_activity_admin_navbar" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="false" />
+        <activity
             android:name=".CharacterSheetActivity"
             android:exported="false" />
         <activity
@@ -23,6 +30,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CharacterListActivity"
+            android:exported="false"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

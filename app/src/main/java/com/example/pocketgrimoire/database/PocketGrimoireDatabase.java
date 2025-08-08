@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.Room;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.pocketgrimoire.LoginActivity;
@@ -15,6 +16,8 @@ import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
+import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.util.PasswordUtils;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -24,6 +27,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * @Database annotation is so RoomDB can generate concrete methods from this abstract class
  * Uses the singleton pattern to ensure only one instance of the DB is ever created in memory
  */
+@TypeConverters({Converters.class})
 @Database(entities = {User.class, CharacterSheet.class, CharacterItems.class, Items.class}, version = 4, exportSchema = false)
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
@@ -75,7 +79,28 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
              */
             Completable.fromAction(() -> {
                 UserDAO userDao = INSTANCE.userDAO();
-                // TODO: Add default users
+                String salt = PasswordUtils.generateSalt();
+                String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
+                User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
+                // blockingAwait() ensures that this is added to the database before any other
+                // I/O operations can be done on the database
+                userDao.insert(defaultUser).blockingAwait();
+
+                //Insert userID to retrieve information for this user
+                defaultUser.setUserID(2);
+                //Insert character and simple attributes for user above
+                CharacterSheetDAO characterDAO = INSTANCE.characterSheetDAO();
+                CharacterSheet character1 = new CharacterSheet();
+                character1.setCharacterID(1);
+                //add userid for user who owns character1
+                character1.setUserID(defaultUser.getUserID());
+                //hard code a character for testing
+                //display character1 on character list
+                character1.setCharacterName("character1");
+                character1.setRace("dragonborn");
+                character1.setClazz("bard");
+                System.out.println(character1.toString());
+                characterDAO.insert(character1);
             })
                     // Schedulers.io provides a thread pool for I/O operations, in this case DB access
                     .subscribeOn(Schedulers.io())
