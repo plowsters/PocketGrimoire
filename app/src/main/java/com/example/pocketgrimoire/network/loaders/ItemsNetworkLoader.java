@@ -16,8 +16,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
- * Produces a mapped list of Items with category and isEquippable set,
- * without touching the database.
+ * Produces a mapped list of Items with all fields set, network only (no database writes)
  *
  * Requires DndApiService to expose:
  * - Single<ResourceListDto> listEquipment()
