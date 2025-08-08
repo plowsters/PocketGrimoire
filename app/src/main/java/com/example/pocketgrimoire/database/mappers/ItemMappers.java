@@ -27,6 +27,7 @@ public final class ItemMappers {
         Items e = new Items();
         e.setName(normalize(ref.name));
         e.setCategory(normalize(category));
+        e.setIsEquippable(EquippableCategory.isEquippable(category));
         return e;
     }
 
