@@ -1,0 +1,47 @@
+package com.example.pocketgrimoire.database.mappers;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * Class that defines which equipment categories can be equipped (weapons/armor/shields).
+ */
+public final class EquippableCategory {
+    private static final List<String> EQUIPPABLE = Arrays.asList(
+            "weapon",
+            "melee-weapons",
+            "ranged-weapons",
+            "simple-weapons",
+            "simple-melee-weapons",
+            "simple-ranged-weapons",
+            "martial-weapons",
+            "martial-melee-weapons",
+            "martial-ranged-weapons",
+            "armor",
+            "light-armor",
+            "medium-armor",
+            "heavy-armor",
+            "shields"
+    );
+
+    private EquippableCategory() {}
+
+    /**
+     * True if the String category corresponds to an equippable category.
+     * */
+    public static boolean isEquippable(String categoryNameOrIndex) {
+        if (categoryNameOrIndex == null) return false;
+        return EQUIPPABLE.contains(canon(categoryNameOrIndex));
+    }
+
+    /**
+     * Convert "Simple Weapons", "simple_weapons", or "Simple   Weapons" → "simple-weapons".
+     * */
+    static String canon(String s) {
+        String t = s.trim().toLowerCase(Locale.ROOT);
+        t = t.replaceAll("[\\s_]+", "-");   // spaces/underscores → hyphen
+        t = t.replaceAll("[^a-z0-9-]", ""); // drop punctuation except hyphen
+        return t;
+    }
+}
