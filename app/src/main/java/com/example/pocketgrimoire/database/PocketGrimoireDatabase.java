@@ -16,8 +16,19 @@ import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
+import com.example.pocketgrimoire.database.remote.DndApiService;
+import com.example.pocketgrimoire.database.remote.DndApiClient;
+import com.example.pocketgrimoire.database.seeding.AbilitiesSeeder;
+import com.example.pocketgrimoire.database.seeding.ClassRaceMaps;
+import com.example.pocketgrimoire.database.seeding.ItemsSeeder;
+import com.example.pocketgrimoire.database.seeding.SpellsSeeder;
 import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.network.loaders.AbilitiesNetworkLoader;
+import com.example.pocketgrimoire.network.loaders.ItemsNetworkLoader;
+import com.example.pocketgrimoire.network.loaders.SpellsNetworkLoader;
 import com.example.pocketgrimoire.util.PasswordUtils;
+
+import java.util.Map;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -73,27 +84,51 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
             super.onCreate(db);
             Log.i(LoginActivity.TAG, "DATABASE CREATED");
 
+            // Build the API service
+            DndApiService api = DndApiClient.get();
+
+            // Build network loaders (pure network + mapping, no DB writes)
+            ItemsNetworkLoader itemsLoader = new ItemsNetworkLoader(api);
+            SpellsNetworkLoader spellsLoader = new SpellsNetworkLoader(api);
+            AbilitiesNetworkLoader abilitiesLoader = new AbilitiesNetworkLoader(api);
+
+            // Build seeders they use update and insert methods from the DAOs
+            ItemsSeeder itemsSeeder = new ItemsSeeder(itemsLoader, INSTANCE.itemsDAO(), INSTANCE);
+            SpellsSeeder spellsSeeder = new SpellsSeeder(spellsLoader, INSTANCE.spellsDAO(), INSTANCE);
+            // class/race maps used for availability
+            Map<String,String> classes = ClassRaceMaps.defaultClasses();
+            Map<String,String> races   = ClassRaceMaps.defaultRaces();
+            AbilitiesSeeder abilitiesSeeder =
+                    new AbilitiesSeeder(abilitiesLoader, INSTANCE.abilitiesDAO(), INSTANCE, classes, races);
+
             /* This uses RxJava instead of Executor to make DB queries on a background thread
                Benefits of RxJava over Executor are better lifecycle management, better task scheduling,
                and automatic thread pool allocation.
                A "Completable" is a task (Object) that can be completed but doesn't return anything.
                Great for DB inserts
              */
-            Completable.fromAction(() -> {
+            Completable seedDefaultUser = Completable.fromAction(() -> {
                 UserDAO userDao = INSTANCE.userDAO();
                 String salt = PasswordUtils.generateSalt();
                 String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
                 User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
-                // blockingAwait() ensures that this is added to the database before any other
-                // I/O operations can be done on the database
                 userDao.insert(defaultUser).blockingAwait();
-            })
-                    // Schedulers.io provides a thread pool for I/O operations, in this case DB access
+            });
+
+            // Call the 3 content seeders AFTER the user insert
+            // Use andThen to be nice to the API (one seeder completes before the other begins)
+            Completable seedAllContent =
+                    itemsSeeder.seed()
+                            .andThen(spellsSeeder.seed())
+                            .andThen(abilitiesSeeder.seed());
+
+            // 5) Run on IO. Optionally observeOn main if you want to toast/log on UI.
+            seedDefaultUser
+                    .andThen(seedAllContent)
                     .subscribeOn(Schedulers.io())
-                    // Subscribing triggers the scheduler to execute I/O operations
                     .subscribe(
-                            () -> Log.i(LoginActivity.TAG, "Default users inserted successfully."),
-                            error -> Log.e(LoginActivity.TAG, "Error inserting default users", error)
+                            () -> Log.i(LoginActivity.TAG, "Default user + initial content seeded."),
+                            t  -> Log.e(LoginActivity.TAG, "Seeding failed", t)
                     );
         }
     };
