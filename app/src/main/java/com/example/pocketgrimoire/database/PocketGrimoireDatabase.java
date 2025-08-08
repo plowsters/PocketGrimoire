@@ -12,16 +12,23 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.pocketgrimoire.LoginActivity;
-import com.example.pocketgrimoire.database.entities.Abilities;
-import com.example.pocketgrimoire.database.entities.CharacterAbilities;
-import com.example.pocketgrimoire.database.entities.CharacterSpells;
-import com.example.pocketgrimoire.database.entities.Spells;
-import com.example.pocketgrimoire.database.typeConverters.Converters;
-import com.example.pocketgrimoire.util.PasswordUtils;
 import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
+import com.example.pocketgrimoire.database.remote.DndApiService;
+import com.example.pocketgrimoire.database.remote.DndApiClient;
+import com.example.pocketgrimoire.database.seeding.AbilitiesSeeder;
+import com.example.pocketgrimoire.database.seeding.ClassRaceMaps;
+import com.example.pocketgrimoire.database.seeding.ItemsSeeder;
+import com.example.pocketgrimoire.database.seeding.SpellsSeeder;
+import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.network.loaders.AbilitiesNetworkLoader;
+import com.example.pocketgrimoire.network.loaders.ItemsNetworkLoader;
+import com.example.pocketgrimoire.network.loaders.SpellsNetworkLoader;
+import com.example.pocketgrimoire.util.PasswordUtils;
+
+import java.util.Map;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -32,29 +39,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * Uses the singleton pattern to ensure only one instance of the DB is ever created in memory
  */
 @TypeConverters({Converters.class})
-@Database(
-        entities = {
-                User.class,
-                Items.class,
-                Spells.class,
-                Abilities.class,
-                CharacterSheet.class,
-                CharacterItems.class,
-                CharacterSpells.class,
-                CharacterAbilities.class},
-        version = 1,
-        exportSchema = false
-)
+@Database(entities = {User.class, CharacterSheet.class, CharacterItems.class, Items.class}, version = 4, exportSchema = false)
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
     public static final String USER_TABLE = "USER_TABLE";
+    public static final String CHARACTER_SHEET_TABLE = "CHARACTER_SHEET_TABLE";
+    public static final String CHARACTER_ITEMS_TABLE = "CHARACTER_ITEMS_TABLE";
     public static final String ITEMS_TABLE = "ITEMS_TABLE";
     public static final String SPELLS_TABLE = "SPELLS_TABLE";
     public static final String ABILITIES_TABLE = "ABILITIES_TABLE";
-    public static final String CHARACTER_SHEET_TABLE = "CHARACTER_SHEET_TABLE";
-    public static final String CHARACTER_ITEMS_TABLE = "CHARACTER_ITEMS_TABLE";
-    public static final String CHARACTER_SPELLS_TABLE = "CHARACTER_SPELLS_TABLE";
-    public static final String CHARACTER_ABILITIES_TABLE = "CHARACTER_ABILITIES_TABLE";
 
     // volatile = stored in RAM. Necessary to make it visible to all threads
     private static volatile PocketGrimoireDatabase INSTANCE;
@@ -68,10 +61,10 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                             PocketGrimoireDatabase.class,
                             DB_NAME
                     )
-                    // .fallbackToDestructiveMigration() is deprecated, using it anyways
-                    .fallbackToDestructiveMigration()
-                    .addCallback(addDefaultValues)
-                    .build();
+                            // .fallbackToDestructiveMigration() is deprecated, using it anyways
+                            .fallbackToDestructiveMigration()
+                            .addCallback(addDefaultValues)
+                            .build();
                 }
             }
         }
@@ -91,53 +84,62 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
             super.onCreate(db);
             Log.i(LoginActivity.TAG, "DATABASE CREATED");
 
+            // Build the API service
+            DndApiService api = DndApiClient.get();
+
+            // Build network loaders (pure network + mapping, no DB writes)
+            ItemsNetworkLoader itemsLoader = new ItemsNetworkLoader(api);
+            SpellsNetworkLoader spellsLoader = new SpellsNetworkLoader(api);
+            AbilitiesNetworkLoader abilitiesLoader = new AbilitiesNetworkLoader(api);
+
+            // Build seeders they use update and insert methods from the DAOs
+            ItemsSeeder itemsSeeder = new ItemsSeeder(itemsLoader, INSTANCE.itemsDAO(), INSTANCE);
+            SpellsSeeder spellsSeeder = new SpellsSeeder(spellsLoader, INSTANCE.spellsDAO(), INSTANCE);
+            // class/race maps used for availability
+            Map<String,String> classes = ClassRaceMaps.defaultClasses();
+            Map<String,String> races   = ClassRaceMaps.defaultRaces();
+            AbilitiesSeeder abilitiesSeeder =
+                    new AbilitiesSeeder(abilitiesLoader, INSTANCE.abilitiesDAO(), INSTANCE, classes, races);
+
             /* This uses RxJava instead of Executor to make DB queries on a background thread
                Benefits of RxJava over Executor are better lifecycle management, better task scheduling,
                and automatic thread pool allocation.
                A "Completable" is a task (Object) that can be completed but doesn't return anything.
                Great for DB inserts
              */
-            Completable.fromAction(() -> {
+            Completable seedDefaultUser = Completable.fromAction(() -> {
                 UserDAO userDao = INSTANCE.userDAO();
                 String salt = PasswordUtils.generateSalt();
                 String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
                 User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
-                // blockingAwait() ensures that this is added to the database before any other
-                // I/O operations can be done on the database
                 userDao.insert(defaultUser).blockingAwait();
+            });
 
-                // Insert a sample character for that user (from main)
-                CharacterSheetDAO characterDAO = INSTANCE.characterSheetDAO();
-                CharacterSheet character1 = new CharacterSheet();
-                character1.setCharacterID(1);
-                //add userid for user who owns character1
-                character1.setUserID(defaultUser.getUserID());
-                //hard code a character for testing
-                //display character1 on character list
-                character1.setCharacterName("character1");
-                character1.setRace("dragonborn");
-                character1.setClazz("bard");
-                System.out.println("Creating new character: " + character1.toString());
-                characterDAO.insert(character1).blockingAwait();
-            })
-                    // Schedulers.io provides a thread pool for I/O operations, in this case DB access
+            // Call the 3 content seeders AFTER the user insert
+            // Use andThen to be nice to the API (one seeder completes before the other begins)
+            Completable seedAllContent =
+                    itemsSeeder.seed()
+                            .andThen(spellsSeeder.seed())
+                            .andThen(abilitiesSeeder.seed());
+
+            // 5) Run on IO. Optionally observeOn main if you want to toast/log on UI.
+            seedDefaultUser
+                    .andThen(seedAllContent)
                     .subscribeOn(Schedulers.io())
-                    // Subscribing triggers the scheduler to execute I/O operations
                     .subscribe(
-                            () -> Log.i(LoginActivity.TAG, "Default users inserted successfully."),
-                            error -> Log.e(LoginActivity.TAG, "Error inserting default users", error)
+                            () -> Log.i(LoginActivity.TAG, "Default user + initial content seeded."),
+                            t  -> Log.e(LoginActivity.TAG, "Seeding failed", t)
                     );
         }
     };
 
-    // RoomDB creates these getter methods for the DAOs for us
+    //RoomDB creates this getter method for the DAO for us
     public abstract UserDAO userDAO();
     public abstract CharacterSheetDAO characterSheetDAO();
     public abstract ItemsDAO itemsDAO();
-    public abstract CharacterItemsDAO characterItemsDAO();
     public abstract SpellsDAO spellsDAO();
     public abstract AbilitiesDAO abilitiesDAO();
-    public abstract CharacterSpellsDAO characterSpellsDAO();
-    public abstract CharacterAbilitiesDAO characterAbilitiesDAO();
+
+    public abstract CharacterItemsDAO characterItemsDAO();
 
 }
