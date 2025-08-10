@@ -3,7 +3,12 @@ package com.example.pocketgrimoire;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.example.pocketgrimoire.fragments.AccountDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -46,5 +51,19 @@ public class AdminNavbarActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_admin_navbar);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        navView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            @Override
+            // MenuItem class automatically instantiated within ActivityAdminNavbarBinding based on bottom_nav_menu.xml items
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.navigation_account) {
+                    AccountDialogFragment dialog = new AccountDialogFragment();
+                    dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
+                    return true;
+                }
+                // Handle other navigation items if you have them
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            }
+        });
     }
 }
