@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pocketgrimoire.databinding.ActivityLoginBinding;
+import com.example.pocketgrimoire.fragments.AccountDialogFragment;
 import com.example.pocketgrimoire.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,7 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         // Check if a user is already logged in
-        checkUserLoggedIn();
+        if (!getIntent().getBooleanExtra(AccountDialogFragment.LOGOUT_EXTRA, false)) {
+            checkUserLoggedIn();
+        }
 
         // Set up the login button click listener
         binding.loginButtonNavigateImageView.setOnClickListener(v -> {

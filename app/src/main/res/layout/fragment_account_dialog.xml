@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.AccountDialogFragment">
+
+
+    <ImageView
+        android:id="@+id/account_dialog_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/account_dialog_fragment_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.37" />
+
+    <ImageView
+        android:id="@+id/account_dialog_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/account_dialog_fragment_exit_button"
+        app:layout_constraintEnd_toEndOf="@+id/account_dialog_background"
+        app:layout_constraintTop_toTopOf="@+id/account_dialog_background" />
+
+    <ImageView
+        android:id="@+id/account_dialog_username_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/account_dialog_fragment_username_button"
+        app:layout_constraintEnd_toEndOf="@+id/account_dialog_background"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/account_dialog_background"
+        app:layout_constraintTop_toTopOf="@+id/account_dialog_background" />
+
+    <TextView
+        android:id="@+id/account_dialog_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inknut_antiqua"
+        android:text="@string/username_all_caps"
+        android:textColor="@color/gold"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/account_dialog_username_container"
+        app:layout_constraintEnd_toEndOf="@+id/account_dialog_username_container"
+        app:layout_constraintStart_toStartOf="@+id/account_dialog_username_container"
+        app:layout_constraintTop_toTopOf="@+id/account_dialog_username_container"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/dotted_line_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/account_dialog_fragment_dotted_line_separator"
+        app:layout_constraintEnd_toEndOf="@+id/account_dialog_background"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="@+id/account_dialog_background"
+        app:layout_constraintTop_toBottomOf="@+id/account_dialog_username_container" />
+
+    <TextView
+        android:id="@+id/sign_out_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/imprima"
+        android:text="@string/sign_out"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/account_dialog_background"
+        app:layout_constraintEnd_toEndOf="@+id/account_dialog_background"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/account_dialog_background"
+        app:layout_constraintTop_toBottomOf="@+id/dotted_line_1"
+        app:layout_constraintVertical_bias="0.300" />
+
+    <ImageView
+        android:id="@+id/account_dialog_line_decorator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line_decorator"
+        app:layout_constraintEnd_toEndOf="@+id/account_dialog_background"
+        app:layout_constraintStart_toStartOf="@+id/account_dialog_background"
+        tools:layout_editor_absoluteY="259dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
