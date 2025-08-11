@@ -22,10 +22,9 @@ public interface CharacterAbilitiesDAO {
     @Update
     Completable update(CharacterAbilities ca);
 
-    @Query("SELECT * FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterID = :characterId")
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterId = :characterId")
     Flowable<List<CharacterAbilities>> getByCharacterId(int characterId);
 
-    @Query("DELETE FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterID = :characterId")
+    @Query("DELETE FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterId = :characterId")
     Completable clearForCharacter(int characterId);
 }
-
