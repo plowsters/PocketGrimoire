@@ -1,5 +1,7 @@
 package com.example.pocketgrimoire.database.entities;
 
+import android.text.TextUtils;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -8,6 +10,7 @@ import androidx.room.PrimaryKey;
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -47,9 +50,9 @@ public class CharacterSheet implements Serializable {
     int conSavingThrow;
     int charSavingThrow;
     int wisSavingThrow;
-    List<String> proficiencies;
-    List<String> traits;
-    List<String> languages;
+    List<String> proficiencies; //requires API call and creation of a pseudolist - low priority
+    List<String> traits; //remove
+    String languages;
     HashMap<String,String> characteristics;
 
     //TODO: Re-add commented lines once fixed
@@ -343,14 +346,21 @@ public class CharacterSheet implements Serializable {
         this.traits = traits;
     }
 
-    public List<String> getLanguages() {
+    public String getLanguages() {
         return languages;
     }
 
-    public void setLanguages(List<String> languages) {
+    public void setLanguages(String languages) {
         this.languages = languages;
     }
 
+    public List<String> getLanguagesArray() {
+        return Arrays.asList(languages.split(","));
+    }
+
+    public void setLanguagesArray(List<String> languages) {
+        this.languages = TextUtils.join(",",languages);
+    }
     public HashMap<String, String> getCharacteristics() {
         return characteristics;
     }

@@ -50,7 +50,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
         //edit character
         //set character name
         binding.nameEditText.setText(character.getCharacterName());
-
         createRaceDropdown();
         createClassDropdown();
         createLanguageDropdown();
@@ -114,7 +113,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private void createLanguageDropdown(){
         //Languages language_array
 //        List<String> chosenLanguages = character.getLanguagesArray();
-        binding.languageTextView.setText((CharSequence) character.getLanguages());
+        binding.languageTextView.setText(character.getLanguages());
 
         //load language array
         Resources resources = getResources();
@@ -231,7 +230,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
 //        character.setConstitution(mCon);
 //        character.setWisdom(mWis);
 //        character.setBackground(mBg);
-        character.setLanguages(Collections.singletonList(mLan));
+        character.setLanguages(mLan);
         //hashmap
 //        character.setAge();
 //        hair
