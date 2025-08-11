@@ -23,7 +23,7 @@ public interface CharacterSheetDAO {
     Flowable<List<CharacterSheet>> getAllCharacterSheetByUserID(int loggedInUserID);
 
     @Delete
-    void delete(CharacterSheet characterSheet);
+    Completable delete(CharacterSheet characterSheet);
 
     @Query(" DELETE from " + PocketGrimoireDatabase.CHARACTER_SHEET_TABLE) void deleteAll();
 }

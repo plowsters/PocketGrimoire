@@ -105,6 +105,6 @@ public class PocketGrimoireRepository {
      * deleteCharacter
      */
     public void deleteCharacterSheet(CharacterSheet character) {
-        characterSheetDAO.delete(character);
+        characterSheetDAO.delete(character).subscribeOn(Schedulers.io()).blockingAwait();
     }
 }
