@@ -1,16 +1,28 @@
 package com.example.pocketgrimoire.database.entities;
 
+import android.text.TextUtils;
+
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(tableName = PocketGrimoireDatabase.CHARACTER_SHEET_TABLE)
-public class CharacterSheet {
+@Entity(tableName = PocketGrimoireDatabase.CHARACTER_SHEET_TABLE,
+        foreignKeys = @ForeignKey(
+                entity = User.class,
+                parentColumns = "userID",
+                childColumns = "userID",
+                onDelete = ForeignKey.CASCADE),
+        indices = @Index(value = {"userID"}))
+public class CharacterSheet implements Serializable {
 
     @PrimaryKey (autoGenerate = true)
     private int characterID;
@@ -32,18 +44,19 @@ public class CharacterSheet {
     int constitution;
     int charisma;
     int wisdom;
-    int strSavingThrow;
-    int dexSavingThrow;
-    int intSavingThrow;
-    int conSavingThrow;
-    int charSavingThrow;
-    int wisSavingThrow;
-    List<String> proficiencies;
-    List<String> traits;
-    List<String> languages;
-    HashMap<String,String> characteristics;
+    List<String> proficiencies; //requires API call and creation of a pseudolist as Lists cannot be added into databases - low priority
+    List<String> traits; //remove
+    String languages;
+    HashMap<String,String> characteristics; //cannot add HashMap into database, will require to make a pseudo HashMap - low priority
+    String characterAlignment;
+    String gender;
+    String eyeColor;
+    String hairColor;
+    String skinColor;
+    int age;
+    int height;
+    int weight;
 
-    //TODO: Re-add commented lines once fixed
     @Override
     public String toString() {
         return "CharacterSheet{" +
@@ -65,58 +78,160 @@ public class CharacterSheet {
                 ", constitution=" + constitution +
                 ", charisma=" + charisma +
                 ", wisdom=" + wisdom +
-                ", strSavingThrow=" + strSavingThrow +
-                ", dexSavingThrow=" + dexSavingThrow +
-                ", intSavingThrow=" + intSavingThrow +
-                ", conSavingThrow=" + conSavingThrow +
-                ", charSavingThrow=" + charSavingThrow +
-                ", wisSavingThrow=" + wisSavingThrow +
                 ", proficiencies=" + proficiencies +
                 ", traits=" + traits +
                 ", languages=" + languages +
                 ", characteristics=" + characteristics +
+                ", characterAlignment=" + characterAlignment +
+                ", gender=" + gender +
+                ", hairColor=" + hairColor +
+                ", eyeColor=" + eyeColor +
+                ", skinColor=" + skinColor +
+                ", age=" + age +
+                ", height=" + height +
+                ", weight=" + weight +
                 '}';
     }
 
     //TODO: Re-add Objects.equals(proficiencies, that.proficiencies) && Objects.equals(traits, that.traits) && Objects.equals(languages, that.languages) && Objects.equals(characteristics, that.characteristics);
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o == null || getClass() != o.getClass()) return false;
+//        CharacterSheet that = (CharacterSheet) o;
+//        return  userID == that.userID &&
+//                characterID == that.characterID &&
+//                level == that.level &&
+//                xpToLevel == that.xpToLevel &&
+//                xp == that.xp &&
+//                maxHP == that.maxHP &&
+//                currentHP == that.currentHP &&
+//                armorClass == that.armorClass &&
+//                strength == that.strength &&
+//                dexterity == that.dexterity &&
+//                intelligence == that.intelligence &&
+//                constitution == that.constitution &&
+//                charisma == that.charisma &&
+//                wisdom == that.wisdom &&
+//                Objects.equals(characterName, that.characterName) &&
+//                Objects.equals(race, that.race) &&
+//                Objects.equals(clazz, that.clazz) &&
+//                Objects.equals(notes, that.notes) &&
+//                Objects.equals(background, that.background) &&
+//                Objects.equals(proficiencies, that.proficiencies) &&
+//                Objects.equals(traits, that.traits) &&
+//                Objects.equals(languages, that.languages) &&
+//                Objects.equals(characteristics, that.characteristics);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(userID, characterID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow, proficiencies, traits, languages, characteristics);
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CharacterSheet that = (CharacterSheet) o;
-        return  userID == that.userID &&
-                characterID == that.characterID &&
+            return characterID == that.characterID &&
+                userID == that.userID &&
                 level == that.level &&
                 xpToLevel == that.xpToLevel &&
                 xp == that.xp &&
-                maxHP == that.maxHP &&
-                currentHP == that.currentHP &&
-                armorClass == that.armorClass &&
-                strength == that.strength &&
-                dexterity == that.dexterity &&
-                intelligence == that.intelligence &&
-                constitution == that.constitution &&
-                charisma == that.charisma &&
-                wisdom == that.wisdom &&
-                strSavingThrow == that.strSavingThrow &&
-                dexSavingThrow == that.dexSavingThrow &&
-                intSavingThrow == that.intSavingThrow &&
-                conSavingThrow == that.conSavingThrow &&
-                charSavingThrow == that.charSavingThrow &&
-                wisSavingThrow == that.wisSavingThrow &&
-                Objects.equals(characterName, that.characterName) &&
-                Objects.equals(race, that.race) &&
-                Objects.equals(clazz, that.clazz) &&
-                Objects.equals(notes, that.notes) &&
-                Objects.equals(background, that.background) &&
-                Objects.equals(proficiencies, that.proficiencies) &&
-                Objects.equals(traits, that.traits) &&
-                Objects.equals(languages, that.languages) &&
-                Objects.equals(characteristics, that.characteristics);
+                    maxHP == that.maxHP &&
+                    currentHP == that.currentHP &&
+                    armorClass == that.armorClass &&
+                    strength == that.strength &&
+                    dexterity == that.dexterity &&
+                    intelligence == that.intelligence &&
+                    constitution == that.constitution &&
+                    charisma == that.charisma &&
+                    wisdom == that.wisdom &&
+                    age == that.age &&
+                    height == that.height &&
+                    weight == that.weight &&
+                    Objects.equals(characterName, that.characterName) &&
+                    Objects.equals(race, that.race) &&
+                    Objects.equals(clazz, that.clazz) &&
+                    Objects.equals(notes, that.notes) &&
+                    Objects.equals(background, that.background) &&
+                    Objects.equals(proficiencies, that.proficiencies) &&
+                    Objects.equals(traits, that.traits) &&
+                    Objects.equals(languages, that.languages) &&
+                    Objects.equals(characteristics, that.characteristics) &&
+                    Objects.equals(characterAlignment, that.characterAlignment) &&
+                    Objects.equals(gender, that.gender) &&
+                    Objects.equals(eyeColor, that.eyeColor) &&
+                    Objects.equals(hairColor, that.hairColor) &&
+                    Objects.equals(skinColor, that.skinColor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userID, characterID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow, proficiencies, traits, languages, characteristics);
+        return Objects.hash(characterID, userID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, proficiencies, traits, languages, characteristics, characterAlignment, gender, eyeColor, hairColor, skinColor, age, height, weight);
+    }
+
+    public String getCharacterAlignment() {
+        return characterAlignment;
+    }
+
+    public void setCharacterAlignment(String characterAlignment) {
+        this.characterAlignment = characterAlignment;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEyeColor() {
+        return eyeColor;
+    }
+
+    public void setEyeColor(String eyeColor) {
+        this.eyeColor = eyeColor;
+    }
+
+    public String getHairColor() {
+        return hairColor;
+    }
+
+    public void setHairColor(String hairColor) {
+        this.hairColor = hairColor;
+    }
+
+    public String getSkinColor() {
+        return skinColor;
+    }
+
+    public void setSkinColor(String skinColor) {
+        this.skinColor = skinColor;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public int getUserID() {
@@ -270,54 +385,6 @@ public class CharacterSheet {
     public void setWisdom(int wisdom) {
         this.wisdom = wisdom;
     }
-
-    public int getStrSavingThrow() {
-        return strSavingThrow;
-    }
-
-    public void setStrSavingThrow(int strSavingThrow) {
-        this.strSavingThrow = strSavingThrow;
-    }
-
-    public int getDexSavingThrow() {
-        return dexSavingThrow;
-    }
-
-    public void setDexSavingThrow(int dexSavingThrow) {
-        this.dexSavingThrow = dexSavingThrow;
-    }
-
-    public int getIntSavingThrow() {
-        return intSavingThrow;
-    }
-
-    public void setIntSavingThrow(int intSavingThrow) {
-        this.intSavingThrow = intSavingThrow;
-    }
-
-    public int getConSavingThrow() {
-        return conSavingThrow;
-    }
-
-    public void setConSavingThrow(int conSavingThrow) {
-        this.conSavingThrow = conSavingThrow;
-    }
-
-    public int getCharSavingThrow() {
-        return charSavingThrow;
-    }
-
-    public void setCharSavingThrow(int charSavingThrow) {
-        this.charSavingThrow = charSavingThrow;
-    }
-
-    public int getWisSavingThrow() {
-        return wisSavingThrow;
-    }
-
-    public void setWisSavingThrow(int wisSavingThrow) {
-        this.wisSavingThrow = wisSavingThrow;
-    }
     public List<String> getProficiencies() {
         return proficiencies;
     }
@@ -334,14 +401,21 @@ public class CharacterSheet {
         this.traits = traits;
     }
 
-    public List<String> getLanguages() {
+    public String getLanguages() {
         return languages;
     }
 
-    public void setLanguages(List<String> languages) {
+    public void setLanguages(String languages) {
         this.languages = languages;
     }
 
+    public List<String> getLanguagesArray() {
+        return Arrays.asList(languages.split(","));
+    }
+
+    public void setLanguagesArray(List<String> languages) {
+        this.languages = TextUtils.join(",",languages);
+    }
     public HashMap<String, String> getCharacteristics() {
         return characteristics;
     }

@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/userTypeImageView"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/user_type_title"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/contentImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/userTypeTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLAYER"
+        android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:textSize="24sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/userTypeImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/userTypeImageView"
+        app:layout_constraintRight_toRightOf="@+id/userTypeImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/userTypeImageView"/>
+
+    <ImageView
+        android:id="@+id/contentImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userTypeImageView"
+        app:srcCompat="@drawable/middle_section" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/adminuinavbar"
+        app:itemIconSize="32dp"
+        app:itemIconTint="@color/white"
+        app:itemPaddingTop="28dp"
+        app:itemTextAppearanceActive="@style/BottomNav.Active"
+        app:itemTextAppearanceInactive="@style/BottomNav.Inactive"
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <ImageView
+        android:id="@+id/lineDecoratorImageView"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintTop_toBottomOf="@+id/characterTitleTextView"
+        app:srcCompat="@drawable/line_decorator" />
+
+    <TextView
+        android:id="@+id/characterTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="create character"
+        android:textColor="#BEB688"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintTop_toTopOf="@+id/contentImageView" />
+
+    <ImageView
+        android:id="@+id/navBarImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/nav_bar"
+        tools:ignore="MissingConstraints" />
+
+    <ScrollView
+        android:layout_width="320dp"
+        android:layout_height="410dp"
+        android:layout_marginBottom="90dp"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintTop_toTopOf="@id/lineDecoratorImageView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="170dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/enterNameTitleTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.14"
+                android:text="name"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/nameEditText"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_input"
+                android:drawablePadding="12dp"
+                android:fontFamily="@font/inder"
+                android:hint="enter a name..."
+                android:textAlignment="center"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/enterNameTitleTextField" />
+
+            <TextView
+                android:id="@+id/chooseRaceTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="choose a race"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nameEditText" />
+
+            <Spinner
+                android:id="@+id/race_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:autofillHints="race..."
+                android:background="@drawable/bg_spinner_race_class"
+                android:textAlignment="textStart"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseRaceTitleTextView" />
+
+            <TextView
+                android:id="@+id/chooseClassTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="choose a class"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/classSpinner"
+                app:layout_constraintLeft_toRightOf="@+id/chooseRaceTitleTextView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nameEditText" />
+
+            <Spinner
+                android:id="@+id/classSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints="race..."
+                android:background="@drawable/bg_spinner_race_class"
+                android:textAlignment="textStart"
+                app:layout_constraintLeft_toRightOf="@+id/race_spinner"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseClassTitleTextView" />
+
+            <TextView
+                android:id="@+id/mainAttTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.14"
+                android:text="main attributes"
+                android:textColor="#BEB688"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/race_spinner" />
+
+            <!--            main attribute section-->
+
+            <ImageView
+                android:id="@+id/strAttributeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mainAttTextView"
+                app:srcCompat="@drawable/attribute_input_box" />
+
+            <TextView
+                android:id="@+id/strAttTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:fontFamily="@font/inder"
+                android:text="str"
+                android:textColor="#BEB688"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/strAttributeImageView"
+                app:layout_constraintLeft_toLeftOf="@+id/strAttributeImageView"
+                app:layout_constraintTop_toTopOf="@+id/strAttributeImageView" />
+
+            <EditText
+                android:id="@+id/strAttrEditTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:textColor="#18191C"
+                app:layout_constraintBottom_toBottomOf="@id/strAttributeImageView"
+                app:layout_constraintLeft_toRightOf="@id/strAttTextView"
+                app:layout_constraintRight_toRightOf="@id/strAttributeImageView"
+                app:layout_constraintTop_toTopOf="@id/strAttributeImageView" />
+
+            <ImageView
+                android:id="@+id/dexAttributeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:layout_constraintLeft_toRightOf="@id/strAttributeImageView"
+                app:layout_constraintRight_toLeftOf="@id/intAttributeImageView"
+                app:layout_constraintTop_toBottomOf="@id/mainAttTextView"
+                app:srcCompat="@drawable/attribute_input_box" />
+
+            <TextView
+                android:id="@+id/dexAttTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:text="dex"
+                android:textColor="#BEB688"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/dexAttributeImageView"
+                app:layout_constraintLeft_toLeftOf="@+id/dexAttributeImageView"
+                app:layout_constraintTop_toTopOf="@+id/dexAttributeImageView" />
+
+            <EditText
+                android:id="@+id/dexAttrEditTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:textColor="#18191C"
+                app:layout_constraintBottom_toBottomOf="@id/dexAttributeImageView"
+                app:layout_constraintLeft_toRightOf="@id/dexAttTextView"
+                app:layout_constraintRight_toRightOf="@id/dexAttributeImageView"
+                app:layout_constraintTop_toTopOf="@id/dexAttributeImageView" />
+
+            <ImageView
+                android:id="@+id/intAttributeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintLeft_toRightOf="@id/dexAttributeImageView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mainAttTextView"
+                app:srcCompat="@drawable/attribute_input_box" />
+
+            <TextView
+                android:id="@+id/intAttTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:text="int"
+                android:textColor="#BEB688"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/intAttributeImageView"
+                app:layout_constraintLeft_toLeftOf="@+id/intAttributeImageView"
+                app:layout_constraintTop_toTopOf="@+id/intAttributeImageView" />
+
+            <EditText
+                android:id="@+id/intAttrEditTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:textColor="#18191C"
+                app:layout_constraintBottom_toBottomOf="@id/intAttributeImageView"
+                app:layout_constraintLeft_toRightOf="@id/intAttTextView"
+                app:layout_constraintRight_toRightOf="@id/intAttributeImageView"
+                app:layout_constraintTop_toTopOf="@id/intAttributeImageView" />
+
+            <ImageView
+                android:id="@+id/chaAttributeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/strAttTextView"
+                app:srcCompat="@drawable/attribute_input_box" />
+
+            <TextView
+                android:id="@+id/chaAttTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:text="cha"
+                android:textColor="#BEB688"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/chaAttributeImageView"
+                app:layout_constraintLeft_toLeftOf="@+id/chaAttributeImageView"
+                app:layout_constraintTop_toTopOf="@+id/chaAttributeImageView" />
+
+            <EditText
+                android:id="@+id/chaAttrEditTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/inder"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:textColor="#18191C"
+                app:layout_constraintBottom_toBottomOf="@id/chaAttributeImageView"
+                app:layout_constraintLeft_toRightOf="@id/chaAttTextView"
+                app:layout_constraintRight_toRightOf="@id/chaAttributeImageView"
+                app:layout_constraintTop_toTopOf="@id/chaAttributeImageView" />
+
+            <ImageView
+                android:id="@+id/conAttributeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintLeft_toRightOf="@id/chaAttributeImageView"
+                app:layout_constraintRight_toLeftOf="@+id/wisAttributeImageView"
+                app:layout_constraintTop_toBottomOf="@+id/dexAttTextView"
+                app:srcCompat="@drawable/attribute_input_box" />
+
+            <TextView
+                android:id="@+id/conAttTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:text="con"
+                android:textColor="#BEB688"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/conAttributeImageView"
+                app:layout_constraintLeft_toLeftOf="@+id/conAttributeImageView"
+                app:layout_constraintTop_toTopOf="@+id/conAttributeImageView" />
+
+            <EditText
+                android:id="@+id/conAttrEditTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:fontFamily="@font/inder"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:textColor="#18191C"
+                app:layout_constraintBottom_toBottomOf="@id/conAttributeImageView"
+                app:layout_constraintLeft_toRightOf="@id/conAttTextView"
+                app:layout_constraintRight_toRightOf="@id/conAttributeImageView"
+                app:layout_constraintTop_toTopOf="@id/conAttributeImageView" />
+
+            <ImageView
+                android:id="@+id/wisAttributeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintLeft_toRightOf="@id/conAttributeImageView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/intAttTextView"
+                app:srcCompat="@drawable/attribute_input_box" />
+
+            <TextView
+                android:id="@+id/wisAttTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:text="wis"
+                android:textColor="#BEB688"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/wisAttributeImageView"
+                app:layout_constraintLeft_toLeftOf="@+id/wisAttributeImageView"
+                app:layout_constraintTop_toTopOf="@+id/wisAttributeImageView" />
+
+            <EditText
+                android:id="@+id/wisAttrEditTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inder"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:textColor="#18191C"
+                app:layout_constraintBottom_toBottomOf="@id/wisAttributeImageView"
+                app:layout_constraintLeft_toRightOf="@id/wisAttTextView"
+                app:layout_constraintRight_toRightOf="@id/wisAttributeImageView"
+                app:layout_constraintTop_toTopOf="@id/wisAttributeImageView" />
+
+            <TextView
+                android:id="@+id/BGTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.14"
+                android:text="choose a background"
+                android:textColor="#BEB688"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chaAttributeImageView" />
+
+            <Spinner
+                android:id="@+id/bgSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:autofillHints="background..."
+                android:background="@drawable/bg_spinner_bg_lan_char"
+                android:textAlignment="textStart"
+                app:layout_constraintHorizontal_bias="0.493"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/BGTitleTextView" />
+
+            <TextView
+                android:id="@+id/lanTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.14"
+                android:text="choose a language"
+                android:textColor="#BEB688"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bgSpinner" />
+
+            <ImageButton
+                android:id="@+id/lanImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:autofillHints="language.."
+                android:background="@drawable/bg_spinner_bg_lan_char"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lanTitleTextView" />
+
+            <TextView
+                android:id="@+id/languageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inder"
+                android:hint="langauge..."
+                android:textColor="#BEB688"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/lanImageButton"
+                app:layout_constraintLeft_toLeftOf="@id/lanImageButton"
+                app:layout_constraintTop_toTopOf="@id/lanImageButton" />
+
+            <TextView
+                android:id="@+id/charAlignTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.14"
+                android:text="character alignment"
+                android:textColor="#BEB688"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lanImageButton" />
+
+            <Spinner
+                android:id="@+id/charAlignSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:autofillHints="character alignment..."
+                android:background="@drawable/bg_spinner_bg_lan_char"
+                android:textAlignment="textStart"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/charAlignTitleTextView" />
+
+
+            <TextView
+                android:id="@+id/chooseSkinColorTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="skin color"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/skinColorSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/charAlignSpinner" />
+
+            <Spinner
+                android:id="@+id/skinColorSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_spinner_race_class"
+                android:fontFamily="@font/inder"
+                android:hint="skin color..."
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseSkinColorTitleTextView" />
+
+            <TextView
+                android:id="@+id/chooseGenderTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="choose gender"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/genderSpinner"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/charAlignSpinner" />
+
+            <Spinner
+                android:id="@+id/genderSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints="race..."
+                android:background="@drawable/bg_spinner_race_class"
+                android:textAlignment="textStart"
+                app:layout_constraintLeft_toRightOf="@+id/skinColorSpinner"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseGenderTitleTextView" />
+
+            <TextView
+                android:id="@+id/chooseHairTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="hair color"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/hairColorSpinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/skinColorSpinner" />
+
+            <Spinner
+                android:id="@+id/hairColorSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:autofillHints="race..."
+                android:background="@drawable/bg_spinner_race_class"
+                android:textAlignment="textStart"
+                app:layout_constraintBottom_toTopOf="@id/heightTitleTextView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseHairTitleTextView" />
+
+            <TextView
+                android:id="@+id/chooseEyeTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="75dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="eye color"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/genderSpinner" />
+
+            <Spinner
+                android:id="@+id/eyeColorSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints="race..."
+                android:background="@drawable/bg_spinner_race_class"
+                android:textAlignment="textStart"
+                app:layout_constraintLeft_toRightOf="@+id/ageEditText"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseHairTitleTextView" />
+
+            <TextView
+                android:id="@+id/heightTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="height"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/chooseHairTitleTextView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hairColorSpinner" />
+
+            <EditText
+                android:id="@+id/heightEditText"
+                android:layout_width="115dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/inder"
+                android:hint="height..."
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/heightTitleTextView" />
+
+            <TextView
+                android:id="@+id/weightTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="95dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="weight"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/eyeColorSpinner" />
+
+            <EditText
+                android:id="@+id/weightEditText"
+                android:layout_width="115dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/inder"
+                android:hint="weight..."
+                android:textSize="13sp"
+                app:layout_constraintLeft_toRightOf="@+id/heightEditText"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/weightTitleTextView" />
+
+            <TextView
+                android:id="@+id/chooseAgeTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="choose age"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/ageEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/heightEditText" />
+
+            <EditText
+                android:id="@+id/ageEditText"
+                android:layout_width="115dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/inder"
+                android:hint="age..."
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@id/notesTextView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseAgeTitleTextView" />
+
+            <TextView
+                android:id="@+id/notesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="notes"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/notesEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ageEditText" />
+
+            <EditText
+                android:id="@+id/notesEditText"
+                android:layout_width="260dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_input"
+                android:drawablePadding="12dp"
+                android:fontFamily="@font/inder"
+                android:gravity="top"
+                android:hint="add notes..."
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/notesTextView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/saveImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="35dp"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="@id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:srcCompat="@drawable/save_button" />
+
+    <TextView
+        android:id="@+id/saveTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="SAVE"
+        android:textColor="#BEB688"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/saveImageButton"
+        app:layout_constraintLeft_toLeftOf="@id/saveImageButton"
+        app:layout_constraintRight_toRightOf="@id/saveImageButton"
+        app:layout_constraintTop_toTopOf="@id/saveImageButton" />
+
+    <TextView
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="45dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="cancel"
+        android:textColor="#BEB688"
+        app:layout_constraintBottom_toBottomOf="@id/contentImageView"
+        app:layout_constraintLeft_toRightOf="@id/saveImageButton"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

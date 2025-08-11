@@ -1,14 +1,20 @@
 package com.example.pocketgrimoire.viewholder;
 
 
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocketgrimoire.CharacterCreationActivity;
+import com.example.pocketgrimoire.CharacterSheetActivity;
 import com.example.pocketgrimoire.R;
+import com.example.pocketgrimoire.database.PocketGrimoireRepository;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 
 /**
@@ -21,21 +27,43 @@ import com.example.pocketgrimoire.database.entities.CharacterSheet;
 
 public class CharacterListViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView characterListItemTextview; //reference to xml
+    //references to xml assets
+    private final TextView characterListItemTextview;
+    private final ImageButton characterListImageButton;
+    private final ImageButton editCharacterImageButton;
+    private final ImageButton deleteCharacterImageButton;
 
     public CharacterListViewHolder(@NonNull View characterListView) {
         super(characterListView);
-        characterListItemTextview = characterListView.findViewById(R.id.characterListItemTextview); //find characterListItemTextview in recycleritem
+        characterListItemTextview = characterListView.findViewById(R.id.characterListItemTextview);
+        characterListImageButton = characterListView.findViewById(R.id.characterListImageButton);
+        editCharacterImageButton = characterListView.findViewById(R.id.editCharacterImageButton);
+        deleteCharacterImageButton = characterListView.findViewById(R.id.deleteCharacterImageButton);
     }
 
-    /**
-     * set text to be displayed on the item and add clicklistener on each item
-     * to change to CharacterSheetActivity
-     * @param
-     */
-    public void bind(CharacterSheet currentCharacter, Context context) {
+    public void bind(CharacterSheet currentCharacter, Context context, Application application) {
         System.out.println("currentCharacter " + currentCharacter);
         characterListItemTextview.setText(currentCharacter.getCharacterName());
+        characterListImageButton.setOnClickListener(view -> {
+            Intent intent = CharacterSheetActivity.characterSheetActivityIntentFactory(context.getApplicationContext(), currentCharacter);
+            context.startActivity(intent);
+        });
 
+        /**
+         * Edit button allows users to edit their chosen character
+         */
+        editCharacterImageButton.setOnClickListener(view -> {
+            Intent intent = CharacterCreationActivity.characterEditActivityIntentFactory(context.getApplicationContext(), currentCharacter);
+            context.startActivity(intent);
+        });
+
+        /**
+         * Delete button allows users to delete a chosen character
+         */
+        deleteCharacterImageButton.setOnClickListener(view -> {
+            System.out.println("This is the delete button");
+            PocketGrimoireRepository repository = PocketGrimoireRepository.getRepository(application).blockingGet();
+            repository.deleteCharacterSheet(currentCharacter);
+        });
     }
 }

@@ -4,18 +4,16 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.pocketgrimoire.LoginActivity;
-import com.example.pocketgrimoire.database.entities.User;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
-import com.example.pocketgrimoire.database.entities.Items;
-import com.example.pocketgrimoire.database.entities.Spells;
-import com.example.pocketgrimoire.database.entities.Abilities;
-import com.example.pocketgrimoire.database.CharacterSpellsDAO;
-import com.example.pocketgrimoire.database.CharacterAbilitiesDAO;
-import com.example.pocketgrimoire.database.entities.CharacterSpells;
-import com.example.pocketgrimoire.database.entities.CharacterAbilities;
+import com.example.pocketgrimoire.database.entities.User;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -24,29 +22,14 @@ import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-/**
- * The central repository for the Pocket Grimoire app.
- * Uses the Room-generated DAOs to read/write data, and exposes RxJava types
- * so ViewModels can subscribe safely on background threads.
- *
- * NOTE: This class intentionally keeps "fire-and-forget" inserts for some ops
- * (subscribe() without observing result) since the UI doesn't need to block.
- */
 public class PocketGrimoireRepository {
 
-    // --- DAOs provided by the Room database ---
     private UserDAO userDAO;
     private CharacterSheetDAO characterSheetDAO;
     private CharacterItemsDAO characterItemsDAO;
     private ItemsDAO itemsDAO;
-    private SpellsDAO spellsDAO;
-    private AbilitiesDAO abilitiesDAO;
-    private CharacterSpellsDAO characterSpellsDAO;
-    private CharacterAbilitiesDAO characterAbilitiesDAO;
-
-
-    // Optional singleton access if needed by callers that prefer Single<> factory
     private static PocketGrimoireRepository repository;
+
 
     /**
      * The constructor for PocketGrimoireRepository
@@ -59,35 +42,31 @@ public class PocketGrimoireRepository {
         this.characterSheetDAO = db.characterSheetDAO();
         this.characterItemsDAO = db.characterItemsDAO();
         this.itemsDAO = db.itemsDAO();
-        this.spellsDAO = db.spellsDAO();
-        this.abilitiesDAO = db.abilitiesDAO();
-        this.characterSpellsDAO = db.characterSpellsDAO();
-        this.characterAbilitiesDAO = db.characterAbilitiesDAO();
     }
 
-    /**
-     * Optional helper that returns a Repository on a background thread.
-     * Useful if a caller wants to lazily obtain the repo with Rx semantics.
-     */
     public static Single<PocketGrimoireRepository> getRepository(Application application) {
         return Single.fromCallable(() -> new PocketGrimoireRepository(application))
-                .subscribeOn(Schedulers.io());
+        .subscribeOn(Schedulers.io());
     }
 
-    // =========================================================================
-    // Users
-    // =========================================================================
-
     /**
-     * Retrieves all Users from the DB as a "reactive stream", allowing the "Subscriber"
-     * (typically a ViewModel) to receive updates whenever the table changes.
+     * Retrieves all Users from the DB as a "reactive stream", allowing  the "Subscriber"
+     * (module requesting data, typically a LiveData/ViewModel object) to tell the "Publisher"
+     * (module providing data, in this case the DAO method) how much data it can handle at once.
+     *
+     * NOTE: For this to work, your DAO interface method must return a "Flowable", which automatically
+     * emits a new list to the Subscriber whenever data in the table changes.
+     *
+     * @return a Flowable that emits a list of all users
      */
     public Flowable<List<User>> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
     /**
-     * Retrieves a user by username. Returns Maybe<User> (0 or 1 result).
+     * Retrieves a user by their username from the database.
+     * @param username The username of the user to retrieve.
+     * @return A Maybe that will emit the User if found, or complete otherwise.
      */
     public Maybe<User> getUserByUsername(String username) {
         return userDAO.getUserByUsername(username)
@@ -97,10 +76,15 @@ public class PocketGrimoireRepository {
 
     /**
      * Inserts a new user into the DB using RxJava instead of Executor.
-     * It defers execution of the userDAO.insert() method to Schedulers.io().
+     * It defers execution of the userDAO.insert() method to the background threads handled by
+     * Schedulers.io(), and the DAO method returns type "Completable" to track a successful or
+     * failed completion of the task.
+     * @param user
      */
+    // Ignore the linter error "Result of .subscribe() never used", not important for DB inserts
     @SuppressLint("CheckResult")
     public void insertUser(User user) {
+        // subscribing to this method triggers the Scheduler to execute this operation
         userDAO.insert(user)
                 .subscribeOn(Schedulers.io())
                 .subscribe(
@@ -109,140 +93,18 @@ public class PocketGrimoireRepository {
                 );
     }
 
-    // =========================================================================
-    // Character Sheets
-    // =========================================================================
-
-    /**
-     * Returns all CharacterSheets for a specific user as a Flowable.
-     * ViewModels can observe this to refresh the UI automatically.
-     */
     public Flowable<List<CharacterSheet>> getAllCharacterSheetByUserId(int loggedInUserId) {
         return characterSheetDAO.getAllCharacterSheetByUserID(loggedInUserId);
     }
 
-    /**
-     * Inserts (or replaces) a CharacterSheet. Wrapped in Completable for consistency
-     * with other insert methods that already return a Completable.
-     */
-    public Completable insertCharacterSheet(CharacterSheet characterSheet) {
-        return Completable.fromAction(() -> characterSheetDAO.insert(characterSheet))
-                .subscribeOn(Schedulers.io());
-    }
-
-    // =========================================================================
-    // Items (Master List)
-    // =========================================================================
-
-    /**
-     * Get all items from the master list. Emits again when DB changes.
-     */
-    public Flowable<List<Items>> getAllItems() {
-        return itemsDAO.getAllItems().subscribeOn(Schedulers.io());
+    public Completable insertCharacterSheet(CharacterSheet character) {
+        return characterSheetDAO.insert(character).subscribeOn(Schedulers.io());
     }
 
     /**
-     * Insert/replace a single item in the master list.
+     * deleteCharacter
      */
-    public Completable insertItem(Items item) {
-        // ItemsDAO defines insert(Items)
-        return itemsDAO.insert(item).subscribeOn(Schedulers.io());
-    }
-
-    /**
-     * Utility to check how many items are currently in the master list table.
-     */
-    public Flowable<Integer> getItemsCount() {
-        return itemsDAO.itemsCount().subscribeOn(Schedulers.io());
-    }
-
-    // =========================================================================
-    // Spells (Master List)
-    // =========================================================================
-
-    public Flowable<List<Spells>> getAllSpells() {
-        return spellsDAO.getAllSpells().subscribeOn(Schedulers.io());
-    }
-
-    public Flowable<List<Spells>> getEnabledSpells() {
-        return spellsDAO.getEnabledSpells().subscribeOn(Schedulers.io());
-    }
-
-    public Completable insertSpell(Spells spell) {
-        // SpellsDAO defines insertSpell(Spells)
-        return spellsDAO.insertSpell(spell).subscribeOn(Schedulers.io());
-    }
-
-    public Completable updateSpell(Spells spell) {
-        return spellsDAO.updateSpell(spell).subscribeOn(Schedulers.io());
-    }
-
-    public Completable clearSpells() {
-        return spellsDAO.clearSpells().subscribeOn(Schedulers.io());
-    }
-
-    // =========================================================================
-    // Abilities (Master List)
-    // =========================================================================
-
-    public Flowable<List<Abilities>> getAllAbilities() {
-        return abilitiesDAO.getAllAbilities().subscribeOn(Schedulers.io());
-    }
-
-    public Flowable<List<Abilities>> getEnabledAbilities() {
-        return abilitiesDAO.getEnabledAbilities().subscribeOn(Schedulers.io());
-    }
-
-    public Completable insertAbility(Abilities ability) {
-        // AbilitiesDAO defines insertAbility(Abilities)
-        return abilitiesDAO.insertAbility(ability).subscribeOn(Schedulers.io());
-    }
-
-    public Completable updateAbility(Abilities ability) {
-        return abilitiesDAO.updateAbility(ability).subscribeOn(Schedulers.io());
-    }
-
-    public Completable clearAbilities() {
-        return abilitiesDAO.clearAbilities().subscribeOn(Schedulers.io());
-    }
-
-    // =========================================================================
-    // Character Spells
-    // =========================================================================
-
-    public Flowable<List<CharacterSpells>> getCharacterSpells(int characterId) {
-        return characterSpellsDAO.getByCharacterId(characterId).subscribeOn(Schedulers.io());
-    }
-
-    public Completable insertCharacterSpell(CharacterSpells cs) {
-        return characterSpellsDAO.insert(cs).subscribeOn(Schedulers.io());
-    }
-
-    public Completable updateCharacterSpell(CharacterSpells cs) {
-        return characterSpellsDAO.update(cs).subscribeOn(Schedulers.io());
-    }
-
-    public Completable clearCharacterSpells(int characterId) {
-        return characterSpellsDAO.clearForCharacter(characterId).subscribeOn(Schedulers.io());
-    }
-
-    // =========================================================================
-    // Character Abilities
-    // =========================================================================
-
-    public Flowable<List<CharacterAbilities>> getCharacterAbilities(int characterId) {
-        return characterAbilitiesDAO.getByCharacterId(characterId).subscribeOn(Schedulers.io());
-    }
-
-    public Completable insertCharacterAbility(CharacterAbilities ca) {
-        return characterAbilitiesDAO.insert(ca).subscribeOn(Schedulers.io());
-    }
-
-    public Completable updateCharacterAbility(CharacterAbilities ca) {
-        return characterAbilitiesDAO.update(ca).subscribeOn(Schedulers.io());
-    }
-
-    public Completable clearCharacterAbilities(int characterId) {
-        return characterAbilitiesDAO.clearForCharacter(characterId).subscribeOn(Schedulers.io());
+    public void deleteCharacterSheet(CharacterSheet character) {
+        characterSheetDAO.delete(character).subscribeOn(Schedulers.io()).blockingAwait();
     }
 }

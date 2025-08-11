@@ -29,9 +29,8 @@ public class CharacterListViewModel extends AndroidViewModel{
         return repository.getAllCharacterSheetByUserId(userID);
     }
 
-    public void insert(CharacterSheet log) {
-        repository.insertCharacterSheet(log);
-    }
+    public void delete(CharacterSheet character) { repository.deleteCharacterSheet(character); }
+
 
 }
 

@@ -1,5 +1,6 @@
 package com.example.pocketgrimoire.adapter;//package com.example.pocketgrimoire.database.viewHolders;
 
+import android.app.Application;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ public class CharacterListAdapter extends ListAdapter<CharacterSheet, CharacterL
     private CharacterSheetDiff.OnItemClickListener onItemClickListener;
     CharacterListRecyclerItemBinding binding;
     Context context;
+    Application application;
 
     public CharacterListAdapter (@NonNull DiffUtil.ItemCallback<CharacterSheet> diffCallback) {
         super(diffCallback);
@@ -42,7 +44,7 @@ public class CharacterListAdapter extends ListAdapter<CharacterSheet, CharacterL
     @Override
     public void onBindViewHolder(@NonNull CharacterListViewHolder holder, int position) {
         CharacterSheet current = getItem(position);
-        holder.bind(current, context);
+        holder.bind(current, context, application);
 
     }
     public static class CharacterSheetDiff extends DiffUtil.ItemCallback<CharacterSheet> {
