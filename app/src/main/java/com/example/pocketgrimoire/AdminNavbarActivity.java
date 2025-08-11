@@ -1,11 +1,15 @@
 package com.example.pocketgrimoire;
 
+import static com.example.pocketgrimoire.CharacterListActivity.LOGGED_OUT;
+import static com.example.pocketgrimoire.fragments.UserTypeSelectionFragment.LOGGED_IN_USER_ID;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.pocketgrimoire.fragments.AccountDialogFragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;

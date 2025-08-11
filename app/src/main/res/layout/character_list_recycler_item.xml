@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="80dp"
+    android:layout_marginLeft="80dp"
+    android:layout_marginTop="10dp"
+    android:scrollbars="vertical"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/characterListImageButton"
+        android:src="@drawable/character_list_button"
+        android:scaleType="centerCrop"
+        android:padding="0dp"
+        />
+
+    <TextView
+        android:id="@+id/characterListItemTextview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:padding="2dp"
+        android:text="@string/character_name"
+        android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:textSize="18sp"/>
+
+    <ImageButton
+        android:id="@+id/editCharacterImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/edit_button" />
+
+    <ImageButton
+        android:id="@+id/deleteCharacterImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/delete_button"
+        android:background="@android:color/transparent"
+        />
+
+
+
+</RelativeLayout>

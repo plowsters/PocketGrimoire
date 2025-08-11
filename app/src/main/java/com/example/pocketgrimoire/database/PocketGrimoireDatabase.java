@@ -98,9 +98,24 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                         String salt = PasswordUtils.generateSalt();
                         String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
                         User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
+                        defaultUser.setUserID(1);
                         // blockingAwait() ensures that this is added to the database before any other
                         // I/O operations can be done on the database
                         userDao.insert(defaultUser).blockingAwait();
+
+                        //Insert character and simple attributes for user above
+                        CharacterSheetDAO characterDAO = INSTANCE.characterSheetDAO();
+                        CharacterSheet character1 = new CharacterSheet();
+                        character1.setCharacterID(1);
+                        //add userid for user who owns character1
+                        character1.setUserID(defaultUser.getUserID());
+                        //hard code a character for testing
+                        //display character1 on character list
+                        character1.setCharacterName("character1");
+                        character1.setRace("dragonborn");
+                        character1.setClazz("bard");
+                        System.out.println("Creating new character: " + character1.toString());
+                        characterDAO.insert(character1).blockingAwait();
                     })
                     // Schedulers.io provides a thread pool for I/O operations, in this case DB access
                     .subscribeOn(Schedulers.io())

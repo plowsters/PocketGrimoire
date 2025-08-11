@@ -4,14 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.pocketgrimoire.LoginActivity;
+import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.User;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PocketGrimoireRepository {
@@ -20,6 +28,8 @@ public class PocketGrimoireRepository {
     private CharacterSheetDAO characterSheetDAO;
     private CharacterItemsDAO characterItemsDAO;
     private ItemsDAO itemsDAO;
+    private static PocketGrimoireRepository repository;
+
 
     /**
      * The constructor for PocketGrimoireRepository
@@ -32,6 +42,11 @@ public class PocketGrimoireRepository {
         this.characterSheetDAO = db.characterSheetDAO();
         this.characterItemsDAO = db.characterItemsDAO();
         this.itemsDAO = db.itemsDAO();
+    }
+
+    public static Single<PocketGrimoireRepository> getRepository(Application application) {
+        return Single.fromCallable(() -> new PocketGrimoireRepository(application))
+        .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -78,5 +93,12 @@ public class PocketGrimoireRepository {
                 );
     }
 
+    public Flowable<List<CharacterSheet>> getAllCharacterSheetByUserId(int loggedInUserId) {
+        return characterSheetDAO.getAllCharacterSheetByUserID(loggedInUserId);
+    }
 
+    public Completable insertCharacterSheet(CharacterSheet characterSheet) {
+        return Completable.fromAction(() -> characterSheetDAO.insert(characterSheet))
+                .subscribeOn(Schedulers.io());
+    }
 }

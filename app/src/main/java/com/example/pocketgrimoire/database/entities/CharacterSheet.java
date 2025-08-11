@@ -14,6 +14,7 @@ public class CharacterSheet {
 
     @PrimaryKey (autoGenerate = true)
     private int characterID;
+    private int userID;
     String characterName;
     String race;
     String clazz;
@@ -42,9 +43,11 @@ public class CharacterSheet {
     List<String> languages;
     HashMap<String,String> characteristics;
 
+    //TODO: Re-add commented lines once fixed
     @Override
     public String toString() {
         return "CharacterSheet{" +
+                ", userID='" + userID + '\'' +
                 ", characterName='" + characterName + '\'' +
                 ", race='" + race + '\'' +
                 ", clazz='" + clazz + '\'' +
@@ -75,11 +78,13 @@ public class CharacterSheet {
                 '}';
     }
 
+    //TODO: Re-add Objects.equals(proficiencies, that.proficiencies) && Objects.equals(traits, that.traits) && Objects.equals(languages, that.languages) && Objects.equals(characteristics, that.characteristics);
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CharacterSheet that = (CharacterSheet) o;
-        return characterID == that.characterID &&
+        return  userID == that.userID &&
+                characterID == that.characterID &&
                 level == that.level &&
                 xpToLevel == that.xpToLevel &&
                 xp == that.xp &&
@@ -111,7 +116,15 @@ public class CharacterSheet {
 
     @Override
     public int hashCode() {
-        return Objects.hash(characterID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow, proficiencies, traits, languages, characteristics);
+        return Objects.hash(userID, characterID, characterName, race, clazz, notes, background, level, xpToLevel, xp, maxHP, currentHP, armorClass, strength, dexterity, intelligence, constitution, charisma, wisdom, strSavingThrow, dexSavingThrow, intSavingThrow, conSavingThrow, charSavingThrow, wisSavingThrow, proficiencies, traits, languages, characteristics);
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public int getCharacterID() {
