@@ -12,17 +12,27 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.pocketgrimoire.LoginActivity;
+import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.util.PasswordUtils;
 import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
 import com.example.pocketgrimoire.database.entities.Spells;
 import com.example.pocketgrimoire.database.entities.Abilities;
-import com.example.pocketgrimoire.database.typeConverters.Converters;
-import com.example.pocketgrimoire.util.PasswordUtils;
+import com.example.pocketgrimoire.database.entities.CharacterSpells;
+import com.example.pocketgrimoire.database.entities.CharacterAbilities;
 
 import com.example.pocketgrimoire.database.SpellsDAO;
 import com.example.pocketgrimoire.database.AbilitiesDAO;
+import com.example.pocketgrimoire.database.CharacterSpellsDAO;
+import com.example.pocketgrimoire.database.CharacterAbilitiesDAO;
+import com.example.pocketgrimoire.database.CharacterSheetDAO;
+import com.example.pocketgrimoire.database.CharacterItemsDAO;
+import com.example.pocketgrimoire.database.ItemsDAO;
+
+import com.example.pocketgrimoire.database.typeConverters.Converters;
+import com.example.pocketgrimoire.util.PasswordUtils;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -34,15 +44,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 @TypeConverters({Converters.class})
 @Database(
-        entities = {
-                User.class,
-                CharacterSheet.class,
-                CharacterItems.class,
-                Items.class,
-                Spells.class,
-                Abilities.class
-        },
-        version = 5,
+        entities = {User.class, CharacterSheet.class, CharacterItems.class, Items.class, Spells.class, Abilities.class, CharacterSpells.class, CharacterAbilities.class},
+        version = 6,
         exportSchema = false
 )
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
@@ -51,6 +54,8 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String CHARACTER_SHEET_TABLE = "CHARACTER_SHEET_TABLE";
     public static final String CHARACTER_ITEMS_TABLE = "CHARACTER_ITEMS_TABLE";
     public static final String ITEMS_TABLE = "ITEMS_TABLE";
+    public static final String CHARACTER_SPELLS_TABLE = "CHARACTER_SPELLS_TABLE";
+    public static final String CHARACTER_ABILITIES_TABLE = "CHARACTER_ABILITIES_TABLE";
 
     // volatile = stored in RAM. Necessary to make it visible to all threads
     private static volatile PocketGrimoireDatabase INSTANCE;
@@ -60,7 +65,8 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (PocketGrimoireDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                    INSTANCE = Room.databaseBuilder(
+                                    context.getApplicationContext(),
                                     PocketGrimoireDatabase.class,
                                     DB_NAME
                             )
@@ -95,15 +101,16 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
              */
             Completable.fromAction(() -> {
                         UserDAO userDao = INSTANCE.userDAO();
+
+                        // Seed a default user (from main)
                         String salt = PasswordUtils.generateSalt();
                         String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
                         User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
                         defaultUser.setUserID(1);
-                        // blockingAwait() ensures that this is added to the database before any other
-                        // I/O operations can be done on the database
+                        // blockingAwait() ensures this is added before any other I/O on the DB
                         userDao.insert(defaultUser).blockingAwait();
 
-                        //Insert character and simple attributes for user above
+                        // Insert a sample character for that user (from main)
                         CharacterSheetDAO characterDAO = INSTANCE.characterSheetDAO();
                         CharacterSheet character1 = new CharacterSheet();
                         character1.setCharacterID(1);
@@ -116,6 +123,8 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                         character1.setClazz("bard");
                         System.out.println("Creating new character: " + character1.toString());
                         characterDAO.insert(character1).blockingAwait();
+
+                        // (Optional) You could also seed spells/abilities here later if needed.
                     })
                     // Schedulers.io provides a thread pool for I/O operations, in this case DB access
                     .subscribeOn(Schedulers.io())
@@ -134,4 +143,7 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public abstract CharacterItemsDAO characterItemsDAO();
     public abstract SpellsDAO spellsDAO();
     public abstract AbilitiesDAO abilitiesDAO();
+    public abstract CharacterSpellsDAO characterSpellsDAO();
+    public abstract CharacterAbilitiesDAO characterAbilitiesDAO();
+
 }
