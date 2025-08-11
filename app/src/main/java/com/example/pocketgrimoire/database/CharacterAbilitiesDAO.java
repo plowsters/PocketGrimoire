@@ -21,5 +21,4 @@ public interface CharacterAbilitiesDAO {
 
     @Update
     Completable update(CharacterAbilities ca);
-    
 }
