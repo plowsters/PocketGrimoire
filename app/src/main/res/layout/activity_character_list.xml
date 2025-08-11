@@ -36,13 +36,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/characterListDisplayRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="100dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="28dp"
         android:orientation="vertical"
         android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/lineDecoratorImageView"
         tools:listitem="@layout/character_list_recycler_item" />
