@@ -1,6 +1,8 @@
 package com.example.pocketgrimoire.database.entities;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
@@ -10,7 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(tableName = PocketGrimoireDatabase.CHARACTER_SHEET_TABLE)
+@Entity(tableName = PocketGrimoireDatabase.CHARACTER_SHEET_TABLE,
+        foreignKeys = @ForeignKey(
+                entity = User.class,
+                parentColumns = "userID",
+                childColumns = "userID",
+                onDelete = ForeignKey.CASCADE),
+        indices = @Index(value = {"userID"}))
 public class CharacterSheet implements Serializable {
 
     @PrimaryKey (autoGenerate = true)

@@ -197,6 +197,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
      * A character can only be created if the name field is not empty
      */
     private void insertCharacterData() {
+        System.out.println("insertCharacterData method");
         mCharacterName = binding.nameEditText.getText().toString();
         String mRace = binding.raceSpinner.getSelectedItem().toString();
         String mClass = binding.classSpinner.getSelectedItem().toString();
@@ -238,7 +239,8 @@ public class CharacterCreationActivity extends AppCompatActivity {
 //        skin
 //        height
 //        weight
-        repository.insertCharacterSheet(character);
+        repository.insertCharacterSheet(character).blockingAwait();
+        System.out.println("insertCharacterData method after character insert:" + character.toString());
     }
 
     private void isEdit() {
