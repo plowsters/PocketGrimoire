@@ -16,9 +16,4 @@ import io.reactivex.rxjava3.core.Flowable;
 @Dao
 public interface CharacterAbilitiesDAO {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(CharacterAbilities ca);
-
-    @Update
-    Completable update(CharacterAbilities ca);
 }
