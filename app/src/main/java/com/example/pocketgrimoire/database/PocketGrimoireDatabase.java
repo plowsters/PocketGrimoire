@@ -14,9 +14,13 @@ import com.example.pocketgrimoire.LoginActivity;
 import com.example.pocketgrimoire.database.entities.User;
 import com.example.pocketgrimoire.database.entities.Spells;
 import com.example.pocketgrimoire.database.entities.Abilities;
+import com.example.pocketgrimoire.database.entities.CharacterSpells;
+import com.example.pocketgrimoire.database.entities.CharacterAbilities;
 
 import com.example.pocketgrimoire.database.SpellsDAO;
 import com.example.pocketgrimoire.database.AbilitiesDAO;
+import com.example.pocketgrimoire.database.CharacterSpellsDAO;
+import com.example.pocketgrimoire.database.CharacterAbilitiesDAO;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -26,10 +30,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * @Database annotation is so RoomDB can generate concrete methods from this abstract class
  * Uses the singleton pattern to ensure only one instance of the DB is ever created in memory
  */
-@Database(entities = {User.class, Spells.class, Abilities.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Spells.class, Abilities.class, CharacterSpells.class, CharacterAbilities.class}, version = 2, exportSchema = false)
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
     public static final String USER_TABLE = "USER_TABLE";
+    public static final String CHARACTER_SPELLS_TABLE = "CHARACTER_SPELLS_TABLE";
+    public static final String CHARACTER_ABILITIES_TABLE = "CHARACTER_ABILITIES_TABLE";
 
     // volatile = stored in RAM. Necessary to make it visible to all threads
     private static volatile PocketGrimoireDatabase INSTANCE;
@@ -40,9 +46,9 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
             synchronized (PocketGrimoireDatabase.class) {
                 if(INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            PocketGrimoireDatabase.class,
-                            DB_NAME
-                    )
+                                    PocketGrimoireDatabase.class,
+                                    DB_NAME
+                            )
                             // .fallbackToDestructiveMigration() is deprecated, using it anyways
                             .fallbackToDestructiveMigration()
                             .addCallback(addDefaultValues)
@@ -73,9 +79,9 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                Great for DB inserts
              */
             Completable.fromAction(() -> {
-                UserDAO userDao = INSTANCE.userDAO();
-                // TODO: Add default users
-            })
+                        UserDAO userDao = INSTANCE.userDAO();
+                        // TODO: Add default users
+                    })
                     // Schedulers.io provides a thread pool for I/O operations, in this case DB access
                     .subscribeOn(Schedulers.io())
                     // Subscribing triggers the scheduler to execute I/O operations
@@ -90,5 +96,7 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public abstract UserDAO userDAO();
     public abstract SpellsDAO spellsDAO();
     public abstract AbilitiesDAO abilitiesDAO();
+    public abstract CharacterSpellsDAO characterSpellsDAO();
+    public abstract CharacterAbilitiesDAO characterAbilitiesDAO();
 
 }
