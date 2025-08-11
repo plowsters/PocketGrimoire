@@ -1,9 +1,8 @@
-package com.example.pocketgrimoire.viewmodel;
+package com.example.pocketgrimoire.viewholder;
 
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;

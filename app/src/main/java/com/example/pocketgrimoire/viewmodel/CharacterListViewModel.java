@@ -1,4 +1,4 @@
-package com.example.pocketgrimoire.database.viewHolders;
+package com.example.pocketgrimoire.viewmodel;
 
 import android.app.Application;
 
