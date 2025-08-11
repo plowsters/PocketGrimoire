@@ -10,6 +10,10 @@ import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.Spells;
 import com.example.pocketgrimoire.database.entities.Abilities;
+import com.example.pocketgrimoire.database.CharacterSpellsDAO;
+import com.example.pocketgrimoire.database.CharacterAbilitiesDAO;
+import com.example.pocketgrimoire.database.entities.CharacterSpells;
+import com.example.pocketgrimoire.database.entities.CharacterAbilities;
 
 import java.util.List;
 
@@ -37,6 +41,9 @@ public class PocketGrimoireRepository {
     private ItemsDAO itemsDAO;
     private SpellsDAO spellsDAO;
     private AbilitiesDAO abilitiesDAO;
+    private CharacterSpellsDAO characterSpellsDAO;
+    private CharacterAbilitiesDAO characterAbilitiesDAO;
+
 
     // Optional singleton access if needed by callers that prefer Single<> factory
     private static PocketGrimoireRepository repository;
@@ -54,6 +61,8 @@ public class PocketGrimoireRepository {
         this.itemsDAO = db.itemsDAO();
         this.spellsDAO = db.spellsDAO();
         this.abilitiesDAO = db.abilitiesDAO();
+        this.characterSpellsDAO = db.characterSpellsDAO();
+        this.characterAbilitiesDAO = db.characterAbilitiesDAO();
     }
 
     /**
@@ -195,5 +204,45 @@ public class PocketGrimoireRepository {
 
     public Completable clearAbilities() {
         return abilitiesDAO.clearAbilities().subscribeOn(Schedulers.io());
+    }
+
+    // =========================================================================
+    // Character Spells
+    // =========================================================================
+
+    public Flowable<List<CharacterSpells>> getCharacterSpells(int characterId) {
+        return characterSpellsDAO.getByCharacterId(characterId).subscribeOn(Schedulers.io());
+    }
+
+    public Completable insertCharacterSpell(CharacterSpells cs) {
+        return characterSpellsDAO.insert(cs).subscribeOn(Schedulers.io());
+    }
+
+    public Completable updateCharacterSpell(CharacterSpells cs) {
+        return characterSpellsDAO.update(cs).subscribeOn(Schedulers.io());
+    }
+
+    public Completable clearCharacterSpells(int characterId) {
+        return characterSpellsDAO.clearForCharacter(characterId).subscribeOn(Schedulers.io());
+    }
+
+    // =========================================================================
+    // Character Abilities
+    // =========================================================================
+
+    public Flowable<List<CharacterAbilities>> getCharacterAbilities(int characterId) {
+        return characterAbilitiesDAO.getByCharacterId(characterId).subscribeOn(Schedulers.io());
+    }
+
+    public Completable insertCharacterAbility(CharacterAbilities ca) {
+        return characterAbilitiesDAO.insert(ca).subscribeOn(Schedulers.io());
+    }
+
+    public Completable updateCharacterAbility(CharacterAbilities ca) {
+        return characterAbilitiesDAO.update(ca).subscribeOn(Schedulers.io());
+    }
+
+    public Completable clearCharacterAbilities(int characterId) {
+        return characterAbilitiesDAO.clearForCharacter(characterId).subscribeOn(Schedulers.io());
     }
 }
