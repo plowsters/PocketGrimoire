@@ -135,7 +135,7 @@
             app:layout_constraintTop_toTopOf="@+id/hpBarImageView" />
 
         <ImageView
-            android:id="@+id/levelTextView"
+            android:id="@+id/levelImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -146,11 +146,30 @@
             app:srcCompat="@drawable/ac_lvl_section" />
 
         <TextView
-            android:id="@+id/levelTextID"
+            android:id="@+id/levelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="level"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginStart="10dp"
+            android:text="LVL"
+            android:textColor="#BEB688"
+            android:textSize="15sp"
+            android:fontFamily="@font/inknut_antiqua_regular"
+            app:layout_constraintTop_toTopOf="@id/levelImageView"
+            app:layout_constraintBottom_toBottomOf="@id/levelImageView"
+            app:layout_constraintLeft_toLeftOf="@id/levelImageView"/>
+
+        <TextView
+            android:id="@+id/currLevelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textSize="20sp"
+            android:fontFamily="@font/inria_serif_light"
+            android:textColor="#BEB688"
+            app:layout_constraintTop_toTopOf="@id/levelImageView"
+            app:layout_constraintBottom_toBottomOf="@id/levelImageView"
+            app:layout_constraintLeft_toRightOf="@id/levelTextView"
+            app:layout_constraintRight_toRightOf="@id/levelImageView"/>
 
         <ImageView
             android:id="@+id/xpBarImageView"
@@ -209,19 +228,33 @@
             app:srcCompat="@drawable/ac_lvl_section"
             app:layout_constraintTop_toBottomOf="@id/characterNameAndDetailsImageView"
             app:layout_constraintRight_toLeftOf="@id/hpBarImageView"/>
+
         <TextView
             android:id="@+id/armorClassTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="AC"
-            tools:ignore="MissingConstraints" />
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inknut_antiqua_regular"
+            android:textSize="15dp"
+            app:layout_constraintLeft_toLeftOf="@id/acImageView"
+            app:layout_constraintTop_toTopOf="@id/acImageView"
+            app:layout_constraintBottom_toBottomOf="@id/acImageView"/>
 
         <TextView
             android:id="@+id/armorClassValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="armor class"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginStart="7dp"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="20sp"
+            android:fontFamily="@font/inria_serif_light"
+            app:layout_constraintTop_toTopOf="@id/acImageView"
+            app:layout_constraintRight_toRightOf="@id/acImageView"
+            app:layout_constraintBottom_toBottomOf="@id/acImageView"
+            app:layout_constraintLeft_toRightOf="@id/armorClassTextView"/>
 
         <ImageView
             android:id="@+id/strBoxImageView"
@@ -591,6 +624,175 @@
             app:layout_constraintBottom_toBottomOf="@id/characteristicsTitleImageView"
             app:layout_constraintRight_toRightOf="@id/characteristicsTitleImageView"
             app:layout_constraintLeft_toLeftOf="@id/characteristicsTitleImageView"/>
+
+        <ImageView
+            android:id="@+id/eyeDisplayImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/characteristics_display"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView"
+            app:layout_constraintLeft_toRightOf="@id/hairDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <ImageView
+            android:id="@+id/hairDisplayImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/characteristics_display"
+            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView"
+            app:layout_constraintLeft_toRightOf="@id/eyeDisplayImageView"
+            app:layout_constraintRight_toLeftOf="@id/skinDisplayImageView"/>
+
+        <ImageView
+            android:id="@+id/skinDisplayImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/characteristics_display"
+            app:layout_constraintLeft_toRightOf="@id/hairDisplayImageView"
+            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ageDisplayImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/characteristics_display"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/eyeDisplayImageView"
+            app:layout_constraintLeft_toRightOf="@id/heightDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <ImageView
+            android:id="@+id/heightDisplayImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/characteristics_display"
+            app:layout_constraintTop_toBottomOf="@id/hairDisplayImageView"
+            app:layout_constraintLeft_toRightOf="@id/ageDisplayImageView"
+            app:layout_constraintRight_toLeftOf="@id/weightDisplayImageView"/>
+
+        <ImageView
+            android:id="@+id/weightDisplayImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/characteristics_display"
+            app:layout_constraintLeft_toRightOf="@id/heightDisplayImageView"
+            app:layout_constraintTop_toBottomOf="@id/skinDisplayImageView"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/eyeTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EYES"
+            android:layout_marginTop="13dp"
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_regular"
+            app:layout_constraintTop_toTopOf="@id/eyeDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/eyeDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/eyeDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/hairTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HAIR"
+            android:layout_marginTop="13dp"
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_regular"
+            app:layout_constraintTop_toTopOf="@id/hairDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/hairDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/hairDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/skinTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SKIN"
+            android:layout_marginTop="13dp"
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_regular"
+            app:layout_constraintTop_toTopOf="@id/skinDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/skinDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/skinDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/ageTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AGE"
+            android:layout_marginTop="13dp"
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_regular"
+            app:layout_constraintTop_toTopOf="@id/ageDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/ageDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/ageDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/heightTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HEIGHT"
+            android:layout_marginTop="13dp"
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_regular"
+            app:layout_constraintTop_toTopOf="@id/heightDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/heightDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/heightDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/weightTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WEIGHT"
+            android:layout_marginTop="13dp"
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_regular"
+            app:layout_constraintTop_toTopOf="@id/weightDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/weightDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/weightDisplayImageView"/>
+
+        <ImageView
+            android:id="@+id/notesTitleImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/section_title"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/heightDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/notesTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NOTES"
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inknut_antiqua_light"
+            android:letterSpacing="0.6"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="@id/notesTitleImageView"
+            app:layout_constraintLeft_toLeftOf="@+id/notesTitleImageView"
+            app:layout_constraintRight_toRightOf="@+id/notesTitleImageView"
+            app:layout_constraintBottom_toBottomOf="@id/notesTitleImageView"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/notes_display"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/notesTitleImageView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
