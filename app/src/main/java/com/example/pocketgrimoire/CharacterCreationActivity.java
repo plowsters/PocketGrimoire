@@ -46,10 +46,12 @@ public class CharacterCreationActivity extends AppCompatActivity {
         //setCharCreationTitle() to change title for character creation
         createCharCreationTitle();
 
-        //make createCharName() method
         //edit character
         //set character name
         binding.nameEditText.setText(character.getCharacterName());
+        binding.strAttrEditTextView.setText(String.valueOf(character.getStrength()));
+        binding.dexAttrEditTextView.setText(String.valueOf(character.getDexterity()));
+        binding.intAttrEditTextView.setText(String.valueOf(character.getIntelligence()));
         createRaceDropdown();
         createClassDropdown();
         createLanguageDropdown();
@@ -60,8 +62,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 insertCharacterData();
-                //pop current intent
-                finish();
+                finish(); //pop current intent
             }
         });
 
@@ -74,42 +75,67 @@ public class CharacterCreationActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * classes to create dropdown items for all dropdown components
+     */
     private void createRaceDropdown() {
         //populate spinners with database items (dropdown)
         Spinner raceSpinner = (Spinner) binding.raceSpinner;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> raceAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.race_array,
                 R.layout.custom_char_create_spinner_item
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        raceSpinner.setAdapter(adapter);
+        raceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        raceSpinner.setAdapter(raceAdapter);
         //find position of chosen race tied to character object
         String chosenRace = character.getRace();
         //get the index for this race
-        int racePosition = adapter.getPosition(chosenRace);
+        int racePosition = raceAdapter.getPosition(chosenRace);
         //set position in spinner
         raceSpinner.setSelection(racePosition);
     }
 
     private void createClassDropdown() {
         //populate spinners with database items (dropdown)
-        Spinner classSpinner = (Spinner) binding.classSpinner;
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        Spinner classSpinner = binding.classSpinner;
+        ArrayAdapter<CharSequence> classAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.class_array,
                 R.layout.custom_char_create_spinner_item
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        classSpinner.setAdapter(adapter);
+        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        classSpinner.setAdapter(classAdapter);
         //find position of chosen race tied to character object
         String chosenClass = character.getClazz();
         //get the index for this race
-        int classPosition = adapter.getPosition(chosenClass);
+        int classPosition = classAdapter.getPosition(chosenClass);
         //set position in spinner
         classSpinner.setSelection(classPosition);
     }
 
+    //character alignment
+    private void createCharAlignDropDown() {
+        Spinner charAlignSpinner = binding.charAlignSpinner;
+        ArrayAdapter<CharSequence> charAlignAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.character_alignment,
+                R.layout.custom_char_create_spinner_item
+        );
+        charAlignAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        charAlignSpinner.setAdapter(charAlignAdapter);
+        String chosenCharAlign = character.getCharacterAlignment();
+        int charAlignPosition = charAlignAdapter.getPosition(chosenCharAlign);
+        charAlignSpinner.setSelection(charAlignPosition);
+    }
+
+    //gender
+    //hair color
+    //eye color
+
+    /**
+     * Dropdown for multiple item selections
+     */
     private void createLanguageDropdown(){
         //Languages language_array
 //        List<String> chosenLanguages = character.getLanguagesArray();
@@ -200,9 +226,11 @@ public class CharacterCreationActivity extends AppCompatActivity {
         mCharacterName = binding.nameEditText.getText().toString();
         String mRace = binding.raceSpinner.getSelectedItem().toString();
         String mClass = binding.classSpinner.getSelectedItem().toString();
-//        int mStr = Integer.parseInt(binding.strAttrEditTextView.getText().toString());
-//        int mDex = Integer.parseInt(binding.dexAttrEditTextView.getText().toString());
-//        int mInt = Integer.parseInt(binding.intAttrEditTextView.getText().toString());
+
+        //Can only choose 1-20
+        int mStr = Integer.parseInt(binding.strAttrEditTextView.getText().toString());
+        int mDex = Integer.parseInt(binding.dexAttrEditTextView.getText().toString());
+        int mInt = Integer.parseInt(binding.intAttrEditTextView.getText().toString());
 //        int mCha = Integer.parseInt(binding.chaAttrEditTextView.getText().toString());
 //        int mCon = Integer.parseInt(binding.conAttrEditTextView.getText().toString());
 //        int mWis = Integer.parseInt(binding.wisAttrEditTextView.getText().toString());
@@ -221,11 +249,13 @@ public class CharacterCreationActivity extends AppCompatActivity {
         if (mCharacterName.isEmpty()) {
             return;
         }
+
+        // set data in database
         character.setCharacterName(mCharacterName);
         character.setRace(mRace);
-//        character.setStrength(mStr);
-//        character.setDexterity(mDex);
-//        character.setIntelligence(mInt);
+        character.setStrength(mStr);
+        character.setDexterity(mDex);
+        character.setIntelligence(mInt);
 //        character.setCharisma(mCha);
 //        character.setConstitution(mCon);
 //        character.setWisdom(mWis);
