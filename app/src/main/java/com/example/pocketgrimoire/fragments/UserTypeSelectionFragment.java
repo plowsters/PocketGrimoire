@@ -26,7 +26,6 @@ public class UserTypeSelectionFragment extends Fragment {
     private UserTypeSelectionViewModel mViewModel;
 
     static public String LOGGED_IN_USER_ID = "LOGGED_IN_USER_ID";
-    private int loggedID;
 
     public static UserTypeSelectionFragment newInstance() {
         return new UserTypeSelectionFragment();
@@ -39,21 +38,6 @@ public class UserTypeSelectionFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@NonNull Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //Set up FragmentResultListener
-        getParentFragmentManager().setFragmentResultListener("potato", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                //Retrieve data from bundle (userID)
-                loggedID = bundle.getInt(LOGGED_IN_USER_ID);
-                System.out.println("This is the loggedID: " + loggedID);
-            }
-        });
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -61,9 +45,7 @@ public class UserTypeSelectionFragment extends Fragment {
         ImageView playerButton = view.findViewById(R.id.playerButton);
         playerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v) {
-                System.out.println("This is the loggedID onClick: " + loggedID);
-                Intent intent = CharacterListActivity.characterListIntentFactory(requireContext().getApplicationContext(), loggedID);
+            public void onClick (View v) {Intent intent = CharacterListActivity.characterListIntentFactory(requireContext().getApplicationContext());
                 startActivity(intent);
             }
         });

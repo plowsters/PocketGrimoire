@@ -1,8 +1,12 @@
 package com.example.pocketgrimoire;
 
+import static com.example.pocketgrimoire.AdminNavbarActivity.USER_ID_KEY;
+import static com.example.pocketgrimoire.fragments.UserTypeSelectionFragment.LOGGED_IN_USER_ID;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -31,14 +35,18 @@ public class CharacterListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        userID = sharedPreferences.getInt(getString(R.string.preference_user_id_key), -1);
+
         binding = ActivityCharacterListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        userID = getIntent().getIntExtra(CHARACTER_LIST_ACTIVITY_USER_ID,LOGGED_OUT);
+        System.out.println("This is the userID: " + userID);
 
+        //get userID
 
         characterListViewModel = new ViewModelProvider(this).get(com.example.pocketgrimoire.database.viewHolders.CharacterListViewModel.class);
 
-        //display list of characters
+        //display list of characters based on userID
         RecyclerView recyclerView = binding.characterListDisplayRecyclerView;
         final CharacterListAdapter adapter = new CharacterListAdapter(new CharacterListAdapter.CharacterSheetDiff());
         recyclerView.setAdapter(adapter);
@@ -56,9 +64,8 @@ public class CharacterListActivity extends AppCompatActivity {
                     Log.e("RX", "Error loading characters", throwable);
                 });
     }
-    public static Intent characterListIntentFactory(Context context, int userID) {
+    public static Intent characterListIntentFactory(Context context) {
         Intent intent = new Intent(context, CharacterListActivity.class);
-        intent.putExtra(CHARACTER_LIST_ACTIVITY_USER_ID, userID);
         return intent;
     }
 

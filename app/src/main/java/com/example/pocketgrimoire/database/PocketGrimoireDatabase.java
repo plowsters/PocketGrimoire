@@ -16,8 +16,13 @@ import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
+import com.example.pocketgrimoire.database.entities.Spells;
+import com.example.pocketgrimoire.database.entities.Abilities;
 import com.example.pocketgrimoire.database.typeConverters.Converters;
 import com.example.pocketgrimoire.util.PasswordUtils;
+
+import com.example.pocketgrimoire.database.SpellsDAO;
+import com.example.pocketgrimoire.database.AbilitiesDAO;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -28,7 +33,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * Uses the singleton pattern to ensure only one instance of the DB is ever created in memory
  */
 @TypeConverters({Converters.class})
-@Database(entities = {User.class, CharacterSheet.class, CharacterItems.class, Items.class}, version = 4, exportSchema = false)
+@Database(
+        entities = {
+                User.class,
+                CharacterSheet.class,
+                CharacterItems.class,
+                Items.class,
+                Spells.class,
+                Abilities.class
+        },
+        version = 5,
+        exportSchema = false
+)
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
     public static final String USER_TABLE = "USER_TABLE";
@@ -41,13 +57,13 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
 
     // Singleton function ensuring only one instance of our DB exists in memory
     static PocketGrimoireDatabase getDatabase(final Context context) {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             synchronized (PocketGrimoireDatabase.class) {
-                if(INSTANCE == null) {
+                if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            PocketGrimoireDatabase.class,
-                            DB_NAME
-                    )
+                                    PocketGrimoireDatabase.class,
+                                    DB_NAME
+                            )
                             // .fallbackToDestructiveMigration() is deprecated, using it anyways
                             .fallbackToDestructiveMigration()
                             .addCallback(addDefaultValues)
@@ -78,30 +94,29 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                Great for DB inserts
              */
             Completable.fromAction(() -> {
-                UserDAO userDao = INSTANCE.userDAO();
-                String salt = PasswordUtils.generateSalt();
-                String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
-                User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
-                // blockingAwait() ensures that this is added to the database before any other
-                // I/O operations can be done on the database
-                userDao.insert(defaultUser).blockingAwait();
+                        UserDAO userDao = INSTANCE.userDAO();
+                        String salt = PasswordUtils.generateSalt();
+                        String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
+                        User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
+                        defaultUser.setUserID(1);
+                        // blockingAwait() ensures that this is added to the database before any other
+                        // I/O operations can be done on the database
+                        userDao.insert(defaultUser).blockingAwait();
 
-                //Insert userID to retrieve information for this user
-                defaultUser.setUserID(2);
-                //Insert character and simple attributes for user above
-                CharacterSheetDAO characterDAO = INSTANCE.characterSheetDAO();
-                CharacterSheet character1 = new CharacterSheet();
-                character1.setCharacterID(1);
-                //add userid for user who owns character1
-                character1.setUserID(defaultUser.getUserID());
-                //hard code a character for testing
-                //display character1 on character list
-                character1.setCharacterName("character1");
-                character1.setRace("dragonborn");
-                character1.setClazz("bard");
-                System.out.println(character1.toString());
-                characterDAO.insert(character1);
-            })
+                        //Insert character and simple attributes for user above
+                        CharacterSheetDAO characterDAO = INSTANCE.characterSheetDAO();
+                        CharacterSheet character1 = new CharacterSheet();
+                        character1.setCharacterID(1);
+                        //add userid for user who owns character1
+                        character1.setUserID(defaultUser.getUserID());
+                        //hard code a character for testing
+                        //display character1 on character list
+                        character1.setCharacterName("character1");
+                        character1.setRace("dragonborn");
+                        character1.setClazz("bard");
+                        System.out.println("Creating new character: " + character1.toString());
+                        characterDAO.insert(character1).blockingAwait();
+                    })
                     // Schedulers.io provides a thread pool for I/O operations, in this case DB access
                     .subscribeOn(Schedulers.io())
                     // Subscribing triggers the scheduler to execute I/O operations
@@ -112,10 +127,11 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
         }
     };
 
-    //RoomDB creates this getter method for the DAO for us
+    // RoomDB creates these getter methods for the DAOs for us
     public abstract UserDAO userDAO();
     public abstract CharacterSheetDAO characterSheetDAO();
     public abstract ItemsDAO itemsDAO();
     public abstract CharacterItemsDAO characterItemsDAO();
-
+    public abstract SpellsDAO spellsDAO();
+    public abstract AbilitiesDAO abilitiesDAO();
 }
