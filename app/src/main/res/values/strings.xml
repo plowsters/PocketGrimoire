@@ -76,7 +76,7 @@
         <item>undercommon</item>
     </string-array>
 
-    <string-array name="character_alignment">
+    <string-array name="character_alignment_array">
         <item>chaotic-neutral</item>
         <item>chaotic-evil</item>
         <item>chaotic-good</item>
@@ -88,7 +88,13 @@
         <item>neutral-good</item>
     </string-array>
 
-    <string-array name="hair_color">
+    <string-array name="gender_array">
+        <item>male</item>
+        <item>female</item>
+        <item>nonbinary</item>
+    </string-array>
+
+    <string-array name="hair_color_array">
         <item>red</item>
         <item>orange</item>
         <item>yellow</item>
@@ -100,7 +106,19 @@
         <item>gray</item>
     </string-array>
 
-    <string-array name="eye_color">
+    <string-array name="eye_color_array">
+        <item>red</item>
+        <item>orange</item>
+        <item>yellow</item>
+        <item>green</item>
+        <item>blue</item>
+        <item>purple</item>
+        <item>black</item>
+        <item>white</item>
+        <item>gray</item>
+    </string-array>
+
+    <string-array name="skin_color_array">
         <item>red</item>
         <item>orange</item>
         <item>yellow</item>

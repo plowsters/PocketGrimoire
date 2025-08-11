@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,12 +53,28 @@ public class CharacterCreationActivity extends AppCompatActivity {
         binding.strAttrEditTextView.setText(String.valueOf(character.getStrength()));
         binding.dexAttrEditTextView.setText(String.valueOf(character.getDexterity()));
         binding.intAttrEditTextView.setText(String.valueOf(character.getIntelligence()));
+        binding.chaAttrEditTextView.setText(String.valueOf(character.getCharisma()));
+        binding.conAttrEditTextView.setText(String.valueOf(character.getConstitution()));
+        binding.wisAttrEditTextView.setText(String.valueOf(character.getWisdom()));
+        binding.ageEditText.setText(String.valueOf(character.getAge()));
+        binding.heightEditText.setText(String.valueOf(character.getHeight()));
+        binding.weightEditText.setText(String.valueOf(character.getWeight()));
+        binding.notesEditText.setText(character.getNotes());
         createRaceDropdown();
         createClassDropdown();
+        createBackgroundDropdown();
         createLanguageDropdown();
+        createCharAlignDropDown();
+        createGenderDropDown();
+        createEyeColorDropDown();
+        createHairColorDropDown();
+        createSkinColorDropDown();
 
-        //create new object if name is entered (validation) with any chosen parameters
-        //if save button pressed
+        /**
+         * A new character object will be saved when the Save button is pressed
+         * Save will only occur if a character name has been answered
+         */
+        //TODO: Create a toast that will trigger if a character name has not been entered
         binding.saveImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,12 +131,30 @@ public class CharacterCreationActivity extends AppCompatActivity {
         classSpinner.setSelection(classPosition);
     }
 
+    //background
+    private void createBackgroundDropdown() {
+        //populate spinners with database items (dropdown)
+        Spinner bgSpinner = binding.bgSpinner;
+        ArrayAdapter<CharSequence> bgAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.background,
+                R.layout.custom_char_create_spinner_item
+        );
+        bgAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bgSpinner.setAdapter(bgAdapter);
+        //find position of chosen race tied to character object
+        String chosenBG = character.getBackground();
+        //get the index for this race
+        int bgPosition = bgAdapter.getPosition(chosenBG);
+        //set position in spinner
+        bgSpinner.setSelection(bgPosition);
+    }
     //character alignment
     private void createCharAlignDropDown() {
         Spinner charAlignSpinner = binding.charAlignSpinner;
         ArrayAdapter<CharSequence> charAlignAdapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.character_alignment,
+                R.array.character_alignment_array,
                 R.layout.custom_char_create_spinner_item
         );
         charAlignAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,8 +165,64 @@ public class CharacterCreationActivity extends AppCompatActivity {
     }
 
     //gender
+    private void createGenderDropDown() {
+        Spinner genderSpinner = binding.genderSpinner;
+        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.gender_array,
+                R.layout.custom_char_create_spinner_item
+        );
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        genderSpinner.setAdapter(genderAdapter);
+        String chosenGender = character.getGender();
+        int genderPosition = genderAdapter.getPosition(chosenGender);
+        genderSpinner.setSelection(genderPosition);
+    }
+
+    //skin color
+    private void createSkinColorDropDown() {
+        Spinner skinColorSpinner = binding.skinColorSpinner;
+        ArrayAdapter<CharSequence> skinColorAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.skin_color_array,
+                R.layout.custom_char_create_spinner_item
+        );
+        skinColorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        skinColorSpinner.setAdapter(skinColorAdapter);
+        String chosenSkinColor = character.getSkinColor();
+        int skinPosition = skinColorAdapter.getPosition(chosenSkinColor);
+        skinColorSpinner.setSelection(skinPosition);
+    }
     //hair color
+    private void createHairColorDropDown() {
+        Spinner hairColorSpinner = binding.hairColorSpinner;
+        ArrayAdapter<CharSequence> hairColorAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.hair_color_array,
+                R.layout.custom_char_create_spinner_item
+        );
+        hairColorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hairColorSpinner.setAdapter(hairColorAdapter);
+        String chosenHairColor = character.getHairColor();
+        int hairPosition = hairColorAdapter.getPosition(chosenHairColor);
+        hairColorSpinner.setSelection(hairPosition);
+    }
     //eye color
+    private void createEyeColorDropDown() {
+        Spinner eyeColorSpinner = binding.eyeColorSpinner;
+        ArrayAdapter<CharSequence> eyeColorAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.eye_color_array,
+                R.layout.custom_char_create_spinner_item
+        );
+        eyeColorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        eyeColorSpinner.setAdapter(eyeColorAdapter);
+        String chosenEyeColor = character.getEyeColor();
+        int eyePosition = eyeColorAdapter.getPosition(chosenEyeColor);
+        eyeColorSpinner.setSelection(eyePosition);
+    }
+
+    //skin color
 
     /**
      * Dropdown for multiple item selections
@@ -231,43 +322,48 @@ public class CharacterCreationActivity extends AppCompatActivity {
         int mStr = Integer.parseInt(binding.strAttrEditTextView.getText().toString());
         int mDex = Integer.parseInt(binding.dexAttrEditTextView.getText().toString());
         int mInt = Integer.parseInt(binding.intAttrEditTextView.getText().toString());
-//        int mCha = Integer.parseInt(binding.chaAttrEditTextView.getText().toString());
-//        int mCon = Integer.parseInt(binding.conAttrEditTextView.getText().toString());
-//        int mWis = Integer.parseInt(binding.wisAttrEditTextView.getText().toString());
-//        String mBg = binding.bgSpinner.getSelectedItem().toString();
+        int mCha = Integer.parseInt(binding.chaAttrEditTextView.getText().toString());
+        int mCon = Integer.parseInt(binding.conAttrEditTextView.getText().toString());
+        int mWis = Integer.parseInt(binding.wisAttrEditTextView.getText().toString());
+        String mBg = binding.bgSpinner.getSelectedItem().toString();
         String mLan = binding.languageTextView.getText().toString();
-//        String mCharAlign = binding.charAlignSpinner.getSelectedItem().toString();
-
-        String mAge; //input
-        String mGender; //spinner
-        String mHair; //spinner
-        String mEyes; //spinner
-        int mHeight; //input
-        int mWeight; //input
-        String mNotes; //input
+        String mCharAlign = binding.charAlignSpinner.getSelectedItem().toString();
+        String mGender = binding.genderSpinner.getSelectedItem().toString();
+        String mHairColor = binding.hairColorSpinner.getSelectedItem().toString();
+        String mEyeColor = binding.eyeColorSpinner.getSelectedItem().toString();
+        String mSkinColor = binding.skinColorSpinner.getSelectedItem().toString();
+        int mAge = Integer.parseInt(binding.ageEditText.getText().toString());
+        int mHeight = Integer.parseInt(binding.heightEditText.getText().toString());
+        int mWeight = Integer.parseInt(binding.weightEditText.getText().toString());
+        String mNotes = binding.notesEditText.getText().toString();
 
         if (mCharacterName.isEmpty()) {
+            Toast.makeText(this, "Please enter a character name", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // set data in database
         character.setCharacterName(mCharacterName);
         character.setRace(mRace);
+        character.setClazz(mClass);
         character.setStrength(mStr);
         character.setDexterity(mDex);
         character.setIntelligence(mInt);
-//        character.setCharisma(mCha);
-//        character.setConstitution(mCon);
-//        character.setWisdom(mWis);
-//        character.setBackground(mBg);
+        character.setCharisma(mCha);
+        character.setConstitution(mCon);
+        character.setWisdom(mWis);
+        character.setBackground(mBg);
         character.setLanguages(mLan);
-        //hashmap
-//        character.setAge();
-//        hair
-//        eye
-//        skin
-//        height
-//        weight
+        character.setCharacterAlignment(mCharAlign);
+        character.setGender(mGender);
+        character.setHairColor(mHairColor);
+        character.setEyeColor(mEyeColor);
+        character.setSkinColor(mSkinColor);
+        character.setAge(mAge);
+        character.setHeight(mHeight);
+        character.setWeight(mWeight);
+        character.setNotes(mNotes);
+
         repository.insertCharacterSheet(character).blockingAwait();
         System.out.println("insertCharacterData method after character insert:" + character.toString());
     }

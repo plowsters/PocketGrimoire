@@ -468,7 +468,6 @@
                 android:layout_marginEnd="10dp"
                 android:autofillHints="language.."
                 android:background="@drawable/bg_spinner_bg_lan_char"
-                android:textAlignment="textStart"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lanTitleTextView" />
@@ -504,7 +503,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:autofillHints="background..."
+                android:autofillHints="character alignment..."
                 android:background="@drawable/bg_spinner_bg_lan_char"
                 android:textAlignment="textStart"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -513,7 +512,7 @@
 
 
             <TextView
-                android:id="@+id/chooseAgeTitleTextView"
+                android:id="@+id/chooseSkinColorTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -521,25 +520,25 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/inria_serif_regular"
                 android:letterSpacing="0.1"
-                android:text="choose age"
+                android:text="skin color"
                 android:textColor="#BEB688"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/ageEditText"
+                app:layout_constraintBottom_toTopOf="@id/skinColorSpinner"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/charAlignSpinner" />
 
-            <EditText
-                android:id="@+id/ageEditText"
-                android:layout_width="115dp"
-                android:layout_height="25dp"
+            <Spinner
+                android:id="@+id/skinColorSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/custom_input"
+                android:background="@drawable/bg_spinner_race_class"
                 android:fontFamily="@font/inder"
-                android:hint="age..."
+                android:hint="skin color..."
                 android:textSize="13sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chooseAgeTitleTextView" />
+                app:layout_constraintTop_toBottomOf="@id/chooseSkinColorTitleTextView" />
 
             <TextView
                 android:id="@+id/chooseGenderTitleTextView"
@@ -566,9 +565,9 @@
                 android:autofillHints="race..."
                 android:background="@drawable/bg_spinner_race_class"
                 android:textAlignment="textStart"
-                app:layout_constraintLeft_toRightOf="@+id/ageEditText"
+                app:layout_constraintLeft_toRightOf="@+id/skinColorSpinner"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chooseAgeTitleTextView" />
+                app:layout_constraintTop_toBottomOf="@id/chooseGenderTitleTextView" />
 
             <TextView
                 android:id="@+id/chooseHairTitleTextView"
@@ -583,20 +582,20 @@
                 android:textColor="#BEB688"
                 android:textSize="15sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ageEditText" />
+                app:layout_constraintTop_toBottomOf="@id/skinColorSpinner"
+                app:layout_constraintBottom_toTopOf="@id/hairColorSpinner"/>
 
             <Spinner
-                android:id="@+id/hairSpinner"
+                android:id="@+id/hairColorSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
                 android:autofillHints="race..."
                 android:background="@drawable/bg_spinner_race_class"
                 android:textAlignment="textStart"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/ageEditText"
-                app:layout_constraintTop_toBottomOf="@id/chooseHairTitleTextView" />
+                app:layout_constraintTop_toBottomOf="@id/chooseHairTitleTextView"
+                app:layout_constraintBottom_toTopOf="@id/heightTitleTextView"/>
 
             <TextView
                 android:id="@+id/chooseEyeTitleTextView"
@@ -614,7 +613,7 @@
                 app:layout_constraintTop_toBottomOf="@id/genderSpinner" />
 
             <Spinner
-                android:id="@+id/eyeSpinner"
+                android:id="@+id/eyeColorSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -631,15 +630,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/inria_serif_regular"
                 android:letterSpacing="0.1"
                 android:text="height"
                 android:textColor="#BEB688"
                 android:textSize="15sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hairSpinner" />
+                app:layout_constraintTop_toBottomOf="@id/hairColorSpinner"
+                app:layout_constraintBottom_toTopOf="@id/chooseHairTitleTextView"/>
 
             <EditText
                 android:id="@+id/heightEditText"
@@ -667,7 +667,7 @@
                 android:textColor="#BEB688"
                 android:textSize="15sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/eyeSpinner" />
+                app:layout_constraintTop_toBottomOf="@id/eyeColorSpinner" />
 
             <EditText
                 android:id="@+id/weightEditText"
@@ -684,6 +684,34 @@
                 app:layout_constraintTop_toBottomOf="@id/weightTitleTextView" />
 
             <TextView
+                android:id="@+id/chooseAgeTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inria_serif_regular"
+                android:letterSpacing="0.1"
+                android:text="choose age"
+                android:textColor="#BEB688"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/ageEditText"
+                app:layout_constraintTop_toBottomOf="@id/heightEditText"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <EditText
+                android:id="@+id/ageEditText"
+                android:layout_width="115dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/inder"
+                android:hint="age..."
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chooseAgeTitleTextView"
+                app:layout_constraintBottom_toTopOf="@id/notesTextView"/>
+
+            <TextView
                 android:id="@+id/notesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -696,7 +724,7 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@id/notesEditText"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/heightEditText" />
+                app:layout_constraintTop_toBottomOf="@id/ageEditText" />
 
             <EditText
                 android:id="@+id/notesEditText"
