@@ -39,7 +39,7 @@ public class CharacterListActivity extends AppCompatActivity {
         binding = ActivityCharacterListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // obtain database
+        //database
         characterListViewModel = new ViewModelProvider(this).get(com.example.pocketgrimoire.viewmodel.CharacterListViewModel.class);
 
         //display list of characters based on userID
@@ -58,6 +58,15 @@ public class CharacterListActivity extends AppCompatActivity {
                 }, throwable -> {
                     Log.e("RX", "Error loading characters", throwable);
                 });
+
+        /**
+         * Add Character button allows users to add a new character
+         */
+        binding.addCharacterImageButton.setOnClickListener(view -> {
+            Intent intent = CharacterCreationActivity.characterAddActivityIntentFactory(getApplicationContext(), userID);
+            startActivity(intent);
+        });
+
     }
     public static Intent characterListIntentFactory(Context context) {
         Intent intent = new Intent(context, CharacterListActivity.class);

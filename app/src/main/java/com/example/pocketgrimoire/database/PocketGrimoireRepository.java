@@ -101,4 +101,12 @@ public class PocketGrimoireRepository {
         return Completable.fromAction(() -> characterSheetDAO.insert(characterSheet))
                 .subscribeOn(Schedulers.io());
     }
+
+    /**
+     * deleteCharacter
+     */
+    public Completable deleteCharacterSheet(CharacterSheet characterSheet) {
+        return Completable.fromAction(() -> characterSheetDAO.delete(characterSheet))
+                .subscribeOn(Schedulers.io());
+    }
 }
