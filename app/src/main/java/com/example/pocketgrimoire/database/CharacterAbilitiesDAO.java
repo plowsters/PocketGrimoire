@@ -13,4 +13,18 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
+@Dao
+public interface CharacterAbilitiesDAO {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insert(CharacterAbilities ca);
+
+    @Update
+    Completable update(CharacterAbilities ca);
+
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterId = :characterId")
+    Flowable<List<CharacterAbilities>> getByCharacterId(int characterId);
+
+    @Query("DELETE FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterId = :characterId")
+    Completable clearForCharacter(int characterId);
 }
