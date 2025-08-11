@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.fragments.DiceRollerFragment;
 
+import java.io.Serializable;
+
 public class CharacterSheetActivity extends AppCompatActivity {
 
     private static final String CHARACTER_SHEET_ACTIVITY_CHARACTER_KEY = "CHARACTER_SHEET_ACTIVITY_CHARACTER_KEY";

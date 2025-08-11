@@ -5,12 +5,13 @@ import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = PocketGrimoireDatabase.CHARACTER_SHEET_TABLE)
-public class CharacterSheet {
+public class CharacterSheet implements Serializable {
 
     @PrimaryKey (autoGenerate = true)
     private int characterID;

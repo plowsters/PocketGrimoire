@@ -255,13 +255,13 @@ public class CharacterCreationActivity extends AppCompatActivity {
         Intent intent = new Intent(context, CharacterCreationActivity.class);
         CharacterSheet newCharacter = new CharacterSheet();
         newCharacter.setUserID(userID);
-        intent.putExtra(CHARACTER_EDIT_CHARACTER, (Parcelable) newCharacter);
+        intent.putExtra(CHARACTER_EDIT_CHARACTER, newCharacter);
         return intent;
     }
 
     public static Intent characterEditActivityIntentFactory(Context context, CharacterSheet character) {
         Intent intent = new Intent(context, CharacterCreationActivity.class);
-        intent.putExtra(CHARACTER_EDIT_CHARACTER, (Parcelable) character);
+        intent.putExtra(CHARACTER_EDIT_CHARACTER,  character);
         return intent;
     }
 
