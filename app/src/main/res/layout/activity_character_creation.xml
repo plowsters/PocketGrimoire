@@ -8,40 +8,58 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/userTitleImageView"
+        android:id="@+id/userTypeImageView"
+        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/user_type_title"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toTopOf="@+id/contentImageView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/user_type_title" />
+        />
 
     <TextView
-        android:id="@+id/userTitleTextView"
+        android:id="@+id/userTypeTitleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inknut_antiqua_regular"
-        android:gravity="center"
         android:text="PLAYER"
         android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/userTitleImageView"
-        app:layout_constraintLeft_toLeftOf="@+id/userTitleImageView"
-        app:layout_constraintRight_toRightOf="@+id/userTitleImageView"
-        app:layout_constraintTop_toTopOf="@+id/userTitleImageView" />
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/userTypeImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/userTypeImageView"
+        app:layout_constraintRight_toRightOf="@+id/userTypeImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/userTypeImageView"/>
 
     <ImageView
         android:id="@+id/contentImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="120dp"
-        android:layout_marginBottom="110dp"
-        app:layout_constraintBottom_toBottomOf="@+id/userTitleImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userTypeImageView"
         app:srcCompat="@drawable/middle_section" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/adminuinavbar"
+        app:itemIconSize="32dp"
+        app:itemIconTint="@color/white"
+        app:itemPaddingTop="28dp"
+        app:itemTextAppearanceActive="@style/BottomNav.Active"
+        app:itemTextAppearanceInactive="@style/BottomNav.Inactive"
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
     <ImageView
         android:id="@+id/lineDecoratorImageView"
@@ -581,9 +599,9 @@
                 android:text="hair color"
                 android:textColor="#BEB688"
                 android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/hairColorSpinner"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/skinColorSpinner"
-                app:layout_constraintBottom_toTopOf="@id/hairColorSpinner"/>
+                app:layout_constraintTop_toBottomOf="@id/skinColorSpinner" />
 
             <Spinner
                 android:id="@+id/hairColorSpinner"
@@ -593,9 +611,9 @@
                 android:autofillHints="race..."
                 android:background="@drawable/bg_spinner_race_class"
                 android:textAlignment="textStart"
+                app:layout_constraintBottom_toTopOf="@id/heightTitleTextView"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chooseHairTitleTextView"
-                app:layout_constraintBottom_toTopOf="@id/heightTitleTextView"/>
+                app:layout_constraintTop_toBottomOf="@id/chooseHairTitleTextView" />
 
             <TextView
                 android:id="@+id/chooseEyeTitleTextView"
@@ -630,16 +648,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/inria_serif_regular"
                 android:letterSpacing="0.1"
                 android:text="height"
                 android:textColor="#BEB688"
                 android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/chooseHairTitleTextView"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hairColorSpinner"
-                app:layout_constraintBottom_toTopOf="@id/chooseHairTitleTextView"/>
+                app:layout_constraintTop_toBottomOf="@id/hairColorSpinner" />
 
             <EditText
                 android:id="@+id/heightEditText"
@@ -695,8 +713,8 @@
                 android:textColor="#BEB688"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@id/ageEditText"
-                app:layout_constraintTop_toBottomOf="@id/heightEditText"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/heightEditText" />
 
             <EditText
                 android:id="@+id/ageEditText"
@@ -707,9 +725,9 @@
                 android:fontFamily="@font/inder"
                 android:hint="age..."
                 android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@id/notesTextView"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chooseAgeTitleTextView"
-                app:layout_constraintBottom_toTopOf="@id/notesTextView"/>
+                app:layout_constraintTop_toBottomOf="@id/chooseAgeTitleTextView" />
 
             <TextView
                 android:id="@+id/notesTextView"
@@ -749,8 +767,8 @@
         android:id="@+id/saveImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="35dp"
         android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/contentImageView"
         app:layout_constraintLeft_toLeftOf="@id/contentImageView"
@@ -775,8 +793,9 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="45dp"
         android:fontFamily="@font/inknut_antiqua_regular"
         android:text="cancel"
         android:textColor="#BEB688"
