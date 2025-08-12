@@ -4,33 +4,40 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
+import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.Spells;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Single;
 
-/**
- * DAO for accessing Spells table with RxJava support.
- */
 @Dao
 public interface SpellsDAO {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertSpell(Spells spell);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insert(Spells spell);
 
-    @Update
-    Completable updateSpell(Spells spell);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insertAll(List<Spells> spells);
 
-    @Query("SELECT * FROM spells")
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    long insertSync(Spells spell);
+
+    /** Update-by-name: update the entire row's non-key fields; seeder inserts if this returns 0. */
+    @Query("UPDATE " + PocketGrimoireDatabase.SPELLS_TABLE +
+            " SET level = :level, school = :school, availableToClass = :availableToClass WHERE name = :name")
+    Single<Integer> updateByName(String name, int level, String school, List<String> availableToClass);
+
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.SPELLS_TABLE + " ORDER BY spellID")
     Flowable<List<Spells>> getAllSpells();
 
-    @Query("SELECT * FROM spells WHERE enabled = 1")
-    Flowable<List<Spells>> getEnabledSpells();
+    @Query("SELECT COUNT(*) FROM " + PocketGrimoireDatabase.SPELLS_TABLE)
+    Flowable<Integer> spellsCount();
 
-    @Query("DELETE FROM spells")
+    @Query("DELETE FROM " + PocketGrimoireDatabase.SPELLS_TABLE)
     Completable clearSpells();
 }

@@ -1,41 +1,46 @@
 package com.example.pocketgrimoire.database.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-/**
- * Represents a spell that can be enabled or disabled in a campaign.
- * This will be used by CharacterSpells later.
- */
-@Entity(tableName = "spells")
+import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/** Spells table: (spellID PK, name UNIQUE, level, school, availableToClass). */
+@Entity(tableName = PocketGrimoireDatabase.SPELLS_TABLE)
 public class Spells {
-
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int spellID;
 
-    private String name;        // Spell name
-    private String apiIndex;    // D&D API unique identifier
-    private int level;          // Level (0 = Cantrip, 1..9)
-    private String school;      // School of magic (e.g., "Evocation")
-    private boolean enabled;    // Whether the spell is active in the campaign
+    @NonNull
+    private String name;
 
-    public Spells(String name, String apiIndex, int level, String school, boolean enabled) {
+    private int level;
+
+    private String school;
+
+    private List<String> availableToClass;
+
+    public Spells() {
+        // No argument constructor for RoomDB initialization
+    }
+    @Ignore
+    public Spells(@NonNull String name, int level, String school, List<String> availableToClass) {
         this.name = name;
-        this.apiIndex = apiIndex;
         this.level = level;
         this.school = school;
-        this.enabled = enabled;
+        this.availableToClass = (availableToClass != null) ? availableToClass : new ArrayList<>();
     }
 
-    // ----- Getters and Setters -----
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getSpellID() { return spellID; }
+    public void setSpellID(int spellID) { this.spellID = spellID; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getApiIndex() { return apiIndex; }
-    public void setApiIndex(String apiIndex) { this.apiIndex = apiIndex; }
+    @NonNull public String getName() { return name; }
+    public void setName(@NonNull String name) { this.name = name; }
 
     public int getLevel() { return level; }
     public void setLevel(int level) { this.level = level; }
@@ -43,6 +48,6 @@ public class Spells {
     public String getSchool() { return school; }
     public void setSchool(String school) { this.school = school; }
 
-    public boolean isEnabled() { return enabled; }
-    public void setEnabled(boolean enabled) { this.enabled = enabled; }
+    public List<String> getAvailableToClass() { return availableToClass; }
+    public void setAvailableToClass(List<String> availableToClass) { this.availableToClass = availableToClass; }
 }

@@ -22,7 +22,7 @@ public class CharacterListViewModel extends AndroidViewModel{
      */
     public CharacterListViewModel(Application application) {
         super(application);
-        repository = PocketGrimoireRepository.getRepository(application).blockingGet();
+        repository = new PocketGrimoireRepository(application);
     }
 
     public Flowable<List<CharacterSheet>> getAllCharacterSheetByUserId(int userID) {

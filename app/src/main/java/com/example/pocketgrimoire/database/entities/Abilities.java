@@ -1,48 +1,53 @@
 package com.example.pocketgrimoire.database.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-/**
- * Represents an ability that can be enabled or disabled in a campaign.
- * This will be used by CharacterAbilities later.
- */
-@Entity(tableName = "abilities")
+import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/** Abilities table with unique (name, traitOrFeat). */
+@Entity(tableName = PocketGrimoireDatabase.ABILITIES_TABLE)
 public class Abilities {
-
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int abilityID;
 
-    private String name;         // Ability name
-    private String apiIndex;     // D&D API index (unique string)
-    private String description;  // Optional short description (or blank if missing)
-    private boolean enabled;     // Whether this ability is active for the campaign
-    private boolean traitOrFeat; // false = Feature, true = Trait
+    @NonNull
+    private String name;
 
-    public Abilities(String name, String apiIndex, String description, boolean enabled, boolean traitOrFeat) {
+    private boolean traitOrFeat;
+
+    private List<String> availableToClass;
+
+    private List<String> availableToRace;
+
+    public Abilities() {
+        // No argument constructor for RoomDB initialization
+    }
+    @Ignore
+    public Abilities(@NonNull String name, boolean traitOrFeat) {
         this.name = name;
-        this.apiIndex = apiIndex;
-        this.description = description;
-        this.enabled = enabled;
         this.traitOrFeat = traitOrFeat;
+        this.availableToClass = new ArrayList<>();
+        this.availableToRace = new ArrayList<>();
     }
 
-    // ----- Getters and Setters -----
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getAbilityID() { return abilityID; }
+    public void setAbilityID(int abilityID) { this.abilityID = abilityID; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getApiIndex() { return apiIndex; }
-    public void setApiIndex(String apiIndex) { this.apiIndex = apiIndex; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public boolean isEnabled() { return enabled; }
-    public void setEnabled(boolean enabled) { this.enabled = enabled; }
+    @NonNull public String getName() { return name; }
+    public void setName(@NonNull String name) { this.name = name; }
 
     public boolean isTraitOrFeat() { return traitOrFeat; }
     public void setTraitOrFeat(boolean traitOrFeat) { this.traitOrFeat = traitOrFeat; }
+
+    public List<String> getAvailableToClass() { return availableToClass; }
+    public void setAvailableToClass(List<String> availableToClass) { this.availableToClass = availableToClass; }
+
+    public List<String> getAvailableToRace() { return availableToRace; }
+    public void setAvailableToRace(List<String> availableToRace) { this.availableToRace = availableToRace; }
 }
