@@ -99,12 +99,12 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
             AbilitiesNetworkLoader abilitiesLoader = new AbilitiesNetworkLoader(api);
 
             // Build seeders they use update and insert methods from the DAOs
-            ItemsSeeder itemsSeeder = new ItemsSeeder(itemsLoader, INSTANCE.itemsDAO(), INSTANCE);
+            ItemsSeeder itemsSeeder = new ItemsSeeder(itemsLoader, INSTANCE.itemsDAO());
             // class/race maps used for availability
             Map<String,String> classes = ClassRaceMaps.defaultClasses();
             Map<String,String> races   = ClassRaceMaps.defaultRaces();
-            SpellsSeeder spellsSeeder = new SpellsSeeder(spellsLoader, INSTANCE.spellsDAO(), INSTANCE, classes);
-            AbilitiesSeeder abilitiesSeeder = new AbilitiesSeeder(abilitiesLoader, INSTANCE.abilitiesDAO(), INSTANCE, classes, races);
+            SpellsSeeder spellsSeeder = new SpellsSeeder(spellsLoader, INSTANCE.spellsDAO());
+            AbilitiesSeeder abilitiesSeeder = new AbilitiesSeeder(abilitiesLoader, INSTANCE.abilitiesDAO());
 
             /* This uses RxJava instead of Executor to make DB queries on a background thread
                Benefits of RxJava over Executor are better lifecycle management, better task scheduling,

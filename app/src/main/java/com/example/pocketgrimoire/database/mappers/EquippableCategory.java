@@ -1,14 +1,16 @@
 package com.example.pocketgrimoire.database.mappers;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Class that defines which equipment categories can be equipped (weapons/armor/shields).
  */
 public final class EquippableCategory {
-    private static final List<String> EQUIPPABLE = Arrays.asList(
+    // Using hashset for constant time lookups, List was causing O(n^2) lookups
+    private static final Set<String> EQUIPPABLE = new HashSet<>(Arrays.asList(
             "weapon",
             "melee-weapons",
             "ranged-weapons",
@@ -23,7 +25,7 @@ public final class EquippableCategory {
             "medium-armor",
             "heavy-armor",
             "shields"
-    );
+    ));
 
     private EquippableCategory() {}
 

@@ -24,14 +24,23 @@ public final class ItemMappers {
      * @return Items row or null if ref/name is missing
      */
     public static Items fromEquipmentRef(ResourceRefDto ref, String categoryName) {
-        if (ref == null || ref.name == null) return null;
-        String name = normalize(ref.name);
-        String cat  = normalize(categoryName);
-        boolean equippable = EquippableCategory.isEquippable(cat);
+        return fromNameAndCategory(ref != null ? ref.name : null, categoryName);
+    }
+
+    /** New overload for equipment-category detail where items are ApiRef. */
+    public static Items fromEquipmentRef(ApiRef ref, String categoryName) {
+        return fromNameAndCategory(ref != null ? ref.name : null, categoryName);
+    }
+
+    private static Items fromNameAndCategory(String rawName, String rawCategory) {
+        if (rawName == null) return null;
+        String name = normalize(rawName);
+        String cat  = normalize(rawCategory);
+
         Items e = new Items();
         e.setName(name);
         e.setCategory(cat);
-        e.setIsEquippable(equippable);
+        e.setIsEquippable(EquippableCategory.isEquippable(cat)); // keep isEquippable here
         return e;
     }
 

@@ -3,7 +3,9 @@ package com.example.pocketgrimoire.database.mappers;
 import com.example.pocketgrimoire.database.entities.Abilities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -35,22 +37,20 @@ public final class AbilityMappers {
         a.setName(n);
         // NEW: true = Trait, false = Feature
         a.setTraitOrFeat(isTrait);
-        a.setAvailableToClass(normalizeDedupe(availableToClass));
-        a.setAvailableToRace(normalizeDedupe(availableToRace));
+        a.setAvailableToClass(dedupeNormalized(availableToClass));
+        a.setAvailableToRace(dedupeNormalized(availableToRace));
         return a;
     }
 
     /** Normalize and remove duplicates while preserving encounter order. */
-    private static List<String> normalizeDedupe(List<String> in) {
-        List<String> out = new ArrayList<>();
-        if (in == null || in.isEmpty()) return out;
-        Set<String> seen = new HashSet<>();
+    private static List<String> dedupeNormalized(List<String> in) {
+        if (in == null) return Collections.emptyList();
+        Set<String> set = new LinkedHashSet<>();
         for (String s : in) {
             String n = normalize(s);
-            if (n == null || n.isEmpty()) continue;
-            if (seen.add(n)) out.add(n);
+            if (n != null && !n.isEmpty()) set.add(n);
         }
-        return out;
+        return new ArrayList<>(set);
     }
 
     /**

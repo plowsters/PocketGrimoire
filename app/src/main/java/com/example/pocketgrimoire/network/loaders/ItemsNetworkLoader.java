@@ -2,26 +2,20 @@ package com.example.pocketgrimoire.network.loaders;
 
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.mappers.ItemMappers;
-import com.example.pocketgrimoire.database.remote.DndApiService;
+import com.example.pocketgrimoire.database.remote.dto.ApiRef;
 import com.example.pocketgrimoire.database.remote.dto.EquipmentCategoryRequestDto;
-import com.example.pocketgrimoire.database.remote.dto.ResourceListDto;
 import com.example.pocketgrimoire.database.remote.dto.ResourceRefDto;
+import com.example.pocketgrimoire.database.remote.DndApiService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
-/**
- * Pure-network loader for Items.
- * 1) Fetch master equipment list
- * 2) Build index→categoryName via equipment-categories
- * 3) Join + compute isEquippable
- */
 public final class ItemsNetworkLoader {
     private final DndApiService api;
 
@@ -29,52 +23,59 @@ public final class ItemsNetworkLoader {
         this.api = api;
     }
 
-    /** Defensive helper: return list results or empty list. */
-    private static List<ResourceRefDto> safeRefs(ResourceListDto list) {
-        return (list != null && list.results != null) ? list.results : Collections.emptyList();
-    }
-
     /**
-     * Build a map equipmentIndex → category display name by enumerating all categories.
-     */
-    private Single<HashMap<String, String>> buildIndexToCategoryName() {
-        final int MAX_CONCURRENCY = 6;
-
-        return api.listEquipmentCategories()
-                .subscribeOn(Schedulers.io())
-                .toFlowable()
-                .flatMap(list -> Flowable.fromIterable(safeRefs(list)))
-                .flatMap(
-                        catRef -> api.getEquipmentCategory(catRef.index)
-                                .subscribeOn(Schedulers.io())
-                                .toFlowable(),
-                        /* delayErrors */ false,
-                        /* maxConcurrency */ MAX_CONCURRENCY
-                )
-                .collect(
-                        HashMap<String, String>::new,
-                        ItemMappers::putCategoryMemberships
-                );
-    }
-
-    /**
-     * Fetch all equipment and join with category names.
-     *
-     * @return Single<List<Items>> ready for seeding
+     * Strategy:
+     * 1) Get equipment categories (list of ResourceRefDto, which usually have only url+name).
+     * 2) Fetch each category detail (EquipmentCategoryRequestDto) concurrently (capped).
+     * 3) For each category, fold its equipment list into a name→Items map (keeps first-seen, stable order).
+     * 4) Map to List<Items>.
      */
     public Single<List<Items>> fetchAll() {
-        return Single.zip(
-                api.listEquipment().subscribeOn(Schedulers.io()),
-                buildIndexToCategoryName(),
-                (equipmentList, indexToCategory) -> {
-                    List<Items> out = new ArrayList<>();
-                    for (ResourceRefDto ref : safeRefs(equipmentList)) {
-                        String catName = (ref != null) ? indexToCategory.get(ref.index) : null;
-                        Items row = ItemMappers.fromEquipmentRef(ref, catName);
-                        if (row != null) out.add(row);
-                    }
-                    return out;
-                }
-        ).subscribeOn(Schedulers.io());
+        return api.listEquipmentCategories()
+                .flatMap(catListDto -> {
+                    final List<ResourceRefDto> cats =
+                            (catListDto != null && catListDto.results != null)
+                                    ? catListDto.results
+                                    : Collections.emptyList();
+
+                    return Flowable.fromIterable(cats)
+                            .flatMap(
+                                    // Each category detail; ResourceRefDto often lacks "index", so derive from URL.
+                                    catRef -> api.getEquipmentCategory(safeIndexFromUrl(catRef)).toFlowable(),
+                                    /* delayErrors */ false,
+                                    /* maxConcurrency */ 4
+                            )
+                            .collect(
+                                    // Use LinkedHashMap to preserve first-seen order.
+                                    () -> new LinkedHashMap<String, Items>(),
+                                    (acc, catDto) -> {
+                                        if (catDto == null) return;
+
+                                        final String catName = catDto.name;
+                                        final List<ApiRef> equipmentRefs =
+                                                (catDto.equipment != null) ? catDto.equipment : Collections.emptyList();
+
+                                        for (ApiRef eq : equipmentRefs) {
+                                            if (eq == null || eq.name == null) continue;
+                                            final String key = eq.name;
+                                            // Keep first category that mentions this item (cheap + stable).
+                                            if (!acc.containsKey(key)) {
+                                                Items item = ItemMappers.fromEquipmentRef(eq, catName);
+                                                if (item != null) acc.put(key, item);
+                                            }
+                                        }
+                                    }
+                            )
+                            .map((Map<String, Items> map) -> new ArrayList<>(map.values()));
+                });
+    }
+
+    /** Extract the last path segment from a URL like ".../api/equipment-categories/simple-weapons". */
+    private static String safeIndexFromUrl(ResourceRefDto r) {
+        if (r == null || r.url == null) return null;
+        String u = r.url.trim();
+        if (u.isEmpty()) return null;
+        int slash = u.lastIndexOf('/');
+        return (slash >= 0 && slash + 1 < u.length()) ? u.substring(slash + 1) : u;
     }
 }

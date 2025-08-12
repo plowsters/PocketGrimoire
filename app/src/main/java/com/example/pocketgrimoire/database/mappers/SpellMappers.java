@@ -30,15 +30,15 @@ public final class SpellMappers {
         e.setLevel(level != null ? level : 0);
         e.setSchool(normalize(school));
 
-        // defensive copy + normalize + dedupe while preserving order
-        List<String> out = new ArrayList<>();
+        // copy + normalize + dedupe while preserving order
+        Set<String> set = new LinkedHashSet<>();
         if (availableToClass != null) {
             for (String s : availableToClass) {
                 String n = normalize(s);
-                if (n != null && !n.isEmpty() && !out.contains(n)) out.add(n);
+                if (n != null && !n.isEmpty()) set.add(n);
             }
         }
-        e.setAvailableToClass(out);
+        e.setAvailableToClass(new ArrayList<>(set));
         return e;
     }
 
@@ -65,29 +65,22 @@ public final class SpellMappers {
     }
 
     /**
-     * Convert a list of ApiRef (for example, class references) into a list of normalized names,
+     * Convert a list of ApiRef (for example, class references) into a set of normalized names,
      * removing duplicates while preserving first-seen order
      *
      * @param refs list of API references (for example, dto.classes); may be null
      * @return a new list of unique, normalized names in stable order (never null)
      */
     public static List<String> extractUniqueNames(List<ApiRef> refs) {
-        List<String> out = new ArrayList<>();
-        if (refs == null || refs.isEmpty()) return out;
-
-        // for every class passed in from the API
-        for (ApiRef r : refs) {
-            if (r == null) continue;
-            String name = normalize(r.name);
-            // check for null before and after normalization
-            if (name == null || name.isEmpty()) continue;
-
-            // Preserves order of classes
-            if (!out.contains(name)) {
-                out.add(name);
+        Set<String> set = new LinkedHashSet<>();
+        if (refs != null) {
+            for (ApiRef r : refs) {
+                if (r == null) continue;
+                String name = normalize(r.name);
+                if (name != null && !name.isEmpty()) set.add(name);
             }
         }
-        return out;
+        return new ArrayList<>(set);
     }
 
     /**
