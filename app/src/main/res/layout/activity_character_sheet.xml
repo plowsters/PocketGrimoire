@@ -113,24 +113,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inria_serif_light"
-            android:text="00 / "
+            android:text="00"
             android:textColor="#BEB688"
             android:textSize="20sp"
+            app:layout_constraintRight_toLeftOf="@id/HPDivider"
             app:layout_constraintBottom_toBottomOf="@id/hpBarImageView"
-            app:layout_constraintRight_toLeftOf="@id/maxHPTextView"
             app:layout_constraintTop_toTopOf="@id/hpBarImageView" />
+
+        <TextView
+            android:id="@+id/HPDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" / "
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_light"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@id/currentHPTextView"
+            app:layout_constraintTop_toTopOf="@id/hpBarImageView"
+            app:layout_constraintBottom_toBottomOf="@id/hpBarImageView"/>
 
         <TextView
             android:id="@+id/maxHPTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:fontFamily="@font/inria_serif_light"
             android:text="00"
             android:textColor="#BEB688"
+            android:layout_marginEnd="15dp"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@id/hpBarImageView"
             app:layout_constraintRight_toRightOf="@id/hpBarImageView"
+            app:layout_constraintLeft_toRightOf="@id/HPDivider"
+            app:layout_constraintBottom_toBottomOf="@id/hpBarImageView"
             app:layout_constraintTop_toTopOf="@+id/hpBarImageView" />
 
         <ImageView
@@ -157,8 +170,8 @@
             app:layout_constraintLeft_toLeftOf="@id/levelImageView"
             app:layout_constraintTop_toTopOf="@id/levelImageView" />
 
-        <TextView
-            android:id="@+id/currLevelTextView"
+        <EditText
+            android:id="@+id/currLevelEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inria_serif_light"
@@ -181,28 +194,41 @@
             app:srcCompat="@drawable/hp_xp_section" />
 
         <TextView
-            android:id="@+id/xpToLevelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inria_serif_light"
-            android:text="00 / "
-            android:textColor="#BEB688"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@id/xpBarImageView"
-            app:layout_constraintRight_toLeftOf="@id/maxXPTextView"
-            app:layout_constraintTop_toTopOf="@id/xpBarImageView" />
-
-        <TextView
             android:id="@+id/maxXPTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="15dp"
             android:fontFamily="@font/inria_serif_light"
             android:text="100"
             android:textColor="#BEB688"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/xpBarImageView"
             app:layout_constraintRight_toRightOf="@id/xpBarImageView"
+            app:layout_constraintLeft_toRightOf="@id/XPDivider"
+            app:layout_constraintTop_toTopOf="@id/xpBarImageView" />
+
+        <TextView
+            android:id="@+id/XPDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" / "
+            android:textColor="#BEB688"
+            android:fontFamily="@font/inria_serif_light"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@id/xpToLevelTextView"
+            app:layout_constraintTop_toTopOf="@id/xpBarImageView"
+            app:layout_constraintBottom_toBottomOf="@id/xpBarImageView"/>
+
+        <TextView
+            android:id="@+id/xpToLevelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inria_serif_light"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/xpBarImageView"
+            app:layout_constraintRight_toLeftOf="@id/XPDivider"
             app:layout_constraintTop_toTopOf="@id/xpBarImageView" />
 
         <TextView
