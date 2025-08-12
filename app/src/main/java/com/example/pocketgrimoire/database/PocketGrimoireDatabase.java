@@ -12,9 +12,13 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.pocketgrimoire.LoginActivity;
+import com.example.pocketgrimoire.database.entities.Abilities;
+import com.example.pocketgrimoire.database.entities.CharacterAbilities;
 import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
+import com.example.pocketgrimoire.database.entities.CharacterSpells;
 import com.example.pocketgrimoire.database.entities.Items;
+import com.example.pocketgrimoire.database.entities.Spells;
 import com.example.pocketgrimoire.database.entities.User;
 import com.example.pocketgrimoire.database.remote.DndApiService;
 import com.example.pocketgrimoire.database.remote.DndApiClient;
@@ -39,12 +43,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * Uses the singleton pattern to ensure only one instance of the DB is ever created in memory
  */
 @TypeConverters({Converters.class})
-@Database(entities = {User.class, CharacterSheet.class, CharacterItems.class, Items.class}, version = 4, exportSchema = false)
+@Database(entities = {User.class, Items.class, Spells.class, Abilities.class, CharacterSheet.class, CharacterItems.class, CharacterSpells.class, CharacterAbilities.class}, version = 1, exportSchema = false)
 public abstract class PocketGrimoireDatabase extends RoomDatabase {
     public static final String DB_NAME = "POCKET_GRIMOIRE_DATABASE";
     public static final String USER_TABLE = "USER_TABLE";
     public static final String CHARACTER_SHEET_TABLE = "CHARACTER_SHEET_TABLE";
     public static final String CHARACTER_ITEMS_TABLE = "CHARACTER_ITEMS_TABLE";
+    public static final String CHARACTER_SPELLS_TABLE = "CHARACTER_SPELLS_TABLE";
+    public static final String CHARACTER_ABILITIES_TABLE = "CHARACTER_ABILITIES_TABLE";
     public static final String ITEMS_TABLE = "ITEMS_TABLE";
     public static final String SPELLS_TABLE = "SPELLS_TABLE";
     public static final String ABILITIES_TABLE = "ABILITIES_TABLE";
@@ -122,7 +128,7 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                             .andThen(spellsSeeder.seed())
                             .andThen(abilitiesSeeder.seed());
 
-            // 5) Run on IO. Optionally observeOn main if you want to toast/log on UI.
+            // 5) Run on IO. Optionally observeOn main if you want to toast/log on UI
             seedDefaultUser
                     .andThen(seedAllContent)
                     .subscribeOn(Schedulers.io())

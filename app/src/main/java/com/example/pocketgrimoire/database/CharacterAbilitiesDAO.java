@@ -4,7 +4,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.pocketgrimoire.database.entities.CharacterAbilities;
 
@@ -12,19 +11,27 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface CharacterAbilitiesDAO {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(CharacterAbilities ca);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insert(CharacterAbilities row);
 
-    @Update
-    Completable update(CharacterAbilities ca);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insertAll(List<CharacterAbilities> rows);
 
-    @Query("SELECT * FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterId = :characterId")
-    Flowable<List<CharacterAbilities>> getByCharacterId(int characterId);
+    /** Idempotent delete for corrections (e.g., level rollback or resync). */
+    @Query("DELETE FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE +
+            " WHERE characterID = :characterID AND abilityID = :abilityID")
+    Completable deleteByIds(int characterID, int abilityID);
 
-    @Query("DELETE FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE + " WHERE characterId = :characterId")
-    Completable clearForCharacter(int characterId);
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE +
+            " WHERE characterID = :characterID ORDER BY abilityID")
+    Flowable<List<CharacterAbilities>> getForCharacter(int characterID);
+
+    @Query("DELETE FROM " + PocketGrimoireDatabase.CHARACTER_ABILITIES_TABLE +
+            " WHERE characterID = :characterID")
+    Completable clearForCharacter(int characterID);
 }

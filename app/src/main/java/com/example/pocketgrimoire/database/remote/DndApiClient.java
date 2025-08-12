@@ -10,17 +10,24 @@ public final class DndApiClient {
     private static DndApiService service;
 
     public static DndApiService get() {
-        if (service == null) {
-            OkHttpClient ok = new OkHttpClient.Builder().build();
-            Retrofit r = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(ok)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                    .build();
-            service = r.create(DndApiService.class);
+        DndApiService local = service;
+        if (local == null) {
+            synchronized (DndApiClient.class) {
+                local = service;
+                if (local == null) {
+                    OkHttpClient ok = new OkHttpClient.Builder().build();
+                    Retrofit r = new Retrofit.Builder()
+                            .baseUrl(BASE_URL)
+                            .client(ok)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                            .build();
+                    local = r.create(DndApiService.class);
+                    service = local;
+                }
+            }
         }
-        return service;
+        return local;
     }
 
     private DndApiClient() {}

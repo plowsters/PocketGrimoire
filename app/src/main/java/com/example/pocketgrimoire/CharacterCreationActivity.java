@@ -42,7 +42,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         assert character != null;
         isEdit();
 
-        repository = PocketGrimoireRepository.getRepository(getApplication()).blockingGet();
+        repository = new PocketGrimoireRepository(getApplication());
 
         //setCharCreationTitle() to change title for character creation
         createCharCreationTitle();

@@ -1,32 +1,32 @@
 package com.example.pocketgrimoire.database.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Index;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
 /** Items table: (itemID PK, name UNIQUE, category). */
-@Entity(
-        tableName = PocketGrimoireDatabase.ITEMS_TABLE,
-        indices = { @Index(value = {"name"}, unique = true) }
-)
+@Entity(tableName = PocketGrimoireDatabase.ITEMS_TABLE)
 public class Items {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "itemID")
     private int itemID;
 
     @NonNull
-    @ColumnInfo(name = "name")
     private String name;
-
-    @ColumnInfo(name = "category")
     private String category;
 
+    private boolean isEquippable;
+
+    public Items() {
+      // no argument constructor for RoomDB initialization
+    }
+
+    @Ignore
     public Items(@NonNull String name, String category) {
         this.name = name;
         this.category = category;
+        this.isEquippable = false;
     }
 
     public int getItemID() { return itemID; }
@@ -37,4 +37,11 @@ public class Items {
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
+
+    public boolean isEquippable() {
+        return isEquippable;
+    }
+    public void setIsEquippable(boolean equippable) {
+        isEquippable = equippable;
+    }
 }

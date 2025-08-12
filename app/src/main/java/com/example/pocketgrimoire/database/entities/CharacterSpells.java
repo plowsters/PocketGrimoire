@@ -1,29 +1,39 @@
 package com.example.pocketgrimoire.database.entities;
 
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
-@Entity(tableName = PocketGrimoireDatabase.CHARACTER_SPELLS_TABLE)
+@Entity(
+        tableName = PocketGrimoireDatabase.CHARACTER_SPELLS_TABLE,
+        primaryKeys = {"characterID", "spellID"},
+        foreignKeys = {
+                @ForeignKey(
+                        entity = CharacterSheet.class,
+                        parentColumns = "characterID",
+                        childColumns = "characterID",
+                        onDelete = ForeignKey.CASCADE
+                ),
+                @ForeignKey(
+                        entity = Spells.class,
+                        parentColumns = "spellID",
+                        childColumns = "spellID",
+                        onDelete = ForeignKey.CASCADE
+                )
+        },
+        indices = { @Index("characterID"), @Index("spellID") }
+)
 public class CharacterSpells {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    public int characterID;
+    public int spellID;
+    public boolean isPrepared;
 
-    private int characterId;   // FK → CharacterSheet.characterID
-    private int spellId;       // FK → Spells.id   (or apiIndex if you prefer)
-    private boolean prepared;  // for spellcasters
-
-    // getters/setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public int getCharacterId() { return characterId; }
-    public void setCharacterId(int characterId) { this.characterId = characterId; }
-
-    public int getSpellId() { return spellId; }
-    public void setSpellId(int spellId) { this.spellId = spellId; }
-
-    public boolean isPrepared() { return prepared; }
-    public void setPrepared(boolean prepared) { this.prepared = prepared; }
+    public CharacterSpells() {}
+    public CharacterSpells(int characterID, int spellID, boolean isPrepared) {
+        this.characterID = characterID;
+        this.spellID = spellID;
+        this.isPrepared = isPrepared;
+    }
 }

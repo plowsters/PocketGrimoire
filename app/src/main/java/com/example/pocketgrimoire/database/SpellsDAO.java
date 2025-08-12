@@ -1,9 +1,6 @@
 package com.example.pocketgrimoire.database;
 
 import androidx.room.Dao;
-package com.example.pocketgrimoire.database;
-
-import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -25,11 +22,13 @@ public interface SpellsDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     Completable insertAll(List<Spells> spells);
 
-    /** Upsert-by-name: update the entire row's non-key fields; seeder inserts if this returns 0. */
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    long insertSync(Spells spell);
+
+    /** Update-by-name: update the entire row's non-key fields; seeder inserts if this returns 0. */
     @Query("UPDATE " + PocketGrimoireDatabase.SPELLS_TABLE +
-            " SET level = :level, school = :school, availableToClass = :availableToClass " +
-            "WHERE name = :name")
-    Single<Integer> updateByName(String name, int level, String school, List<String> availableToClass);
+            " SET level = :level, school = :school, availableToClass = :availableToClass WHERE name = :name")
+    int updateByName(String name, int level, String school, List<String> availableToClass);
 
     @Query("SELECT * FROM " + PocketGrimoireDatabase.SPELLS_TABLE + " ORDER BY spellID")
     Flowable<List<Spells>> getAllSpells();

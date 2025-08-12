@@ -22,10 +22,14 @@ public interface ItemsDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     Completable insertAll(List<Items> items);
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    long insertSync(Items item); // synchronous insert for seeding
+
+
     /** Upsert-by-name: update all non-key fields; seeder inserts if this returns 0. */
     @Query("UPDATE " + PocketGrimoireDatabase.ITEMS_TABLE +
             " SET category = :category, isEquippable = :isEquippable WHERE name = :name")
-    Single<Integer> updateByName(String name, String category, boolean isEquippable);
+    int updateByName(String name, String category, boolean isEquippable);
 
     @Query("SELECT * FROM " + PocketGrimoireDatabase.ITEMS_TABLE + " ORDER BY itemID")
     Flowable<List<Items>> getAllItems();

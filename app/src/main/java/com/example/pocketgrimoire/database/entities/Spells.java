@@ -1,41 +1,34 @@
 package com.example.pocketgrimoire.database.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Index;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
-import com.example.pocketgrimoire.database.typeConverters.Converters;
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** Spells table: (spellID PK, name UNIQUE, level, school, availableToClass). */
-@Entity(
-        tableName = PocketGrimoireDatabase.SPELLS_TABLE,
-        indices = { @Index(value = {"name"}, unique = true) }
-)
+@Entity(tableName = PocketGrimoireDatabase.SPELLS_TABLE)
 public class Spells {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "spellID")
     private int spellID;
 
     @NonNull
-    @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "level")
     private int level;
 
-    @ColumnInfo(name = "school")
     private String school;
 
-    @ColumnInfo(name = "availableToClass")
     private List<String> availableToClass;
 
+    public Spells() {
+        // No argument constructor for RoomDB initialization
+    }
+    @Ignore
     public Spells(@NonNull String name, int level, String school, List<String> availableToClass) {
         this.name = name;
         this.level = level;
