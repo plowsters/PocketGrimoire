@@ -38,7 +38,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
     }
 
     private void createBindings() {
-        //display character data top card
+        //display character data top card - getTopCard()
         binding.characterNameTextView.setText(character.getCharacterName());
         binding.currentHPTextView.setText(String.valueOf(character.getCurrentHP()));
         binding.raceTextView.setText(character.getRace());
@@ -49,6 +49,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         calculateMaxXP(currLevel); //displays current max xp depending on level
         currentCharXP(); //displays current character xp
         calculateCurrHP(); //displays current character hp
+        //attributes - getAttributes()
         binding.strValueTextView.setText(String.valueOf(character.getStrength()));
         binding.dexValueTextView.setText(String.valueOf(character.getDexterity()));
         binding.intValueTextView.setText(String.valueOf(character.getIntelligence()));
@@ -58,6 +59,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         binding.wisValueTextView.setText(String.valueOf(character.getWisdom()));
         //stat modifiers
         getStatModifiers();
+        //characteristics - getCharacteristics()
         binding.backgroundTextView.setText(character.getBackground());
         binding.eyeColorTextView.setText(character.getEyeColor());
         binding.hairColorTextView.setText(character.getHairColor());
@@ -66,6 +68,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         binding.heightTextView.setText(String.valueOf(character.getHeight()));
         binding.weightTextView.setText(String.valueOf(character.getWeight()));
         binding.charAlignTextView.setText(character.getCharacterAlignment());
+        //notes
         binding.notesTextView.setText(character.getNotes());
     }
 
@@ -81,8 +84,13 @@ public class CharacterSheetActivity extends AppCompatActivity {
         binding.armorClassValueTextView.setText(String.valueOf(character.getArmorClass()));
     }
 
+    /**
+     * Displays current level
+     * Every character will always start with level 1
+     * TODO: if there is time, set level to input and change HP and XP accordingly
+     * @return
+     */
     private int showCurrLevel() {
-        //everyone starts at level 1
         character.setLevel(1);
         int currLevel = character.getLevel();
         binding.currLevelEditText.setText(String.valueOf(currLevel));
@@ -103,6 +111,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
      * calculateMaxXP calculates max XP for each class depending on their level
      * Starting max xp is 300
      * The calculation is based on 300 * current character level
+     * @param currLevel
      */
     private void calculateMaxXP(int currLevel) {
         int maxXP = 300 * currLevel;
@@ -113,8 +122,6 @@ public class CharacterSheetActivity extends AppCompatActivity {
      * findHitDie assigns hitDie for each class
      */
     private int findHitDie() {
-//        if (character.getClazz() == someclass)
-//            set HitDie to number
         int hitDie = 0;
         String clazz = character.getClazz();
         switch (clazz) {
