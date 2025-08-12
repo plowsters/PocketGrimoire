@@ -28,7 +28,7 @@ public interface SpellsDAO {
     /** Update-by-name: update the entire row's non-key fields; seeder inserts if this returns 0. */
     @Query("UPDATE " + PocketGrimoireDatabase.SPELLS_TABLE +
             " SET level = :level, school = :school, availableToClass = :availableToClass WHERE name = :name")
-    int updateByName(String name, int level, String school, List<String> availableToClass);
+    Single<Integer> updateByName(String name, int level, String school, List<String> availableToClass);
 
     @Query("SELECT * FROM " + PocketGrimoireDatabase.SPELLS_TABLE + " ORDER BY spellID")
     Flowable<List<Spells>> getAllSpells();

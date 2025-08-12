@@ -10,79 +10,84 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+/**
+ * Seeds Abilities (Traits & Features).
+ *
+ * Strategy:
+ * - Fetch the full, de-duplicated ability roster + availability (class/race) via the loader
+ *   BEFORE opening a DB transaction.
+ * - Inside one Room transaction:
+ *   1) Upsert the row identity with name/flag (traitOrFeat).
+ *   2) Update availability-for-class OR availability-for-race, based on the flag.
+ *   (If the identity update affects 0 rows, insert; then write availability.)
+ */
 public final class AbilitiesSeeder {
     private final AbilitiesNetworkLoader loader;
     private final AbilitiesDAO abilitiesDao;
     private final RoomDatabase db;
-
-    // Supply class/race maps (index -> display name).
-    private final Map<String,String> classIndexToDisplay;
-    private final Map<String,String> raceIndexToDisplay;
+    private final Map<String, String> classes;
+    private final Map<String, String> races;
 
     public AbilitiesSeeder(AbilitiesNetworkLoader loader,
                            AbilitiesDAO abilitiesDao,
                            RoomDatabase db,
-                           Map<String,String> classIndexToDisplay,
-                           Map<String,String> raceIndexToDisplay) {
-        this.loader = loader; this.abilitiesDao = abilitiesDao; this.db = db;
-        this.classIndexToDisplay = classIndexToDisplay;
-        this.raceIndexToDisplay = raceIndexToDisplay;
+                           Map<String, String> classes,
+                           Map<String, String> races) {
+        this.loader = loader;
+        this.abilitiesDao = abilitiesDao;
+        this.db = db;
+        this.classes = classes;
+        this.races = races;
     }
 
-    /** Seed base abilities, then enrich availability by class/race. */
+    /**
+     * Fetch abilities and upsert them atomically, including availability.
+     *
+     * @return Completable that completes when seeding finishes
+     */
     public Completable seed() {
-        // Base rows (names + traitOrFeat flag, empty lists)
-        Single<List<Abilities>> baseSingle = loader.loadBaseAbilities();
+        // 1) Network first: build a full list with flags + availability (no DB yet).
+        return loader.fetchAll(classes, races) // Single<List<Abilities>>
+                // 2) Do DB-only work inside one transaction and block until done.
+                .flatMapCompletable(all ->
+                        Completable.fromAction(() ->
+                                db.runInTransaction(() -> {
+                                    Flowable.fromIterable(all)
+                                            .concatMapCompletable(a -> {
+                                                // Step A: ensure the row exists with the correct name/flag
+                                                Completable upsertIdentity =
+                                                        abilitiesDao.updateNameAndFlagByName(
+                                                                        a.getName(), // search by same name
+                                                                        a.getName(), // keep/normalize name
+                                                                        a.isTraitOrFeat()
+                                                                )
+                                                                .flatMapCompletable(rows ->
+                                                                        rows > 0
+                                                                                ? Completable.complete()
+                                                                                : abilitiesDao.insert(a)
+                                                                );
 
-        // Persist base rows
-        Completable persistBase = baseSingle
-                .flattenAsFlowable(list -> list)
-                .concatMapCompletable(ab ->
-                        abilitiesDao.updateByNameAndFlag(
-                                        ab.getName(),
-                                        ab.isTraitOrFeat()
-                                )
-                                .subscribeOn(Schedulers.io())
-                                .flatMapCompletable(rows ->
-                                        rows > 0
-                                                ? Completable.complete()
-                                                : abilitiesDao.insert(ab)
-                                                .subscribeOn(Schedulers.io())
-                                )
-                );
+                                                // Step B: write availability by type
+                                                Completable writeAvailability =
+                                                        a.isTraitOrFeat()
+                                                                // traitOrFeat == true -> TRAIT -> availableToRace
+                                                                ? abilitiesDao
+                                                                .updateAvailableToRace(a.getName(), a.getAvailableToRace())
+                                                                .ignoreElement()
+                                                                // traitOrFeat == false -> FEATURE -> availableToClass
+                                                                : abilitiesDao
+                                                                .updateAvailableToClass(a.getName(), a.getAvailableToClass())
+                                                                .ignoreElement();
 
-        // Add class and race availability
-        Single<List<Abilities>> enrichedSingle = baseSingle
-                .flatMap(base -> loader.enrichAvailability(base, classIndexToDisplay, raceIndexToDisplay));
-
-        // Persist availability lists
-        Completable persistAvail = enrichedSingle
-                .flattenAsFlowable(list -> list)
-                .concatMapCompletable(ab ->
-                        abilitiesDao.updateAvailabilityByNameAndFlag(
-                                        ab.getName(),
-                                        ab.isTraitOrFeat(),
-                                        ab.getAvailableToClass(),
-                                        ab.getAvailableToRace()
-                                )
-                                .subscribeOn(Schedulers.io())
-                                // If row didn’t exist (should not happen if base row step ran), insert full row
-                                .flatMapCompletable(rows ->
-                                        rows > 0
-                                                ? Completable.complete()
-                                                : abilitiesDao.insert(ab).subscribeOn(Schedulers.io())
-                                )
-                );
-
-        // Wrap in a transaction to keep the table consistent on failure: base rows first, then availability
-        return Completable.fromAction(() ->
-                db.runInTransaction(() -> {
-                    persistBase.blockingAwait();
-                    persistAvail.blockingAwait();
-                })
-        ).subscribeOn(Schedulers.io());
+                                                return upsertIdentity.andThen(writeAvailability);
+                                            })
+                                            .blockingAwait();
+                                })
+                        )
+                )
+                .subscribeOn(Schedulers.io());
     }
 }

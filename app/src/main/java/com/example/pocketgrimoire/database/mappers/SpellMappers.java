@@ -17,7 +17,30 @@ import java.util.*;
  */
 public final class SpellMappers {
 
-    private SpellMappers() {}
+    private SpellMappers() {
+        // No argument constructor
+    }
+
+    public static Spells fromNameLevelSchoolAndAvailability(
+            String name, Integer level, String school, List<String> availableToClass) {
+
+        if (name == null) return null;
+        Spells e = new Spells();
+        e.setName(normalize(name));
+        e.setLevel(level != null ? level : 0);
+        e.setSchool(normalize(school));
+
+        // defensive copy + normalize + dedupe while preserving order
+        List<String> out = new ArrayList<>();
+        if (availableToClass != null) {
+            for (String s : availableToClass) {
+                String n = normalize(s);
+                if (n != null && !n.isEmpty() && !out.contains(n)) out.add(n);
+            }
+        }
+        e.setAvailableToClass(out);
+        return e;
+    }
 
     /**
      * Map a single spell DTO to a Spells entity.
@@ -43,7 +66,7 @@ public final class SpellMappers {
 
     /**
      * Convert a list of ApiRef (for example, class references) into a list of normalized names,
-     * removing duplicates while preserving first-seen order.
+     * removing duplicates while preserving first-seen order
      *
      * @param refs list of API references (for example, dto.classes); may be null
      * @return a new list of unique, normalized names in stable order (never null)

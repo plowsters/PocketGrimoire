@@ -100,12 +100,11 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
 
             // Build seeders they use update and insert methods from the DAOs
             ItemsSeeder itemsSeeder = new ItemsSeeder(itemsLoader, INSTANCE.itemsDAO(), INSTANCE);
-            SpellsSeeder spellsSeeder = new SpellsSeeder(spellsLoader, INSTANCE.spellsDAO(), INSTANCE);
             // class/race maps used for availability
             Map<String,String> classes = ClassRaceMaps.defaultClasses();
             Map<String,String> races   = ClassRaceMaps.defaultRaces();
-            AbilitiesSeeder abilitiesSeeder =
-                    new AbilitiesSeeder(abilitiesLoader, INSTANCE.abilitiesDAO(), INSTANCE, classes, races);
+            SpellsSeeder spellsSeeder = new SpellsSeeder(spellsLoader, INSTANCE.spellsDAO(), INSTANCE, classes);
+            AbilitiesSeeder abilitiesSeeder = new AbilitiesSeeder(abilitiesLoader, INSTANCE.abilitiesDAO(), INSTANCE, classes, races);
 
             /* This uses RxJava instead of Executor to make DB queries on a background thread
                Benefits of RxJava over Executor are better lifecycle management, better task scheduling,
@@ -113,12 +112,21 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                A "Completable" is a task (Object) that can be completed but doesn't return anything.
                Great for DB inserts
              */
-            Completable seedDefaultUser = Completable.fromAction(() -> {
-                UserDAO userDao = INSTANCE.userDAO();
+            Completable seedDefaultUser = Completable.defer(() -> {
                 String salt = PasswordUtils.generateSalt();
                 String hashedPassword = PasswordUtils.hashPassword("Cleric123!", salt);
-                User defaultUser = new User("dwarfcleric@pocketgrimoire.com", "bobthedwarf", salt, hashedPassword);
-                userDao.insert(defaultUser).blockingAwait();
+                User defaultUser = new User(
+                        "dwarfcleric@pocketgrimoire.com",
+                        "bobthedwarf",
+                        salt,
+                        hashedPassword
+                );
+                return INSTANCE.userDAO().insert(defaultUser);
+            });
+
+            // Verify step can query counts and log them at the end
+            Completable verifyCounts = Completable.fromAction(() -> {
+                Log.i(LoginActivity.TAG, "Seeding complete.");
             });
 
             // Call the 3 content seeders AFTER the user insert
@@ -128,13 +136,17 @@ public abstract class PocketGrimoireDatabase extends RoomDatabase {
                             .andThen(spellsSeeder.seed())
                             .andThen(abilitiesSeeder.seed());
 
-            // 5) Run on IO. Optionally observeOn main if you want to toast/log on UI
+            // Run on IO Scheduler. Optionally observeOn main if you want to toast/log on UI
             seedDefaultUser
-                    .andThen(seedAllContent)
+                    .doOnSubscribe(d -> Log.i(LoginActivity.TAG, "Seeding default user…"))
+                    .andThen(itemsSeeder.seed().doOnSubscribe(d -> Log.i(LoginActivity.TAG, "Seeding items…")))
+                    .andThen(spellsSeeder.seed().doOnSubscribe(d -> Log.i(LoginActivity.TAG, "Seeding spells…")))
+                    .andThen(abilitiesSeeder.seed().doOnSubscribe(d -> Log.i(LoginActivity.TAG, "Seeding abilities…")))
+                    .andThen(verifyCounts)
                     .subscribeOn(Schedulers.io())
                     .subscribe(
-                            () -> Log.i(LoginActivity.TAG, "Default user + initial content seeded."),
-                            t  -> Log.e(LoginActivity.TAG, "Seeding failed", t)
+                            () -> Log.i(LoginActivity.TAG, "Seeding + verification complete."),
+                            t -> Log.e(LoginActivity.TAG, "Seeding failed", t)
                     );
         }
     };

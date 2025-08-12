@@ -1,57 +1,53 @@
 package com.example.pocketgrimoire.database.mappers;
 
-import com.example.pocketgrimoire.database.remote.dto.ResourceRefDto;
-import com.example.pocketgrimoire.database.remote.dto.EquipmentCategoryRequestDto;
-import com.example.pocketgrimoire.database.remote.dto.ApiRef;
 import com.example.pocketgrimoire.database.entities.Items;
+import com.example.pocketgrimoire.database.remote.dto.ApiRef;
+import com.example.pocketgrimoire.database.remote.dto.EquipmentCategoryRequestDto;
+import com.example.pocketgrimoire.database.remote.dto.ResourceRefDto;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
- * Maps DTOs from API calls to the RoomDB Items Object
- * NOTE: We dedupe by "name" at the repository/DAO layer (update-by-name, else insert)
+ * Mapping helpers for Items + small utilities to build category maps.
  */
 public final class ItemMappers {
 
     private ItemMappers() {}
 
     /**
-     * Map a single equipment reference + its category name to an Items entity object
-     * The DB's primary key (itemID) is auto-incremented
-     * @param ref the default Dto structure for D&D 5e API
-     * @param category the equipment category of the item
-     * @return Items object that can now be inserted into the DB
+     * Build an Items entity from a ResourceRefDto and category name.
+     * Also computes isEquippable using EquippableCategory.
+     *
+     * @param ref           equipment reference (index/name/url)
+     * @param categoryName  display name for the equipment category (may be null)
+     * @return Items row or null if ref/name is missing
      */
-    public static Items fromEquipmentRef(ResourceRefDto ref, String category) {
-        if (ref == null) return null;
+    public static Items fromEquipmentRef(ResourceRefDto ref, String categoryName) {
+        if (ref == null || ref.name == null) return null;
+        String name = normalize(ref.name);
+        String cat  = normalize(categoryName);
+        boolean equippable = EquippableCategory.isEquippable(cat);
         Items e = new Items();
-        e.setName(normalize(ref.name));
-        e.setCategory(normalize(category));
-        e.setIsEquippable(EquippableCategory.isEquippable(category));
+        e.setName(name);
+        e.setCategory(cat);
+        e.setIsEquippable(equippable);
         return e;
     }
 
     /**
-     * API lookup: equipment index -> category NAME.
-     * This lets you take results from /equipment and fill "category" without calling each item detail.
+     * Add all equipment in a category response to the given index→categoryName map.
+     * Keyed by equipment index (stable id from the API).
      *
-     * @param categories List of EquipmentCategoryRequestDto objects from /api/2014/equipment-categories/{index}
-     * @return A HashMap with key = API index of the equipment reference, value = normalized String category for RoomDB entity
+     * @param acc index → category display name (mutated)
+     * @param cat category response DTO
      */
-    public static Map<String, String> buildIndexToCategoryMap(List<EquipmentCategoryRequestDto> categories) {
-        Map<String, String> map = new HashMap<>();
-        if (categories == null) return map;
-
-        for (EquipmentCategoryRequestDto cat : categories) {
-            String catName = normalize(cat.name);
-            if (cat.equipment == null) continue;
-
-            for (ApiRef eq : cat.equipment) {
-                if (eq == null || eq.index == null) continue;
-                map.put(eq.index, catName);
-            }
+    public static void putCategoryMemberships(HashMap<String,String> acc, EquipmentCategoryRequestDto cat) {
+        if (acc == null || cat == null || cat.name == null || cat.equipment == null) return;
+        for (ApiRef r : cat.equipment) {
+            if (r == null || r.index == null) continue;
+            acc.put(r.index, cat.name);
         }
-        return map;
     }
 
     /**

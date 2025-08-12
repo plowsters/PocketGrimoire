@@ -5,10 +5,19 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Retrofit client singleton for the D&D 5e API.
+ * Provides a singleton DndApiService configured with RxJava3 & Gson.
+ */
 public final class DndApiClient {
     private static final String BASE_URL = "https://www.dnd5eapi.co/";
     private static DndApiService service;
 
+    /**
+     * Get the singleton DndApiService instance
+     *
+     * @return DndApiService
+     */
     public static DndApiService get() {
         DndApiService local = service;
         if (local == null) {

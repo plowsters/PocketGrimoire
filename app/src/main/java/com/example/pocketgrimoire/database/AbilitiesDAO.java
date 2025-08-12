@@ -28,16 +28,16 @@ public interface AbilitiesDAO {
     // 1) Update name/flag by name (search by name)
     @Query("UPDATE " + PocketGrimoireDatabase.ABILITIES_TABLE +
             " SET name = :newName, traitOrFeat = :traitOrFeat WHERE name = :searchName")
-    int updateNameAndFlagByName(String searchName, String newName, boolean traitOrFeat);
+    Single<Integer> updateNameAndFlagByName(String searchName, String newName, boolean traitOrFeat);
 
     // 2) Update availability by (name, flag)
     @Query("UPDATE " + PocketGrimoireDatabase.ABILITIES_TABLE +
             " SET availableToClass = :availableToClass WHERE name = :name AND traitOrFeat = 0")
-    int updateAvailableToClass(String name, List<String> availableToClass);
+    Single<Integer> updateAvailableToClass(String name, List<String> availableToClass);
 
     @Query("UPDATE " + PocketGrimoireDatabase.ABILITIES_TABLE +
             " SET availableToRace = :availableToRace WHERE name = :name AND traitOrFeat = 1")
-    int updateAvailableToRace(String name, List<String> availableToRace);
+    Single<Integer> updateAvailableToRace(String name, List<String> availableToRace);
 
     @Query("SELECT * FROM " + PocketGrimoireDatabase.ABILITIES_TABLE + " ORDER BY abilityID")
     Flowable<List<Abilities>> getAllAbilities();
