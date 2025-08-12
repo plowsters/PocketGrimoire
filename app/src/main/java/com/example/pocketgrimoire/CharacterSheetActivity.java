@@ -106,8 +106,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
      */
     private void calculateMaxXP(int currLevel) {
         int maxXP = 300 * currLevel;
-        binding.maxHPTextView.setText(String.valueOf(maxXP));
-
+        binding.maxXPTextView.setText(String.valueOf(maxXP));
     }
 
     /**
