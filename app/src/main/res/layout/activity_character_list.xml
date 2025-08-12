@@ -8,45 +8,64 @@
 
     <ImageView
         android:id="@+id/contentImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="180dp"
-        android:layout_marginBottom="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:srcCompat="@drawable/middle_section"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="272dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userTitleImageView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/adminuinavbar"
+        app:itemIconSize="32dp"
+        app:itemIconTint="@color/white"
+        app:itemPaddingTop="28dp"
+        app:itemTextAppearanceActive="@style/BottomNav.Active"
+        app:itemTextAppearanceInactive="@style/BottomNav.Inactive"
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/characterListDisplayRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="100dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="28dp"
         android:orientation="vertical"
         android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/lineDecoratorImageView"
         tools:listitem="@layout/character_list_recycler_item" />
 
     <ImageView
         android:id="@+id/userTitleImageView"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/user_type_title"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toTopOf="@+id/contentImageView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
 
     <TextView
+        android:id="@+id/userTypeTitleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PLAYER"
         android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
         android:textSize="24sp"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="@+id/userTitleImageView"
@@ -70,18 +89,21 @@
         android:layout_marginTop="20dp"
         android:text="@string/characters"
         android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
         android:textSize="20sp"
         android:id="@+id/characterTitleTextView"
         app:layout_constraintTop_toTopOf="@+id/contentImageView"
         app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintBottom_toBottomOf="@id/lineDecoratorImageView"
         app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
         />
 
-    <ImageView
-        android:id="@+id/addCharacterImageView"
+    <ImageButton
+        android:id="@+id/addCharacterImageButton"
+        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         app:srcCompat="@drawable/add_new_character_button"
         app:layout_constraintBottom_toBottomOf="@+id/contentImageView"
         app:layout_constraintRight_toRightOf="@+id/contentImageView"
@@ -95,11 +117,22 @@
         android:textSize="12sp"
         android:text="ADD NEW CHARACTER"
         android:textColor="#BEB688"
-        app:layout_constraintTop_toTopOf="@+id/addCharacterImageView"
-        app:layout_constraintBottom_toBottomOf="@id/addCharacterImageView"
-        app:layout_constraintLeft_toLeftOf="@+id/addCharacterImageView"
-        app:layout_constraintRight_toRightOf="@+id/addCharacterImageView"/>
+        app:layout_constraintTop_toTopOf="@+id/addCharacterImageButton"
+        app:layout_constraintBottom_toBottomOf="@id/addCharacterImageButton"
+        app:layout_constraintLeft_toLeftOf="@+id/addCharacterImageButton"
+        app:layout_constraintRight_toRightOf="@+id/addCharacterImageButton"/>
 
 
+    <TextView
+        android:id="@+id/accountTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:text="username"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/nav_view"
+        app:layout_constraintTop_toTopOf="@id/nav_view"
+        app:layout_constraintRight_toRightOf="@id/nav_view"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

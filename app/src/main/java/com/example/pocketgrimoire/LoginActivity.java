@@ -1,6 +1,8 @@
 package com.example.pocketgrimoire;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pocketgrimoire.databinding.ActivityLoginBinding;
+import com.example.pocketgrimoire.fragments.AccountDialogFragment;
 import com.example.pocketgrimoire.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,6 +29,11 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
+        // Check if a user is already logged in
+        if (!getIntent().getBooleanExtra(AccountDialogFragment.LOGOUT_EXTRA, false)) {
+            checkUserLoggedIn();
+        }
+
         // Set up the login button click listener
         binding.loginButtonNavigateImageView.setOnClickListener(v -> {
             String username = binding.usernameTextInputEditText.getText().toString().trim();
@@ -35,6 +43,16 @@ public class LoginActivity extends AppCompatActivity {
 
         // Observe the LiveData from the ViewModel
         observeViewModel();
+    }
+
+    private void checkUserLoggedIn() {
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt(getString(R.string.preference_user_id_key), -1);
+        if (userId != -1) {
+            Intent intent = AdminNavbarActivity.newIntent(LoginActivity.this, userId);
+            startActivity(intent);
+            finish();
+        }
     }
 
     /**
@@ -50,6 +68,11 @@ public class LoginActivity extends AppCompatActivity {
         viewModel.getLoginSuccess().observe(this, isSuccess -> {
             if (isSuccess != null) {
                 Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                // Save the user's ID to SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(getString(R.string.preference_user_id_key), isSuccess.getUserID());
+                editor.apply();
                 // Use the Intent Factory to create the intent and start the next activity
                 Intent intent = AdminNavbarActivity.newIntent(LoginActivity.this, isSuccess.getUserID());
                 startActivity(intent);

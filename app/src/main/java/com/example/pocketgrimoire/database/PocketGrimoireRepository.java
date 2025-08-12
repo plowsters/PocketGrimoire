@@ -97,8 +97,14 @@ public class PocketGrimoireRepository {
         return characterSheetDAO.getAllCharacterSheetByUserID(loggedInUserId);
     }
 
-    public Completable insertCharacterSheet(CharacterSheet characterSheet) {
-        return Completable.fromAction(() -> characterSheetDAO.insert(characterSheet))
-                .subscribeOn(Schedulers.io());
+    public Completable insertCharacterSheet(CharacterSheet character) {
+        return characterSheetDAO.insert(character).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * deleteCharacter
+     */
+    public void deleteCharacterSheet(CharacterSheet character) {
+        characterSheetDAO.delete(character).subscribeOn(Schedulers.io()).blockingAwait();
     }
 }

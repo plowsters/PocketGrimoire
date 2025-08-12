@@ -22,19 +22,20 @@
         android:id="@+id/characterListItemTextview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
         android:padding="2dp"
         android:text="@string/character_name"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_centerInParent="true" />
+        android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:textSize="18sp"/>
 
     <ImageButton
         android:id="@+id/editCharacterImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
+        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         app:srcCompat="@drawable/edit_button" />
 
@@ -43,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="230dp"
+        android:layout_marginTop="20dp"
         app:srcCompat="@drawable/delete_button"
         android:background="@android:color/transparent"
         />

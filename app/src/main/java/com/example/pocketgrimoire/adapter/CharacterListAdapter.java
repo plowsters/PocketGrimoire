@@ -1,5 +1,6 @@
-package com.example.pocketgrimoire.viewmodel;//package com.example.pocketgrimoire.database.viewHolders;
+package com.example.pocketgrimoire.adapter;//package com.example.pocketgrimoire.database.viewHolders;
 
+import android.app.Application;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.example.pocketgrimoire.R;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.databinding.CharacterListRecyclerItemBinding;
-import com.example.pocketgrimoire.viewmodel.CharacterListViewHolder;
+import com.example.pocketgrimoire.viewholder.CharacterListViewHolder;
 
 /**
  * CharacterListAdapter binds data to views using ViewHolder to handle events
@@ -24,6 +25,7 @@ public class CharacterListAdapter extends ListAdapter<CharacterSheet, CharacterL
     private CharacterSheetDiff.OnItemClickListener onItemClickListener;
     CharacterListRecyclerItemBinding binding;
     Context context;
+    Application application;
 
     public CharacterListAdapter (@NonNull DiffUtil.ItemCallback<CharacterSheet> diffCallback) {
         super(diffCallback);
@@ -31,18 +33,18 @@ public class CharacterListAdapter extends ListAdapter<CharacterSheet, CharacterL
 
     @NonNull
     @Override
-    public com.example.pocketgrimoire.viewmodel.CharacterListViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType) {
+    public CharacterListViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType) {
         System.out.println("In adapter oncreateviewholder: " + parent.getContext()); //context is null here
 
         context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.character_list_recycler_item, parent, false);
-        return new com.example.pocketgrimoire.viewmodel.CharacterListViewHolder(view);
+        return new CharacterListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CharacterListViewHolder holder, int position) {
         CharacterSheet current = getItem(position);
-        holder.bind(current, context);
+        holder.bind(current, context, application);
 
     }
     public static class CharacterSheetDiff extends DiffUtil.ItemCallback<CharacterSheet> {

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,6 +40,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/inknut_antiqua_regular"
             android:text="CHARACTER NAME"
+            android:textAllCaps="true"
             android:textColor="#BEB688"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="@id/characterNameAndDetailsImageView"
@@ -116,9 +116,9 @@
             android:text="00 / "
             android:textColor="#BEB688"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/hpBarImageView"
             app:layout_constraintRight_toLeftOf="@id/maxHPTextView"
-            app:layout_constraintTop_toTopOf="@id/hpBarImageView"
-            app:layout_constraintBottom_toBottomOf="@id/hpBarImageView"/>
+            app:layout_constraintTop_toTopOf="@id/hpBarImageView" />
 
         <TextView
             android:id="@+id/maxHPTextView"
@@ -139,8 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             app:layout_constraintBottom_toBottomOf="@id/characterDetailsTopImageView"
-            app:layout_constraintRight_toLeftOf="@id/xpBarImageView"
             app:layout_constraintLeft_toLeftOf="@id/characterDetailsTopImageView"
+            app:layout_constraintRight_toLeftOf="@id/xpBarImageView"
             app:layout_constraintTop_toTopOf="@id/acImageView"
             app:srcCompat="@drawable/ac_lvl_section" />
 
@@ -149,26 +149,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/inknut_antiqua_regular"
             android:text="LVL"
             android:textColor="#BEB688"
             android:textSize="15sp"
-            android:fontFamily="@font/inknut_antiqua_regular"
-            app:layout_constraintTop_toTopOf="@id/levelImageView"
             app:layout_constraintBottom_toBottomOf="@id/levelImageView"
-            app:layout_constraintLeft_toLeftOf="@id/levelImageView"/>
+            app:layout_constraintLeft_toLeftOf="@id/levelImageView"
+            app:layout_constraintTop_toTopOf="@id/levelImageView" />
 
         <TextView
             android:id="@+id/currLevelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00"
-            android:textSize="20sp"
             android:fontFamily="@font/inria_serif_light"
+            android:text="00"
             android:textColor="#BEB688"
-            app:layout_constraintTop_toTopOf="@id/levelImageView"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/levelImageView"
             app:layout_constraintLeft_toRightOf="@id/levelTextView"
-            app:layout_constraintRight_toRightOf="@id/levelImageView"/>
+            app:layout_constraintRight_toRightOf="@id/levelImageView"
+            app:layout_constraintTop_toTopOf="@id/levelImageView" />
 
         <ImageView
             android:id="@+id/xpBarImageView"
@@ -196,23 +196,23 @@
             android:id="@+id/maxXPTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/inria_serif_light"
             android:layout_marginEnd="10dp"
+            android:fontFamily="@font/inria_serif_light"
             android:text="100"
             android:textColor="#BEB688"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/xpBarImageView"
             app:layout_constraintRight_toRightOf="@id/xpBarImageView"
-            app:layout_constraintTop_toTopOf="@id/xpBarImageView"/>
+            app:layout_constraintTop_toTopOf="@id/xpBarImageView" />
 
         <TextView
             android:id="@+id/xpTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/inknut_antiqua_regular"
             android:text="XP"
             android:textColor="#BEB688"
-            android:fontFamily="@font/inknut_antiqua_regular"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/xpBarImageView"
             app:layout_constraintLeft_toLeftOf="@id/xpBarImageView"
@@ -224,36 +224,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:layout_marginEnd="10dp"
-            app:srcCompat="@drawable/ac_lvl_section"
+            app:layout_constraintRight_toLeftOf="@id/hpBarImageView"
             app:layout_constraintTop_toBottomOf="@id/characterNameAndDetailsImageView"
-            app:layout_constraintRight_toLeftOf="@id/hpBarImageView"/>
+            app:srcCompat="@drawable/ac_lvl_section" />
 
         <TextView
             android:id="@+id/armorClassTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/inknut_antiqua_regular"
             android:text="AC"
             android:textColor="#BEB688"
-            android:fontFamily="@font/inknut_antiqua_regular"
             android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/acImageView"
             app:layout_constraintLeft_toLeftOf="@id/acImageView"
-            app:layout_constraintTop_toTopOf="@id/acImageView"
-            app:layout_constraintBottom_toBottomOf="@id/acImageView"/>
+            app:layout_constraintTop_toTopOf="@id/acImageView" />
 
         <TextView
             android:id="@+id/armorClassValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
+            android:fontFamily="@font/inria_serif_light"
             android:text="00"
             android:textColor="#BEB688"
             android:textSize="20sp"
-            android:fontFamily="@font/inria_serif_light"
-            app:layout_constraintTop_toTopOf="@id/acImageView"
-            app:layout_constraintRight_toRightOf="@id/acImageView"
             app:layout_constraintBottom_toBottomOf="@id/acImageView"
-            app:layout_constraintLeft_toRightOf="@id/armorClassTextView"/>
+            app:layout_constraintLeft_toRightOf="@id/armorClassTextView"
+            app:layout_constraintRight_toRightOf="@id/acImageView"
+            app:layout_constraintTop_toTopOf="@id/acImageView" />
 
         <ImageView
             android:id="@+id/strBoxImageView"
@@ -270,10 +270,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/attribute_display"
-            app:layout_constraintTop_toBottomOf="@id/characterDetailsTopImageView"
+            app:layout_constraintLeft_toRightOf="@id/strBoxImageView"
             app:layout_constraintRight_toLeftOf="@id/intBoxImageView"
-            app:layout_constraintLeft_toRightOf="@id/strBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/characterDetailsTopImageView"
+            app:srcCompat="@drawable/attribute_display" />
 
         <ImageView
             android:id="@+id/intBoxImageView"
@@ -281,33 +281,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="6dp"
-            app:srcCompat="@drawable/attribute_display"
-            app:layout_constraintTop_toBottomOf="@id/characterDetailsTopImageView"
             app:layout_constraintLeft_toRightOf="@id/dexBoxImageView"
             app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/characterDetailsTopImageView"
+            app:srcCompat="@drawable/attribute_display" />
 
         <ImageView
             android:id="@+id/chaBoxImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="6dp"
-            app:srcCompat="@drawable/attribute_display"
-            app:layout_constraintTop_toBottomOf="@id/strBoxImageView"
+            android:layout_marginTop="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/conBoxImageView"/>
+            app:layout_constraintRight_toLeftOf="@id/conBoxImageView"
+            app:layout_constraintTop_toBottomOf="@id/strBoxImageView"
+            app:srcCompat="@drawable/attribute_display" />
 
         <ImageView
             android:id="@+id/conBoxImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/attribute_display"
-            app:layout_constraintTop_toBottomOf="@id/dexBoxImageView"
             app:layout_constraintLeft_toRightOf="@id/wisBoxImageView"
             app:layout_constraintRight_toLeftOf="@id/chaBoxImageView"
-            />
+            app:layout_constraintTop_toBottomOf="@id/dexBoxImageView"
+            app:srcCompat="@drawable/attribute_display" />
 
         <ImageView
             android:id="@+id/wisBoxImageView"
@@ -316,324 +314,336 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="6dp"
 
-            app:srcCompat="@drawable/attribute_display"
-            app:layout_constraintTop_toBottomOf="@id/intBoxImageView"
             app:layout_constraintLeft_toRightOf="@id/conBoxImageView"
             app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/intBoxImageView"
+            app:srcCompat="@drawable/attribute_display" />
 
         <TextView
             android:id="@+id/strTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
             android:fontFamily="@font/inknut_antiqua_regular"
+            android:text="STR"
             android:textColor="#BEB688"
             android:textSize="12sp"
-            android:text="STR"
-            android:layout_marginTop="5sp"
-            app:layout_constraintTop_toTopOf="@id/strBoxImageView"
             app:layout_constraintLeft_toLeftOf="@id/strBoxImageView"
-            app:layout_constraintRight_toRightOf="@id/strBoxImageView"/>
+            app:layout_constraintRight_toRightOf="@id/strBoxImageView"
+            app:layout_constraintTop_toTopOf="@id/strBoxImageView" />
 
         <TextView
             android:id="@+id/strValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#BEB688"
-            android:fontFamily="@font/inria_serif_light"
-            android:textSize="40sp"
-            android:text="00"
             android:layout_marginBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@id/strTextView"
+            android:fontFamily="@font/inria_serif_light"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="@id/strSMTextView"
+            app:layout_constraintLeft_toLeftOf="@id/strBoxImageView"
             app:layout_constraintRight_toRightOf="@id/strBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/strBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/strTextView" />
 
         <TextView
             android:id="@+id/strSMTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0"
-            android:textSize="15sp"
             android:layout_marginBottom="5dp"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inknut_antiqua_medium"
+            android:text="+0"
+            android:textColor="#BEB688"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/strBoxImageView"
-            app:layout_constraintTop_toBottomOf="@id/strValueTextView"
+            app:layout_constraintLeft_toLeftOf="@id/strBoxImageView"
             app:layout_constraintRight_toRightOf="@id/strBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/strBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/strValueTextView" />
 
         <TextView
             android:id="@+id/dexTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
             android:fontFamily="@font/inknut_antiqua_regular"
+            android:text="DEX"
             android:textColor="#BEB688"
             android:textSize="12sp"
-            android:text="DEX"
-            android:layout_marginTop="5sp"
-            app:layout_constraintTop_toTopOf="@id/dexBoxImageView"
             app:layout_constraintLeft_toLeftOf="@id/dexBoxImageView"
-            app:layout_constraintRight_toRightOf="@id/dexBoxImageView"/>
+            app:layout_constraintRight_toRightOf="@id/dexBoxImageView"
+            app:layout_constraintTop_toTopOf="@id/dexBoxImageView" />
 
         <TextView
             android:id="@+id/dexValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#BEB688"
-            android:fontFamily="@font/inria_serif_light"
-            android:textSize="40sp"
-            android:text="00"
             android:layout_marginBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@id/dexTextView"
+            android:fontFamily="@font/inria_serif_light"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="@id/dexSMTextView"
+            app:layout_constraintLeft_toLeftOf="@id/dexBoxImageView"
             app:layout_constraintRight_toRightOf="@id/dexBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/dexBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/dexTextView" />
 
         <TextView
             android:id="@+id/dexSMTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0"
-            android:textSize="15sp"
-            android:textColor="#BEB688"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/inknut_antiqua_medium"
+            android:text="+0"
+            android:textColor="#BEB688"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/dexBoxImageView"
-            app:layout_constraintTop_toBottomOf="@id/dexValueTextView"
+            app:layout_constraintLeft_toLeftOf="@id/dexBoxImageView"
             app:layout_constraintRight_toRightOf="@id/dexBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/dexBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/dexValueTextView" />
 
         <TextView
             android:id="@+id/intTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
             android:fontFamily="@font/inknut_antiqua_regular"
+            android:text="INT"
             android:textColor="#BEB688"
             android:textSize="12sp"
-            android:text="INT"
-            android:layout_marginTop="5sp"
-            app:layout_constraintTop_toTopOf="@id/intBoxImageView"
             app:layout_constraintLeft_toLeftOf="@id/intBoxImageView"
-            app:layout_constraintRight_toRightOf="@id/intBoxImageView"/>
+            app:layout_constraintRight_toRightOf="@id/intBoxImageView"
+            app:layout_constraintTop_toTopOf="@id/intBoxImageView" />
 
         <TextView
             android:id="@+id/intValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#BEB688"
-            android:fontFamily="@font/inria_serif_light"
-            android:textSize="40sp"
-            android:text="00"
             android:layout_marginBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@id/intTextView"
+            android:fontFamily="@font/inria_serif_light"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="@id/intSMTextView"
+            app:layout_constraintLeft_toLeftOf="@id/intBoxImageView"
             app:layout_constraintRight_toRightOf="@id/intBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/intBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/intTextView" />
 
         <TextView
             android:id="@+id/intSMTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0"
-            android:textSize="15sp"
-            android:textColor="#BEB688"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/inknut_antiqua_medium"
+            android:text="+0"
+            android:textColor="#BEB688"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/intBoxImageView"
-            app:layout_constraintTop_toBottomOf="@id/intValueTextView"
+            app:layout_constraintLeft_toLeftOf="@id/intBoxImageView"
             app:layout_constraintRight_toRightOf="@id/intBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/intBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/intValueTextView" />
 
         <TextView
             android:id="@+id/chaTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
             android:fontFamily="@font/inknut_antiqua_regular"
+            android:text="CHA"
             android:textColor="#BEB688"
             android:textSize="12sp"
-            android:text="CHA"
-            android:layout_marginTop="5sp"
-            app:layout_constraintTop_toTopOf="@id/chaBoxImageView"
             app:layout_constraintLeft_toLeftOf="@id/chaBoxImageView"
-            app:layout_constraintRight_toRightOf="@id/chaBoxImageView"/>
+            app:layout_constraintRight_toRightOf="@id/chaBoxImageView"
+            app:layout_constraintTop_toTopOf="@id/chaBoxImageView" />
 
         <TextView
             android:id="@+id/chaValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#BEB688"
-            android:fontFamily="@font/inria_serif_light"
-            android:textSize="40sp"
-            android:text="00"
             android:layout_marginBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@id/chaTextView"
+            android:fontFamily="@font/inria_serif_light"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="@id/chaSMTextView"
+            app:layout_constraintLeft_toLeftOf="@id/chaBoxImageView"
             app:layout_constraintRight_toRightOf="@id/chaBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/chaBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/chaTextView" />
 
         <TextView
             android:id="@+id/chaSMTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0"
-            android:textSize="15sp"
-            android:textColor="#BEB688"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/inknut_antiqua_medium"
+            android:text="+0"
+            android:textColor="#BEB688"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/chaBoxImageView"
-            app:layout_constraintTop_toBottomOf="@id/chaValueTextView"
+            app:layout_constraintLeft_toLeftOf="@id/chaBoxImageView"
             app:layout_constraintRight_toRightOf="@id/chaBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/chaBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/chaValueTextView" />
 
         <TextView
             android:id="@+id/conTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
             android:fontFamily="@font/inknut_antiqua_regular"
+            android:text="CON"
             android:textColor="#BEB688"
             android:textSize="12sp"
-            android:text="CON"
-            android:layout_marginTop="5sp"
-            app:layout_constraintTop_toTopOf="@id/conBoxImageView"
             app:layout_constraintLeft_toLeftOf="@id/conBoxImageView"
-            app:layout_constraintRight_toRightOf="@id/conBoxImageView"/>
+            app:layout_constraintRight_toRightOf="@id/conBoxImageView"
+            app:layout_constraintTop_toTopOf="@id/conBoxImageView" />
 
         <TextView
             android:id="@+id/conValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#BEB688"
-            android:fontFamily="@font/inria_serif_light"
-            android:textSize="40sp"
-            android:text="00"
             android:layout_marginBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@id/conTextView"
+            android:fontFamily="@font/inria_serif_light"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="@id/conSMTextView"
+            app:layout_constraintLeft_toLeftOf="@id/conBoxImageView"
             app:layout_constraintRight_toRightOf="@id/conBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/conBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/conTextView" />
 
         <TextView
             android:id="@+id/conSMTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0"
-            android:textSize="15sp"
-            android:textColor="#BEB688"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/inknut_antiqua_medium"
+            android:text="+0"
+            android:textColor="#BEB688"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/conBoxImageView"
-            app:layout_constraintTop_toBottomOf="@id/conValueTextView"
+            app:layout_constraintLeft_toLeftOf="@id/conBoxImageView"
             app:layout_constraintRight_toRightOf="@id/conBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/conBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/conValueTextView" />
 
         <TextView
             android:id="@+id/wisTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
             android:fontFamily="@font/inknut_antiqua_regular"
+            android:text="WIS"
             android:textColor="#BEB688"
             android:textSize="12sp"
-            android:text="WIS"
-            android:layout_marginTop="5sp"
-            app:layout_constraintTop_toTopOf="@id/wisBoxImageView"
             app:layout_constraintLeft_toLeftOf="@id/wisBoxImageView"
-            app:layout_constraintRight_toRightOf="@id/wisBoxImageView"/>
+            app:layout_constraintRight_toRightOf="@id/wisBoxImageView"
+            app:layout_constraintTop_toTopOf="@id/wisBoxImageView" />
 
         <TextView
             android:id="@+id/wisValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#BEB688"
-            android:fontFamily="@font/inria_serif_light"
-            android:textSize="40sp"
-            android:text="00"
             android:layout_marginBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@id/wisTextView"
+            android:fontFamily="@font/inria_serif_light"
+            android:text="00"
+            android:textColor="#BEB688"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="@id/wisSMTextView"
+            app:layout_constraintLeft_toLeftOf="@id/wisBoxImageView"
             app:layout_constraintRight_toRightOf="@id/wisBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/wisBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/wisTextView" />
 
         <TextView
             android:id="@+id/wisSMTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0"
-            android:textSize="15sp"
-            android:textColor="#BEB688"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/inknut_antiqua_medium"
+            android:text="+0"
+            android:textColor="#BEB688"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/wisBoxImageView"
-            app:layout_constraintTop_toBottomOf="@id/wisValueTextView"
+            app:layout_constraintLeft_toLeftOf="@id/wisBoxImageView"
             app:layout_constraintRight_toRightOf="@id/wisBoxImageView"
-            app:layout_constraintLeft_toLeftOf="@id/wisBoxImageView"/>
+            app:layout_constraintTop_toBottomOf="@id/wisValueTextView" />
 
         <ImageView
             android:id="@+id/backgroundTitleImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            app:srcCompat="@drawable/section_title"
-            app:layout_constraintTop_toBottomOf="@id/conBoxImageView"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conBoxImageView"
+            app:srcCompat="@drawable/section_title" />
 
         <ImageView
             android:id="@+id/backgroundTextImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            app:srcCompat="@drawable/background_text_section"
-            app:layout_constraintTop_toBottomOf="@id/backgroundTitleImageView"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/backgroundTitleImageView"
+            app:srcCompat="@drawable/background_text_section" />
+
+        <TextView
+            android:id="@+id/backgroundTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="left"
+            android:fontFamily="@font/inria_serif_regular"
+            android:hint="background..."
+            android:textColor="#D9D9D9"
+            app:layout_constraintBottom_toBottomOf="@id/backgroundTextImageView"
+            app:layout_constraintLeft_toLeftOf="@id/backgroundTextImageView"
+            app:layout_constraintTop_toTopOf="@id/backgroundTextImageView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BACKGROUND"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inknut_antiqua_light"
             android:letterSpacing="0.6"
+            android:text="BACKGROUND"
+            android:textColor="#BEB688"
             android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="@id/backgroundTitleImageView"
             app:layout_constraintBottom_toBottomOf="@id/backgroundTitleImageView"
+            app:layout_constraintLeft_toLeftOf="@id/backgroundTitleImageView"
             app:layout_constraintRight_toRightOf="@id/backgroundTitleImageView"
-            app:layout_constraintLeft_toLeftOf="@id/backgroundTitleImageView"/>
+            app:layout_constraintTop_toTopOf="@id/backgroundTitleImageView" />
 
         <ImageView
             android:id="@+id/characteristicsTitleImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            app:srcCompat="@drawable/section_title"
-            app:layout_constraintTop_toBottomOf="@id/backgroundTextImageView"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/backgroundTextImageView"
+            app:srcCompat="@drawable/section_title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CHARACTERISTICS"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inknut_antiqua_light"
             android:letterSpacing="0.3"
+            android:text="CHARACTERISTICS"
+            android:textColor="#BEB688"
             android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="@id/characteristicsTitleImageView"
             app:layout_constraintBottom_toBottomOf="@id/characteristicsTitleImageView"
+            app:layout_constraintLeft_toLeftOf="@id/characteristicsTitleImageView"
             app:layout_constraintRight_toRightOf="@id/characteristicsTitleImageView"
-            app:layout_constraintLeft_toLeftOf="@id/characteristicsTitleImageView"/>
+            app:layout_constraintTop_toTopOf="@id/characteristicsTitleImageView" />
 
         <ImageView
             android:id="@+id/eyeDisplayImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/characteristics_display"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView"
+            android:src="@drawable/characteristics_display"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintLeft_toRightOf="@id/hairDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView" />
 
         <ImageView
             android:id="@+id/hairDisplayImageView"
@@ -641,9 +651,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:src="@drawable/characteristics_display"
-            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView"
             app:layout_constraintLeft_toRightOf="@id/eyeDisplayImageView"
-            app:layout_constraintRight_toLeftOf="@id/skinDisplayImageView"/>
+            app:layout_constraintRight_toLeftOf="@id/skinDisplayImageView"
+            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView" />
 
         <ImageView
             android:id="@+id/skinDisplayImageView"
@@ -653,19 +663,19 @@
             android:layout_marginEnd="15dp"
             android:src="@drawable/characteristics_display"
             app:layout_constraintLeft_toRightOf="@id/hairDisplayImageView"
-            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/characteristicsTitleImageView" />
 
         <ImageView
             android:id="@+id/ageDisplayImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/characteristics_display"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/eyeDisplayImageView"
+            android:src="@drawable/characteristics_display"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintLeft_toRightOf="@id/heightDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/eyeDisplayImageView" />
 
         <ImageView
             android:id="@+id/heightDisplayImageView"
@@ -673,9 +683,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:src="@drawable/characteristics_display"
-            app:layout_constraintTop_toBottomOf="@id/hairDisplayImageView"
             app:layout_constraintLeft_toRightOf="@id/ageDisplayImageView"
-            app:layout_constraintRight_toLeftOf="@id/weightDisplayImageView"/>
+            app:layout_constraintRight_toLeftOf="@id/weightDisplayImageView"
+            app:layout_constraintTop_toBottomOf="@id/hairDisplayImageView" />
 
         <ImageView
             android:id="@+id/weightDisplayImageView"
@@ -685,113 +695,264 @@
             android:layout_marginEnd="15dp"
             android:src="@drawable/characteristics_display"
             app:layout_constraintLeft_toRightOf="@id/heightDisplayImageView"
-            app:layout_constraintTop_toBottomOf="@id/skinDisplayImageView"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/skinDisplayImageView" />
 
         <TextView
             android:id="@+id/eyeTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="EYES"
             android:layout_marginTop="13dp"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inria_serif_regular"
-            app:layout_constraintTop_toTopOf="@id/eyeDisplayImageView"
+            android:text="EYES"
+            android:textColor="#BEB688"
+            app:layout_constraintLeft_toLeftOf="@id/eyeDisplayImageView"
             app:layout_constraintRight_toRightOf="@id/eyeDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="@id/eyeDisplayImageView"/>
+            app:layout_constraintTop_toTopOf="@id/eyeDisplayImageView" />
 
         <TextView
             android:id="@+id/hairTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HAIR"
             android:layout_marginTop="13dp"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inria_serif_regular"
-            app:layout_constraintTop_toTopOf="@id/hairDisplayImageView"
+            android:text="HAIR"
+            android:textColor="#BEB688"
+            app:layout_constraintLeft_toLeftOf="@id/hairDisplayImageView"
             app:layout_constraintRight_toRightOf="@id/hairDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="@id/hairDisplayImageView"/>
+            app:layout_constraintTop_toTopOf="@id/hairDisplayImageView" />
 
         <TextView
             android:id="@+id/skinTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SKIN"
             android:layout_marginTop="13dp"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inria_serif_regular"
-            app:layout_constraintTop_toTopOf="@id/skinDisplayImageView"
+            android:text="SKIN"
+            android:textColor="#BEB688"
+            app:layout_constraintLeft_toLeftOf="@id/skinDisplayImageView"
             app:layout_constraintRight_toRightOf="@id/skinDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="@id/skinDisplayImageView"/>
+            app:layout_constraintTop_toTopOf="@id/skinDisplayImageView" />
 
         <TextView
             android:id="@+id/ageTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AGE"
             android:layout_marginTop="13dp"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inria_serif_regular"
-            app:layout_constraintTop_toTopOf="@id/ageDisplayImageView"
+            android:text="AGE"
+            android:textColor="#BEB688"
+            app:layout_constraintLeft_toLeftOf="@id/ageDisplayImageView"
             app:layout_constraintRight_toRightOf="@id/ageDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="@id/ageDisplayImageView"/>
+            app:layout_constraintTop_toTopOf="@id/ageDisplayImageView" />
 
         <TextView
             android:id="@+id/heightTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HEIGHT"
             android:layout_marginTop="13dp"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inria_serif_regular"
-            app:layout_constraintTop_toTopOf="@id/heightDisplayImageView"
+            android:text="HEIGHT"
+            android:textColor="#BEB688"
+            app:layout_constraintLeft_toLeftOf="@id/heightDisplayImageView"
             app:layout_constraintRight_toRightOf="@id/heightDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="@id/heightDisplayImageView"/>
+            app:layout_constraintTop_toTopOf="@id/heightDisplayImageView" />
 
         <TextView
             android:id="@+id/weightTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WEIGHT"
             android:layout_marginTop="13dp"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inria_serif_regular"
-            app:layout_constraintTop_toTopOf="@id/weightDisplayImageView"
+            android:text="WEIGHT"
+            android:textColor="#BEB688"
+            app:layout_constraintLeft_toLeftOf="@id/weightDisplayImageView"
             app:layout_constraintRight_toRightOf="@id/weightDisplayImageView"
-            app:layout_constraintLeft_toLeftOf="@id/weightDisplayImageView"/>
+            app:layout_constraintTop_toTopOf="@id/weightDisplayImageView" />
+
+        <TextView
+            android:id="@+id/eyeColorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="eye color"
+            android:textColor="#D9D9D9"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/eyeTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/eyeDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/eyeDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/eyeDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/hairColorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hair color"
+            android:textColor="#D9D9D9"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/hairTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/hairDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/hairDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/hairDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/skinColorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="skin color"
+            android:textColor="#D9D9D9"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/skinTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/skinDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/skinDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/skinDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/ageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="age"
+            android:textColor="#D9D9D9"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/ageTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/ageDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/ageDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/ageDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/heightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="height"
+            android:textColor="#D9D9D9"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/heightTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/heightDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/heightDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/heightDisplayImageView"/>
+
+        <TextView
+            android:id="@+id/weightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="weight"
+            android:textColor="#D9D9D9"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/weightTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/weightDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/weightDisplayImageView"
+            app:layout_constraintRight_toRightOf="@id/weightDisplayImageView"/>
+
+        <ImageView
+            android:id="@+id/charAlignImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/character_alignment_display"
+            app:layout_constraintBottom_toTopOf="@id/notesTitleImageView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/heightDisplayImageView" />
+
+        <TextView
+            android:id="@+id/charAlignTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:text="CHARACTER ALIGNMENT"
+            android:textColor="#BEB688"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="@id/charAlignImageView"
+            app:layout_constraintRight_toRightOf="@id/charAlignImageView"
+            app:layout_constraintTop_toTopOf="@id/charAlignImageView" />
+
+        <ImageView
+            android:id="@+id/charAlignLineDecoratorImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/line_decorator"
+            app:layout_constraintLeft_toLeftOf="@+id/charAlignImageView"
+            app:layout_constraintRight_toRightOf="@+id/charAlignImageView"
+            app:layout_constraintTop_toBottomOf="@id/charAlignTitleTextView" />
+
+        <TextView
+            android:id="@+id/charAlignTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/inria_serif_regular"
+            android:gravity="center"
+            android:text="character alignment..."
+            android:textColor="#D9D9D9"
+            app:layout_constraintBottom_toBottomOf="@id/charAlignImageView"
+            app:layout_constraintLeft_toLeftOf="@id/charAlignImageView"
+            app:layout_constraintRight_toRightOf="@id/charAlignImageView"
+            app:layout_constraintTop_toBottomOf="@id/charAlignLineDecoratorImageView" />
 
         <ImageView
             android:id="@+id/notesTitleImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/section_title"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/heightDisplayImageView"
+            android:src="@drawable/section_title"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/charAlignImageView" />
 
         <TextView
             android:id="@+id/notesTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NOTES"
-            android:textColor="#BEB688"
             android:fontFamily="@font/inknut_antiqua_light"
             android:letterSpacing="0.6"
+            android:text="NOTES"
+            android:textColor="#BEB688"
             android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="@id/notesTitleImageView"
+            app:layout_constraintBottom_toBottomOf="@id/notesTitleImageView"
             app:layout_constraintLeft_toLeftOf="@+id/notesTitleImageView"
             app:layout_constraintRight_toRightOf="@+id/notesTitleImageView"
-            app:layout_constraintBottom_toBottomOf="@id/notesTitleImageView"/>
+            app:layout_constraintTop_toTopOf="@id/notesTitleImageView" />
 
         <ImageView
+            android:id="@+id/notesDisplayImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/notes_display"
             android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/notesTitleImageView"
+            android:src="@drawable/notes_display"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notesTitleImageView" />
+
+        <TextView
+            android:id="@+id/notesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inria_serif_regular"
+            android:text="notes..."
+            android:layout_margin="15dp"
+            android:textColor="#D9D9D9"
+            app:layout_constraintTop_toTopOf="@id/notesDisplayImageView"
+            app:layout_constraintLeft_toLeftOf="@id/notesDisplayImageView"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
