@@ -314,6 +314,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
      */
     private void insertCharacterData() {
         System.out.println("insertCharacterData method");
+
         mCharacterName = binding.nameEditText.getText().toString();
         String mRace = binding.raceSpinner.getSelectedItem().toString();
         String mClass = binding.classSpinner.getSelectedItem().toString();
@@ -325,6 +326,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         int mCha = Integer.parseInt(binding.chaAttrEditTextView.getText().toString());
         int mCon = Integer.parseInt(binding.conAttrEditTextView.getText().toString());
         int mWis = Integer.parseInt(binding.wisAttrEditTextView.getText().toString());
+
         String mBg = binding.bgSpinner.getSelectedItem().toString();
         String mLan = binding.languageTextView.getText().toString();
         String mCharAlign = binding.charAlignSpinner.getSelectedItem().toString();
@@ -332,6 +334,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         String mHairColor = binding.hairColorSpinner.getSelectedItem().toString();
         String mEyeColor = binding.eyeColorSpinner.getSelectedItem().toString();
         String mSkinColor = binding.skinColorSpinner.getSelectedItem().toString();
+
         int mAge = Integer.parseInt(binding.ageEditText.getText().toString());
         int mHeight = Integer.parseInt(binding.heightEditText.getText().toString());
         int mWeight = Integer.parseInt(binding.weightEditText.getText().toString());
