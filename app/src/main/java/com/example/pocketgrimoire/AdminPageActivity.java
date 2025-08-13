@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.pocketgrimoire.databinding.ActivityAdminPageBinding;
 
@@ -23,6 +24,10 @@ public class AdminPageActivity extends AppCompatActivity {
 
         binding = ActivityAdminPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //display items, spells, and abilities tables in recyclerView
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.adminPageFragment).build(); //the dream?
 
     }
 
