@@ -133,6 +133,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_out">sign out</string>
+    <string name="item_1">Item 1</string>
+    <string name="spell_1">spell 1</string>
+    <string name="game_master_title">GAME MASTER</string>
+    <string name="spells">Spells</string>
+    <string name="add_new_spell">ADD NEW SPELL</string>
+    <string name="ability_1">ability 1</string>
+    <string name="abilities">Abilities</string>
+    <string name="add_new_ability">ADD NEW ABILITY</string>
     <string name="item_name">item name</string>
 
 </resources>
