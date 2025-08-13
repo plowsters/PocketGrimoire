@@ -1,6 +1,7 @@
 package com.example.pocketgrimoire;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -23,6 +24,10 @@ public class AdminPageActivity extends AppCompatActivity {
         binding = ActivityAdminPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+    }
 
+    public static Intent adminPageIntentFactory(Context context) {
+        Intent intent = new Intent(context, AdminPageActivity.class);
+        return intent;
     }
 }

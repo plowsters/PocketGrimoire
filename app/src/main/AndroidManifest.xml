@@ -33,7 +33,11 @@
         <activity
             android:name=".CharacterListActivity"
             android:exported="false"/>
-        <activity android:name=".CharacterCreationActivity"
+        <activity
+            android:name=".CharacterCreationActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".AdminPageActivity"
             android:exported="false"/>
 
         <meta-data

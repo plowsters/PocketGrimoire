@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.pocketgrimoire.AdminPageActivity;
 import com.example.pocketgrimoire.CharacterListActivity;
 import com.example.pocketgrimoire.R;
 import com.example.pocketgrimoire.viewmodel.UserTypeSelectionViewModel;
@@ -41,11 +42,20 @@ public class UserTypeSelectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //find the button
+        //player button functionality
         ImageView playerButton = view.findViewById(R.id.playerButton);
         playerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {Intent intent = CharacterListActivity.characterListIntentFactory(requireContext().getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+        //dungeon master button functionality
+        ImageView gameMasterButton = view.findViewById(R.id.gameMasterButton);
+        gameMasterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {Intent intent = AdminPageActivity.adminPageIntentFactory(requireContext().getApplicationContext());
                 startActivity(intent);
             }
         });
