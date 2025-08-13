@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background"
-    tools:showIn="@layout/activity_admin_page"
-    tools:context=".fragments.AdminSelectionFragment">
+    tools:context=".fragments.AdminSelectionFragment"
+    tools:showIn="@layout/activity_admin_page">
 
     <ImageView
         android:id="@+id/contentImageView"
@@ -41,6 +41,106 @@
         app:layout_constraintBottom_toBottomOf="@id/userTitleImageView"
         app:layout_constraintRight_toRightOf="@id/userTitleImageView"
         app:layout_constraintLeft_toLeftOf="@id/userTitleImageView"/>
+
+    <ImageView
+        android:id="@+id/lineDecoratorImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintTop_toBottomOf="@+id/adminTitleView"
+        app:srcCompat="@drawable/line_decorator" />
+
+    <TextView
+        android:id="@+id/adminTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="set text..."
+        android:textColor="#BEB688"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/lineDecoratorImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintTop_toTopOf="@+id/contentImageView"/>
+
+    <ImageButton
+        android:id="@+id/itemsImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/admin_selection_button"
+        android:layout_marginTop="50dp"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="@id/contentImageView"
+        app:layout_constraintTop_toBottomOf="@id/lineDecoratorImageView"/>
+
+    <ImageButton
+        android:id="@+id/spellsImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/admin_selection_button"
+        android:layout_marginTop="50dp"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="@id/contentImageView"
+        app:layout_constraintTop_toBottomOf="@id/itemsImageButton"/>
+
+    <ImageButton
+        android:id="@+id/abilitiesmageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/admin_selection_button"
+        android:layout_marginTop="50dp"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="@id/contentImageView"
+        app:layout_constraintTop_toBottomOf="@id/spellsImageButton"/>
+
+    <TextView
+        android:id="@+id/itemsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="items"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="5dp"
+        android:letterSpacing="0.1"
+        android:textColor="#BEB688"
+        android:textSize="20sp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        app:layout_constraintLeft_toLeftOf="@id/itemsImageButton"
+        app:layout_constraintTop_toTopOf="@id/itemsImageButton"
+        app:layout_constraintBottom_toBottomOf="@id/itemsImageButton"/>
+
+    <TextView
+        android:id="@+id/spellsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="spells"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#BEB688"
+        android:textSize="20sp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        app:layout_constraintLeft_toLeftOf="@id/spellsImageButton"
+        app:layout_constraintTop_toTopOf="@id/spellsImageButton"
+        app:layout_constraintBottom_toBottomOf="@id/spellsImageButton"/>
+
+    <TextView
+        android:id="@+id/abilitiesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abilities"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#BEB688"
+        android:textSize="20sp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        app:layout_constraintLeft_toLeftOf="@id/abilitiesmageButton"
+        app:layout_constraintTop_toTopOf="@id/abilitiesmageButton"
+        app:layout_constraintBottom_toBottomOf="@id/abilitiesmageButton"/>
 
 
 
