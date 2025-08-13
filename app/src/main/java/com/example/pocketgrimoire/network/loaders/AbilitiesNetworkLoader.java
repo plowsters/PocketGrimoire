@@ -1,26 +1,24 @@
 package com.example.pocketgrimoire.network.loaders;
 
+import androidx.core.util.Pair;
+
 import com.example.pocketgrimoire.database.entities.Abilities;
 import com.example.pocketgrimoire.database.mappers.AbilityMappers;
 import com.example.pocketgrimoire.database.remote.DndApiService;
-import com.example.pocketgrimoire.database.remote.dto.ResourceListDto;
-import com.example.pocketgrimoire.database.remote.dto.ResourceRefDto;
+import com.example.pocketgrimoire.database.seeding.ClassRaceMaps;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
- * Loads Abilities (Features + Traits) using only list endpoints that already exist.
- * - Features => traitOrFeat = false
- * - Traits   => traitOrFeat = true
- *
- * We dedupe by (name + kind) in first-seen order and return a single list.
- * Availability lists are left empty here (can be filled later without changing DAO/Seeder).
+ * Loads and fully populates Abilities (Features + Traits) including their
+ * class and race availability lists.
  */
 public final class AbilitiesNetworkLoader {
     private final DndApiService api;
@@ -29,78 +27,91 @@ public final class AbilitiesNetworkLoader {
         this.api = api;
     }
 
-    /** Fetch both features and traits, merge, and return as a single list. */
+    /**
+     * Orchestrates the fetching and merging of all ability data sequentially to respect API rate limits.
+     * 1. Fetches all base features and traits.
+     * 2. THEN, it builds a map of availability for classes.
+     * 3. FINALLY, it builds a map for races and zips the results together.
+     */
     public Single<List<Abilities>> fetchAll() {
-        Single<List<Abilities>> features = fetchFeaturesFromList();
-        Single<List<Abilities>> traits   = fetchTraitsFromList();
+        return getBaseAbilitiesMap()
+                .flatMap(baseAbilities ->
+                        buildFeatureToClassMap()
+                                .flatMap(featureMap ->
+                                        buildTraitToRaceMap()
+                                                .map(traitMap -> {
+                                                    // This is the final "stitching together" step, executed after all data is fetched.
+                                                    for (Abilities ability : baseAbilities.values()) {
+                                                        if (ability.isTraitOrFeat()) { // It's a Feature
+                                                            List<String> classes = featureMap.get(ability.getName());
+                                                            if (classes != null) {
+                                                                ability.setAvailableToClass(classes);
+                                                            }
+                                                        } else { // It's a Trait
+                                                            List<String> races = traitMap.get(ability.getName());
+                                                            if (races != null) {
+                                                                ability.setAvailableToRace(races);
+                                                            }
+                                                        }
+                                                    }
+                                                    return new ArrayList<>(baseAbilities.values());
+                                                })
+                                )
+                );
+    }
 
-        return Single.zip(features, traits, (f, t) -> {
-            Map<String, Abilities> byKey = new LinkedHashMap<>();
-            for (Abilities a : safeList(f)) putIfAbsent(byKey, a);
-            for (Abilities a : safeList(t)) putIfAbsent(byKey, a);
-            return new ArrayList<>(byKey.values());
+    /**
+     * Fetches all features and traits from the API and maps them to a base
+     * Abilities entity, stored in a Map for quick lookups.
+     */
+    private Single<Map<String, Abilities>> getBaseAbilitiesMap() {
+        Single<List<Abilities>> features = api.listFeatures()
+                .map(dto -> AbilityMappers.fromResourceList(dto, true)); // isFeature = true
+
+        Single<List<Abilities>> traits = api.listTraits()
+                .map(dto -> AbilityMappers.fromResourceList(dto, false)); // isFeature = false
+
+        // Combine both lists and convert to a Map<Name, Ability>
+        return Single.zip(features, traits, (featureList, traitList) -> {
+            Map<String, Abilities> map = new LinkedHashMap<>();
+            for (Abilities f : featureList) { map.put(f.getName(), f); }
+            for (Abilities t : traitList) { map.putIfAbsent(t.getName(), t); }
+            return map;
         });
     }
 
-    /** Build Abilities (feature) rows directly from the list endpoint. */
-    private Single<List<Abilities>> fetchFeaturesFromList() {
-        // DndApiService: Single<ResourceListDto>
-        return api.listFeatures()
-                .map((ResourceListDto listDto) -> {
-                    List<ResourceRefDto> refs =
-                            (listDto != null && listDto.results != null)
-                                    ? listDto.results
-                                    : Collections.emptyList();
-
-                    Map<String, Abilities> acc = new LinkedHashMap<>();
-                    for (ResourceRefDto r : refs) {
-                        if (r == null || r.name == null) continue;
-                        Abilities a = AbilityMappers.fromParts(
-                                r.name,
-                                /* isTrait */ false,
-                                /* availableToClass */ null,
-                                /* availableToRace  */ null
-                        );
-                        if (a != null) putIfAbsent(acc, a);
-                    }
-                    return new ArrayList<>(acc.values());
-                });
+    /**
+     * Builds a Map where Key = Feature Name and Value = List of classes that have it.
+     */
+    private Single<Map<String, List<String>>> buildFeatureToClassMap() {
+        // Use the hardcoded list of class keys from your existing ClassRaceMaps
+        return Flowable.fromIterable(ClassRaceMaps.defaultClasses().keySet())
+                .flatMap(classIndex ->
+                                // For each class, fetch its features. Bounded concurrency is kind to the API.
+                                api.listClassFeatures(classIndex).toFlowable()
+                                        .map(featureListDto -> AbilityMappers.createOwnerToAbilityEntry(
+                                                ClassRaceMaps.defaultClasses().get(classIndex), // Use the proper name
+                                                featureListDto)
+                                        ),
+                        false, 4 // Bounded Concurrency
+                )
+                .collect(HashMap<String, List<String>>::new, AbilityMappers::mergeIntoAvailabilityMap);
     }
 
-    /** Build Abilities (trait) rows directly from the list endpoint. */
-    private Single<List<Abilities>> fetchTraitsFromList() {
-        // DndApiService: Single<ResourceListDto>
-        return api.listTraits()
-                .map((ResourceListDto listDto) -> {
-                    List<ResourceRefDto> refs =
-                            (listDto != null && listDto.results != null)
-                                    ? listDto.results
-                                    : Collections.emptyList();
-
-                    Map<String, Abilities> acc = new LinkedHashMap<>();
-                    for (ResourceRefDto r : refs) {
-                        if (r == null || r.name == null) continue;
-                        Abilities a = AbilityMappers.fromParts(
-                                r.name,
-                                /* isTrait */ true,
-                                /* availableToClass */ null,
-                                /* availableToRace  */ null
-                        );
-                        if (a != null) putIfAbsent(acc, a);
-                    }
-                    return new ArrayList<>(acc.values());
-                });
-    }
-
-    // ---------- helpers ----------
-
-    private static <T> List<T> safeList(List<T> in) {
-        return (in != null) ? in : Collections.emptyList();
-    }
-
-    private static void putIfAbsent(Map<String, Abilities> acc, Abilities a) {
-        // key by name + kind (T/F) to avoid mixing features/traits with same name
-        String key = a.getName() + "|" + (a.isTraitOrFeat() ? "T" : "F");
-        acc.putIfAbsent(key, a);
+    /**
+     * Builds a Map where Key = Trait Name and Value = List of races that have it.
+     */
+    private Single<Map<String, List<String>>> buildTraitToRaceMap() {
+        // Follows the exact same pattern as above, but for races and traits.
+        return Flowable.fromIterable(ClassRaceMaps.defaultRaces().keySet())
+                .flatMap(raceIndex ->
+                                api.listRaceTraits(raceIndex).toFlowable()
+                                        .map(traitListDto -> AbilityMappers.createOwnerToAbilityEntry(
+                                                ClassRaceMaps.defaultRaces().get(raceIndex), // Use the proper name
+                                                traitListDto)
+                                        ),
+                        false, 4 // Bounded Concurrency
+                )
+                .collect(HashMap<String, List<String>>::new, AbilityMappers::mergeIntoAvailabilityMap);
     }
 }
