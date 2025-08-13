@@ -48,12 +48,15 @@ public interface DndApiService {
     Single<ResourceListDto> listRaces();
 
     // To get features for a specific class
-    @GET("api/2014/classes/{index}/features")
-    Single<ResourceListDto> listClassFeatures(@Path("index") String index);
+    @GET("api/2014/classes/{cls}/features")
+    Single<ResourceListDto> listClassFeatures(@Path("cls") String classIndex);
+    @GET("api/2014/classes/{cls}/levels/{lvl}/features")
+    Single<ResourceListDto> listClassFeaturesByLevel(@Path("cls") String classIndex, @Path("lvl") int level);
 
     // To get traits for a specific race
     @GET("api/2014/races/{index}/traits")
     Single<ResourceListDto> listRaceTraits(@Path("index") String index);
+
 
     // Classes
     @GET("api/2014/classes/{cls}")
