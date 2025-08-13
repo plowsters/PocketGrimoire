@@ -5,8 +5,11 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.pocketgrimoire.LoginActivity;
+import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.database.entities.User;
+import com.example.pocketgrimoire.database.remote.CharacterDataService;
+import com.example.pocketgrimoire.database.remote.DndApiClient;
 
 import java.util.List;
 
@@ -14,6 +17,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PocketGrimoireRepository {
@@ -26,6 +30,8 @@ public class PocketGrimoireRepository {
     private ItemsDAO itemsDAO;
     private SpellsDAO spellsDAO;
     private AbilitiesDAO abilitiesDAO;
+
+    private final CharacterDataService characterDataService;
 
 
     /**
@@ -43,6 +49,14 @@ public class PocketGrimoireRepository {
         this.characterItemsDAO = db.characterItemsDAO();
         this.characterSpellsDAO = db.characterSpellsDAO();
         this.characterAbilitiesDAO = db.characterAbilitiesDAO();
+
+        //Initialize the CharacterDataService, giving it the DAOs it needs for seeding starting equipment
+        this.characterDataService = new CharacterDataService(
+                DndApiClient.get(),
+                db.itemsDAO(),
+                db.spellsDAO(),
+                db.abilitiesDAO()
+        );
     }
 
     /**
@@ -93,7 +107,7 @@ public class PocketGrimoireRepository {
         return characterSheetDAO.getAllCharacterSheetByUserID(loggedInUserId);
     }
 
-    public Completable insertCharacterSheet(CharacterSheet character) {
+    public Single<Long> insertCharacterSheet(CharacterSheet character) {
         return characterSheetDAO.insert(character).subscribeOn(Schedulers.io());
     }
 
@@ -102,5 +116,20 @@ public class PocketGrimoireRepository {
      */
     public void deleteCharacterSheet(CharacterSheet character) {
         characterSheetDAO.delete(character).subscribeOn(Schedulers.io()).blockingAwait();
+    }
+
+    /**
+     * Gets starting equipment for a class
+     */
+    public Single<List<CharacterItems>> fetchStartingEquipmentForClass(String classIndex, int characterId) {
+        return characterDataService.fetchStartingEquipmentForClass(classIndex, characterId)
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * Inserts items into CharacterItems table
+     */
+    public Completable insertCharacterItems(List<CharacterItems> items) {
+        return characterItemsDAO.insertAll(items).subscribeOn(Schedulers.io());
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -22,6 +23,10 @@ import com.example.pocketgrimoire.databinding.ActivityCharacterCreationBinding;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class CharacterCreationActivity extends AppCompatActivity {
 
     private static final String CHARACTER_EDIT_CHARACTER = "CHARACTER_EDIT_CHARACTER";
@@ -30,6 +35,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     String mCharacterName = "";
     CharacterSheet character;
     private boolean isEdit;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +84,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         binding.saveImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertCharacterData();
-                finish(); //pop current intent
+                saveCharacterAndFetchData();
             }
         });
 
@@ -90,6 +95,132 @@ public class CharacterCreationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * This is the new, fully asynchronous save method. It replaces blockingAwait()
+     * with a proper RxJava chain that runs on a background thread.
+     */
+    private void saveCharacterAndFetchData() {
+        // First, gather the data from the UI synchronously.
+        if (!gatherDataFromFields()) {
+            return; // Stop if validation fails (e.g., no name).
+        }
+
+        Log.i(CHARACTER_EDIT_CHARACTER, "Starting character save process for: " + character.getCharacterName());
+
+        // The RxJava chain starts here.
+        disposables.add(
+                repository.insertCharacterSheet(character)
+                        .flatMapCompletable(newCharacterId -> {
+                            Log.i(CHARACTER_EDIT_CHARACTER, "Character saved with new ID: " + newCharacterId + ". Fetching starting equipment...");
+                            // Use the new ID to fetch equipment.
+                            // The 'clazz' index needs to be lower-case for the API.
+                            String classIndex = character.getClazz().toLowerCase();
+                            return repository.fetchStartingEquipmentForClass(classIndex, newCharacterId.intValue())
+                                    .flatMapCompletable(characterItems -> {
+                                        Log.i(CHARACTER_EDIT_CHARACTER, "Fetched " + characterItems.size() + " starting equipment items. Inserting into database...");
+                                        // Insert the fetched items into the CharacterItems table.
+                                        return repository.insertCharacterItems(characterItems);
+                                    });
+                        })
+                        .subscribeOn(Schedulers.io()) // Perform all operations on a background thread
+                        .observeOn(AndroidSchedulers.mainThread()) // Receive results on the main thread
+                        .subscribe(
+                                () -> {
+                                    // onSuccess: This runs when everything is complete
+                                    Log.i(CHARACTER_EDIT_CHARACTER, "Successfully saved character and all starting data.");
+                                    Toast.makeText(this, "Character Saved!", Toast.LENGTH_SHORT).show();
+                                    finish(); // Go back to the previous activity
+                                },
+                                error -> {
+                                    // onError: This runs if any part of the chain fails
+                                    Log.e(CHARACTER_EDIT_CHARACTER, "Error saving character or fetching data", error);
+                                    Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                        )
+        );
+    }
+
+    /**
+     * Gathers data from UI fields and populates the 'character' object.
+     * Replaces the logic inside your old insertCharacterData method.
+     * @return true if successful, false if validation fails.
+     */
+    private boolean gatherDataFromFields() {
+        // --- 1. Validate Required Fields ---
+        mCharacterName = binding.nameEditText.getText().toString().trim();
+        if (mCharacterName.isEmpty()) {
+            Toast.makeText(this, "Please enter a character name", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // --- 2. Gather Data from UI ---
+
+        // Spinners (Dropdowns)
+        String race = binding.raceSpinner.getSelectedItem().toString();
+        String clazz = binding.classSpinner.getSelectedItem().toString();
+        String background = binding.bgSpinner.getSelectedItem().toString();
+        String alignment = binding.charAlignSpinner.getSelectedItem().toString();
+        String gender = binding.genderSpinner.getSelectedItem().toString();
+        String skinColor = binding.skinColorSpinner.getSelectedItem().toString();
+        String hairColor = binding.hairColorSpinner.getSelectedItem().toString();
+        String eyeColor = binding.eyeColorSpinner.getSelectedItem().toString();
+
+        // Text Fields
+        String languages = binding.languageTextView.getText().toString();
+        String notes = binding.notesEditText.getText().toString();
+
+        // Numeric Fields (with safe parsing to avoid errors on empty fields)
+        int strength = parseIntWithDefault(binding.strAttrEditTextView.getText().toString(), 0);
+        int dexterity = parseIntWithDefault(binding.dexAttrEditTextView.getText().toString(), 0);
+        int intelligence = parseIntWithDefault(binding.intAttrEditTextView.getText().toString(), 0);
+        int charisma = parseIntWithDefault(binding.chaAttrEditTextView.getText().toString(), 0);
+        int constitution = parseIntWithDefault(binding.conAttrEditTextView.getText().toString(), 0);
+        int wisdom = parseIntWithDefault(binding.wisAttrEditTextView.getText().toString(), 0);
+        int age = parseIntWithDefault(binding.ageEditText.getText().toString(), 0);
+        int height = parseIntWithDefault(binding.heightEditText.getText().toString(), 0);
+        int weight = parseIntWithDefault(binding.weightEditText.getText().toString(), 0);
+
+
+        // --- 3. Populate the CharacterSheet Object ---
+        character.setCharacterName(mCharacterName);
+        character.setRace(race);
+        character.setClazz(clazz);
+        character.setBackground(background);
+        character.setCharacterAlignment(alignment);
+        character.setGender(gender);
+        character.setSkinColor(skinColor);
+        character.setHairColor(hairColor);
+        character.setEyeColor(eyeColor);
+        character.setLanguages(languages);
+        character.setNotes(notes);
+        character.setStrength(strength);
+        character.setDexterity(dexterity);
+        character.setIntelligence(intelligence);
+        character.setCharisma(charisma);
+        character.setConstitution(constitution);
+        character.setWisdom(wisdom);
+        character.setAge(age);
+        character.setHeight(height);
+        character.setWeight(weight);
+
+        // --- 4. Return Success ---
+        return true;
+    }
+
+    /**
+     * A helper method to safely parse a String into an integer.
+     * @param number The string to parse.
+     * @param defaultValue The value to return if the string is not a valid number.
+     * @return The parsed integer or the default value.
+     */
+    private int parseIntWithDefault(String number, int defaultValue) {
+        try {
+            return Integer.parseInt(number.trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     /**
@@ -305,70 +436,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    /**
-     * insertCharacterData() inserts a new character object when a new character is made
-     * <br>
-     * A character can only be created if the name field is not empty
-     */
-    private void insertCharacterData() {
-        System.out.println("insertCharacterData method");
-
-        mCharacterName = binding.nameEditText.getText().toString();
-        String mRace = binding.raceSpinner.getSelectedItem().toString();
-        String mClass = binding.classSpinner.getSelectedItem().toString();
-
-        //Can only choose 1-20
-        int mStr = Integer.parseInt(binding.strAttrEditTextView.getText().toString());
-        int mDex = Integer.parseInt(binding.dexAttrEditTextView.getText().toString());
-        int mInt = Integer.parseInt(binding.intAttrEditTextView.getText().toString());
-        int mCha = Integer.parseInt(binding.chaAttrEditTextView.getText().toString());
-        int mCon = Integer.parseInt(binding.conAttrEditTextView.getText().toString());
-        int mWis = Integer.parseInt(binding.wisAttrEditTextView.getText().toString());
-
-        String mBg = binding.bgSpinner.getSelectedItem().toString();
-        String mLan = binding.languageTextView.getText().toString();
-        String mCharAlign = binding.charAlignSpinner.getSelectedItem().toString();
-        String mGender = binding.genderSpinner.getSelectedItem().toString();
-        String mHairColor = binding.hairColorSpinner.getSelectedItem().toString();
-        String mEyeColor = binding.eyeColorSpinner.getSelectedItem().toString();
-        String mSkinColor = binding.skinColorSpinner.getSelectedItem().toString();
-
-        int mAge = Integer.parseInt(binding.ageEditText.getText().toString());
-        int mHeight = Integer.parseInt(binding.heightEditText.getText().toString());
-        int mWeight = Integer.parseInt(binding.weightEditText.getText().toString());
-        String mNotes = binding.notesEditText.getText().toString();
-
-        if (mCharacterName.isEmpty()) {
-            Toast.makeText(this, "Please enter a character name", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // set data in database
-        character.setCharacterName(mCharacterName);
-        character.setRace(mRace);
-        character.setClazz(mClass);
-        character.setStrength(mStr);
-        character.setDexterity(mDex);
-        character.setIntelligence(mInt);
-        character.setCharisma(mCha);
-        character.setConstitution(mCon);
-        character.setWisdom(mWis);
-        character.setBackground(mBg);
-        character.setLanguages(mLan);
-        character.setCharacterAlignment(mCharAlign);
-        character.setGender(mGender);
-        character.setHairColor(mHairColor);
-        character.setEyeColor(mEyeColor);
-        character.setSkinColor(mSkinColor);
-        character.setAge(mAge);
-        character.setHeight(mHeight);
-        character.setWeight(mWeight);
-        character.setNotes(mNotes);
-
-        repository.insertCharacterSheet(character).blockingAwait();
-        System.out.println("insertCharacterData method after character insert:" + character.toString());
     }
 
     private void isEdit() {

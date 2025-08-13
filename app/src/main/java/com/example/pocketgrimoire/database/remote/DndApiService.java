@@ -41,11 +41,22 @@ public interface DndApiService {
     @GET("api/2014/traits")
     Single<ResourceListDto> listTraits();
 
+    @GET("api/2014/classes")
+    Single<ResourceListDto> listClasses();
+
+    @GET("api/2014/races")
+    Single<ResourceListDto> listRaces();
+
+    // To get features for a specific class
     @GET("api/2014/classes/{cls}/features")
     Single<ResourceListDto> listClassFeatures(@Path("cls") String classIndex);
+    @GET("api/2014/classes/{cls}/levels/{lvl}/features")
+    Single<ResourceListDto> listClassFeaturesByLevel(@Path("cls") String classIndex, @Path("lvl") int level);
 
-    @GET("api/2014/races/{race}/traits")
-    Single<ResourceListDto> listRaceTraits(@Path("race") String raceIndex);
+    // To get traits for a specific race
+    @GET("api/2014/races/{index}/traits")
+    Single<ResourceListDto> listRaceTraits(@Path("index") String index);
+
 
     // Classes
     @GET("api/2014/classes/{cls}")

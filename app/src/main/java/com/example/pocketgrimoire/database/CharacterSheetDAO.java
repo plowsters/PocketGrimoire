@@ -13,11 +13,12 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface CharacterSheetDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(CharacterSheet characterSheet);
+    Single<Long> insert(CharacterSheet characterSheet);
 
     @Query("SELECT * FROM " + PocketGrimoireDatabase.CHARACTER_SHEET_TABLE + " WHERE userID = :loggedInUserID")
     Flowable<List<CharacterSheet>> getAllCharacterSheetByUserID(int loggedInUserID);
