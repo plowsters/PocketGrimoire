@@ -27,8 +27,7 @@ public class AdminPageActivity extends AppCompatActivity {
 
         //display items, spells, and abilities tables in recyclerView
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.adminPageFragment).build(); //the dream?
-
+                R.id.adminPageFragment).build();
     }
 
     public static Intent adminPageIntentFactory(Context context) {

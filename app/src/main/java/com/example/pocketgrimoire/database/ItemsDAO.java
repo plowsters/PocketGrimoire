@@ -1,6 +1,7 @@
 package com.example.pocketgrimoire.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -38,4 +39,7 @@ public interface ItemsDAO {
 
     @Query("DELETE FROM " + PocketGrimoireDatabase.ITEMS_TABLE)
     Completable clearItems();
+
+    @Delete
+    Completable deleteItem(Items item);
 }

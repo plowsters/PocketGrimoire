@@ -42,7 +42,6 @@ public class CharacterListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(CharacterSheet currentCharacter, Context context, Application application) {
-        System.out.println("currentCharacter " + currentCharacter);
         characterListItemTextview.setText(currentCharacter.getCharacterName());
         characterListImageButton.setOnClickListener(view -> {
             Intent intent = CharacterSheetActivity.characterSheetActivityIntentFactory(context.getApplicationContext(), currentCharacter);
@@ -61,7 +60,6 @@ public class CharacterListViewHolder extends RecyclerView.ViewHolder {
          * Delete button allows users to delete a chosen character
          */
         deleteCharacterImageButton.setOnClickListener(view -> {
-            System.out.println("This is the delete button");
             PocketGrimoireRepository repository = new PocketGrimoireRepository(application);
             repository.deleteCharacterSheet(currentCharacter);
         });
