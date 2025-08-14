@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".fragments.AdminSelectionFragment">
+
+    <ImageView
+        android:id="@+id/contentImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userTitleImageView"
+        app:srcCompat="@drawable/middle_section" />
+
+    <ImageView
+        android:id="@+id/userTitleImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/contentImageView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/user_type_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="GAME MASTER"
+        android:textColor="#BEB688"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/userTitleImageView"
+        app:layout_constraintLeft_toLeftOf="@id/userTitleImageView"
+        app:layout_constraintRight_toRightOf="@id/userTitleImageView"
+        app:layout_constraintTop_toTopOf="@id/userTitleImageView" />
+
+    <ImageView
+        android:id="@+id/lineDecoratorImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintTop_toBottomOf="@+id/adminTitleView"
+        app:srcCompat="@drawable/line_decorator" />
+
+    <TextView
+        android:id="@+id/adminTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="set text..."
+        android:textColor="#BEB688"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/lineDecoratorImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
+        app:layout_constraintRight_toRightOf="@+id/contentImageView"
+        app:layout_constraintTop_toTopOf="@+id/contentImageView"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

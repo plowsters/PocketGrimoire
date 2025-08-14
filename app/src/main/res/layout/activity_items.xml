@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="@layout/fragment_admin">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/ItemsActivityFragment"
+        android:name="com.example.pocketgrimoire.fragments.ItemsSelectionFragment"
+        app:defaultNavHost="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:navGraph="@navigation/mobile_navigation"
+        tools:layout="@layout/fragment_admin"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

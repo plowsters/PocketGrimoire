@@ -75,7 +75,7 @@
 
     <ImageView
         android:id="@+id/lineDecoratorImageView"
-        android:layout_width="150sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/line_decorator"
         app:layout_constraintTop_toBottomOf="@+id/characterTitleTextView"
