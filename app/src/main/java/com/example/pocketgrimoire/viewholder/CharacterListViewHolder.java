@@ -61,7 +61,6 @@ public class CharacterListViewHolder extends RecyclerView.ViewHolder {
          * Delete button allows users to delete a chosen character
          */
         deleteCharacterImageButton.setOnClickListener(view -> {
-            System.out.println("This is the delete button");
             PocketGrimoireRepository repository = new PocketGrimoireRepository(application);
             repository.deleteCharacterSheet(currentCharacter);
         });

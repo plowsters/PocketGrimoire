@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.pocketgrimoire.LoginActivity;
 import com.example.pocketgrimoire.database.entities.CharacterItems;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
+import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.User;
 import com.example.pocketgrimoire.database.remote.CharacterDataService;
 import com.example.pocketgrimoire.database.remote.DndApiClient;
@@ -131,5 +132,20 @@ public class PocketGrimoireRepository {
      */
     public Completable insertCharacterItems(List<CharacterItems> items) {
         return characterItemsDAO.insertAll(items).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * Gets all items from Items table
+     * @return
+     */
+    public Flowable<List<Items>> getAllItemsList() {
+        return itemsDAO.getAllItems().subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * deleteItem
+     */
+    public void deleteItem(Items itemName) {
+        itemsDAO.deleteItem(itemName).subscribeOn(Schedulers.io()).blockingAwait();
     }
 }

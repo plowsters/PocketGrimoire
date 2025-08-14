@@ -6,6 +6,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
+import java.util.Objects;
+
 /** Items table: (itemID PK, name UNIQUE, category). */
 @Entity(tableName = PocketGrimoireDatabase.ITEMS_TABLE)
 public class Items {
@@ -20,6 +22,18 @@ public class Items {
 
     public Items() {
       // no argument constructor for RoomDB initialization
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Items items = (Items) o;
+        return itemID == items.itemID && isEquippable == items.isEquippable && Objects.equals(name, items.name) && Objects.equals(category, items.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemID, name, category, isEquippable);
     }
 
     @Ignore

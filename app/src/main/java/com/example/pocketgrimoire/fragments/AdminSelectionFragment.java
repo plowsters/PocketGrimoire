@@ -9,9 +9,12 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketgrimoire.ItemsActivity;
 import com.example.pocketgrimoire.R;
+import com.example.pocketgrimoire.adapter.CharacterListAdapter;
 
 import io.reactivex.rxjava3.annotations.Nullable;
 
@@ -70,6 +73,8 @@ public class AdminSelectionFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
         //spells button
         //abilities button
     }
