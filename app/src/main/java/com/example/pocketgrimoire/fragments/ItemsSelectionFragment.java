@@ -42,11 +42,12 @@ public class ItemsSelectionFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                       @Nullable Bundle savedInstanceState) {
+
         //Inflate layout for items fragment - initiates binding
         View view = inflater.inflate(R.layout.activity_items_fragment, container, false);
         recyclerView = view.findViewById(R.id.itemListDisplayRecycleView);
 
-        //display list of characters based on userID
+        //display list of items based on userID
         adapter = new ItemsListAdapter(new ItemsListAdapter.ItemsListDiff());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -54,9 +55,7 @@ public class ItemsSelectionFragment extends Fragment {
         //database
         itemsListViewModel = new ViewModelProvider(this).get(com.example.pocketgrimoire.viewmodel.ItemsListViewModel.class);
 
-        //get items and save them under UserID
-        //from there the UserID can delete or add new items
-        //check for characters under UserID then adds their data
+        //displays all items in the database - the admin can remove or add new items into the database
         itemsListViewModel.getAllItemsList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
