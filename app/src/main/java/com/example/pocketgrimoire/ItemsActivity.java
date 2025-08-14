@@ -12,13 +12,10 @@ public class ItemsActivity extends AppCompatActivity {
 
     private ActivityItemsBinding binding;
 
-    //create Items object
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityItemsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
     }
 
     public static Intent itemsIntentFactory(Context context) {
@@ -26,4 +23,3 @@ public class ItemsActivity extends AppCompatActivity {
         return intent;
     }
 }
-

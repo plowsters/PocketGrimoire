@@ -42,7 +42,6 @@ public class CharacterListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(CharacterSheet currentCharacter, Context context, Application application) {
-        System.out.println("currentCharacter " + currentCharacter);
         characterListItemTextview.setText(currentCharacter.getCharacterName());
         characterListImageButton.setOnClickListener(view -> {
             Intent intent = CharacterSheetActivity.characterSheetActivityIntentFactory(context.getApplicationContext(), currentCharacter);
