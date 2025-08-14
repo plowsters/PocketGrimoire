@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,6 +65,14 @@ public class ItemsSelectionFragment extends Fragment {
             }, throwable -> {
                 Log.e("RX", "Error loading items", throwable);
             });
+
+        //Add Item Dialog Fragment
+        ImageButton showAddItemDialogButton = view.findViewById(R.id.addItemImageButton);
+
+        showAddItemDialogButton.setOnClickListener( v -> {
+            AddItemDialogFragment addItemDialogFragment = new AddItemDialogFragment();
+            addItemDialogFragment.show(getChildFragmentManager(), "AddItemDialogFragment");
+        });
 
         return view;
 

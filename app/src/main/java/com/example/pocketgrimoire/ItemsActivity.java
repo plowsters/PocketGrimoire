@@ -18,6 +18,7 @@ public class ItemsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityItemsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
     }
 
     public static Intent itemsIntentFactory(Context context) {
