@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/addSpellDialogFrag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/add_item_modal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/spellTitleImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/title_modal_display"
+        app:layout_constraintLeft_toLeftOf="@id/addSpellDialogFrag"
+        app:layout_constraintRight_toRightOf="@+id/addSpellDialogFrag"
+        app:layout_constraintTop_toTopOf="@+id/addSpellDialogFrag" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="ADDING NEW SPELL"
+        android:textColor="#BEB688"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/spellTitleImageView"
+        app:layout_constraintRight_toRightOf="@id/spellTitleImageView"
+        app:layout_constraintTop_toTopOf="@+id/spellTitleImageView" />
+
+    <TextView
+        android:id="@+id/enterNameTextField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inria_serif_regular"
+        android:text="enter name of spell"
+        android:textColor="#BEB688"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="@id/addSpellDialogFrag"
+        app:layout_constraintRight_toRightOf="@id/addSpellDialogFrag"
+        app:layout_constraintTop_toBottomOf="@id/spellTitleImageView" />
+
+    <EditText
+        android:id="@+id/spellEditText"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/custom_input"
+        android:fontFamily="@font/inder"
+        android:gravity="center"
+        android:hint="enter a spell..."
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/confirmImageButton"
+        app:layout_constraintLeft_toLeftOf="@id/addSpellDialogFrag"
+        app:layout_constraintRight_toRightOf="@id/addSpellDialogFrag"
+        app:layout_constraintTop_toBottomOf="@id/enterNameTextField" />
+
+    <ImageButton
+        android:id="@+id/confirmImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/confirm_button"
+        app:layout_constraintBottom_toBottomOf="@id/addSpellDialogFrag"
+        app:layout_constraintLeft_toLeftOf="@id/addSpellDialogFrag"
+        app:layout_constraintRight_toRightOf="@id/addSpellDialogFrag"
+        app:layout_constraintTop_toBottomOf="@id/spellEditText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="confirm"
+        android:textColor="#D9D9D9"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/confirmImageButton"
+        app:layout_constraintLeft_toLeftOf="@id/confirmImageButton"
+        app:layout_constraintRight_toRightOf="@id/confirmImageButton"
+        app:layout_constraintTop_toTopOf="@id/confirmImageButton" />
+
+    <ImageButton
+        android:id="@+id/exitModalImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/account_dialog_fragment_exit_button"
+        app:layout_constraintRight_toRightOf="@+id/addSpellDialogFrag"
+        app:layout_constraintTop_toTopOf="@id/addSpellDialogFrag" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,15 +9,54 @@
         android:id="@+id/userTypeSelectionFragment"
         android:name="com.example.pocketgrimoire.fragments.UserTypeSelectionFragment"
         android:label="fragment_user_type_selection"
-        tools:layout="@layout/fragment_user_type_selection" />
+        tools:layout="@layout/fragment_user_type_selection">
 
-    <!-- Other fragments, like the admin panel and character list, will be defined here as new destinations -->
+        <action
+            android:id="@+id/action_userTypeSelectionFragment_to_adminPageFragment"
+            app:destination="@id/adminPageFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/adminPageFragment"
         android:name="com.example.pocketgrimoire.fragments.AdminSelectionFragment"
         android:label="fragment_admin_page_selection"
-        tools:layout="@layout/fragment_admin_selection" />
+        tools:layout="@layout/fragment_admin_selection">
 
+        <!-- Action to navigate to the Items fragment -->
+        <action
+            android:id="@+id/action_adminPageFragment_to_itemsSelectionFragment"
+            app:destination="@id/itemsSelectionFragment" />
+
+        <!-- ADD THIS ACTION: To navigate to the Spells fragment -->
+        <action
+            android:id="@+id/action_adminPageFragment_to_adminSpellsFragment"
+            app:destination="@id/adminSpellsFragment" />
+
+        <!-- ADD THIS ACTION: To navigate to the Abilities fragment -->
+        <action
+            android:id="@+id/action_adminPageFragment_to_adminAbilitiesFragment"
+            app:destination="@id/adminAbilitiesFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/itemsSelectionFragment"
+        android:name="com.example.pocketgrimoire.fragments.ItemsSelectionFragment"
+        android:label="ItemsSelectionFragment"
+        tools:layout="@layout/activity_items_fragment" />
+
+    <!-- ADD THIS FRAGMENT: The destination for Spells -->
+    <fragment
+        android:id="@+id/adminSpellsFragment"
+        android:name="com.example.pocketgrimoire.fragments.AdminSpellsFragment"
+        android:label="AdminSpellsFragment"
+        tools:layout="@layout/fragment_admin_spells" />
+
+    <!-- ADD THIS FRAGMENT: The destination for Abilities -->
+    <fragment
+        android:id="@+id/adminAbilitiesFragment"
+        android:name="com.example.pocketgrimoire.fragments.AdminAbilitiesFragment"
+        android:label="AdminAbilitiesFragment"
+        tools:layout="@layout/fragment_admin_abilities" />
 
 </navigation>

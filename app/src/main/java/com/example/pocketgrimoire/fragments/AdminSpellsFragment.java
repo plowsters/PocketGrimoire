@@ -11,13 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.pocketgrimoire.R;
 import com.example.pocketgrimoire.viewmodel.AdminSpellsViewModel;
 
 public class AdminSpellsFragment extends Fragment {
 
-    private AdminSpellsViewModel mViewModel;
+    private AdminSpellsViewModel ViewModel;
 
     public static AdminSpellsFragment newInstance() {
         return new AdminSpellsFragment();
@@ -30,10 +31,16 @@ public class AdminSpellsFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AdminSpellsViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ViewModel = new ViewModelProvider(this).get(AdminSpellsViewModel.class);
+        // TODO: Use the ViewModel to display the list of spells in your RecyclerView
 
+        // Find the "add spell" button and set its click listener
+        ImageButton addSpellButton = view.findViewById(R.id.addSpellImageButton);
+        addSpellButton.setOnClickListener(v -> {
+            AddSpellDialogFragment dialogFragment = new AddSpellDialogFragment();
+            dialogFragment.show(getChildFragmentManager(), "AddSpellDialog");
+        });
+    }
 }
