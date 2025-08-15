@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.pocketgrimoire.databinding.ActivityAdminNavbarBinding;
@@ -53,7 +54,9 @@ public class AdminNavbarActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.userTypeSelectionFragment) // Add your top-level destinations here
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_admin_navbar);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_admin_navbar);
+        NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         navView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {

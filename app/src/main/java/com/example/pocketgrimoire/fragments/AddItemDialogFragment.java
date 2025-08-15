@@ -74,7 +74,7 @@ public class AddItemDialogFragment extends DialogFragment {
             //set new item name to newItems
             newItem.setName(itemInput);
 
-            repository.insertItems(newItem).blockingAwait();
+            repository.insertItems(newItem);
 
             //return to previous activity
             dismiss();

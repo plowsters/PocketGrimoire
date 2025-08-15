@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="@layout/activity_admin_navbar">
+
+    <ImageView
+        android:id="@+id/abilityListBackgroundObject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/middle_section"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gameMasterTitleImageView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/abilityListDisplayRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="28dp"
+        android:orientation="vertical"
+        android:padding="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lineDecoratorImageView"
+        tools:listitem="@layout/admin_ability_list_recycler_item" />
+
+    <ImageView
+        android:id="@+id/gameMasterTitleImageView"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/user_type_title"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/abilityListBackgroundObject"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/userTypeTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/game_master_title"
+        android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:textSize="24sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/gameMasterTitleImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/gameMasterTitleImageView"
+        app:layout_constraintRight_toRightOf="@+id/gameMasterTitleImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/gameMasterTitleImageView"/>
+
+    <ImageView
+        android:id="@+id/lineDecoratorImageView"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/line_decorator"
+        app:layout_constraintTop_toBottomOf="@+id/abilityTitleTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/abilityListBackgroundObject"
+        app:layout_constraintRight_toRightOf="@+id/abilityListBackgroundObject"
+        android:foregroundGravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/abilities"
+        android:textColor="#BEB688"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:textSize="20sp"
+        android:id="@+id/abilityTitleTextView"
+        app:layout_constraintTop_toTopOf="@+id/abilityListBackgroundObject"
+        app:layout_constraintRight_toRightOf="@+id/abilityListBackgroundObject"
+        app:layout_constraintBottom_toBottomOf="@id/lineDecoratorImageView"
+        app:layout_constraintLeft_toLeftOf="@+id/abilityListBackgroundObject"
+        />
+
+    <ImageButton
+        android:id="@+id/addAbilityImageButton"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        app:srcCompat="@drawable/add_new_character_button"
+        app:layout_constraintBottom_toBottomOf="@+id/abilityListBackgroundObject"
+        app:layout_constraintRight_toRightOf="@+id/abilityListBackgroundObject"
+        app:layout_constraintLeft_toLeftOf="@+id/abilityListBackgroundObject"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/addAbilityTextView"
+        android:textSize="12sp"
+        android:text="@string/add_new_ability"
+        android:textColor="#BEB688"
+        app:layout_constraintTop_toTopOf="@+id/addAbilityImageButton"
+        app:layout_constraintBottom_toBottomOf="@id/addAbilityImageButton"
+        app:layout_constraintLeft_toLeftOf="@+id/addAbilityImageButton"
+        app:layout_constraintRight_toRightOf="@+id/addAbilityImageButton"/>
+
+
+    <TextView
+        android:id="@+id/accountTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:text="username"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/nav_view"
+        app:layout_constraintTop_toTopOf="@id/nav_view"
+        app:layout_constraintRight_toRightOf="@id/nav_view"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

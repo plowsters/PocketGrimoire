@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="80dp"
+    android:layout_marginRight="80dp">
+
+    <ImageButton
+        android:id="@+id/deleteAbilityImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="4dp"
+        app:srcCompat="@drawable/delete_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/editAbilityImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        android:padding="4dp"
+        app:srcCompat="@drawable/edit_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deleteAbilityImageButton"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/admin_list_ability_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/admin_spell_list_recycler_item_background"
+        app:layout_constraintDimensionRatio="H,4:1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editAbilityImageButton"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/admin_ability_list_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="6dp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        android:text="@string/ability_1"
+        android:textColor="#BEB688"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/admin_list_ability_button"
+        app:layout_constraintEnd_toEndOf="@id/admin_list_ability_button"
+        app:layout_constraintStart_toStartOf="@id/admin_list_ability_button"
+        app:layout_constraintTop_toTopOf="@id/admin_list_ability_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
