@@ -1,22 +1,430 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/black">
+
+    <ImageView
+        android:id="@+id/header_img"
+        android:layout_width="196dp"
+        android:layout_height="59dp"
+        android:src="@drawable/dice_title_display"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/text_result"
+        android:id="@+id/header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Roll a dice!"
-        android:textSize="18sp"
-        android:padding="8dp" />
+        android:text="@string/dice_title"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="#BEB688"
+        android:textSize="16sp"
+        android:fontFamily="@font/inknut_antiqua_regular"
+        app:layout_constraintTop_toTopOf="@id/header_img"
+        app:layout_constraintBottom_toBottomOf="@id/header_img"
+        app:layout_constraintStart_toStartOf="@id/header_img"
+        app:layout_constraintEnd_toEndOf="@id/header_img"/>
 
-    <Button
-        android:id="@+id/button_d6"
+    <ImageButton
+        android:id="@+id/btn_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="-16.5dp"
+        android:layout_marginEnd="-16.5dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/close"
+        android:elevation="6dp"
+        android:padding="6dp"
+        android:src="@drawable/exit_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@null" />
+
+    <FrameLayout
+        android:id="@+id/big_die_panel"
+        android:layout_width="287dp"
+        android:layout_height="182dp"
+        android:background="@drawable/dice_roll_background"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/header_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/image_big_die"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dice"
+            android:contentDescription="@null"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/text_big_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dice_big_default_number"
+            android:textStyle="bold"
+            android:textSize="42sp"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/text_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Roll D6" />
-</LinearLayout>
+        android:text="@string/dice_press_hint"
+        android:textColor="#BEB688"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/big_die_panel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/separator_top"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#BEB688"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/text_message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <HorizontalScrollView
+        android:id="@+id/row_quick_scroll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fillViewport="false"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/separator_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/row_quick_dice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <FrameLayout
+                android:layout_width="51dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="8dp">
+
+                <ImageView
+                    android:id="@+id/sel_d4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/selected_die"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/btn_d4"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:src="@drawable/dice_four_side"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd_d4"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/die_n4"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="51dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="8dp">
+
+                <ImageView
+                    android:id="@+id/sel_d6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/selected_die"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/btn_d6"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:src="@drawable/dice_six_side"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd_d6"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/die_n6"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="51dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="8dp">
+
+                <ImageView
+                    android:id="@+id/sel_d8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/selected_die"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/btn_d8"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:src="@drawable/dice_eight_ten_twelve_twenty_side"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd_d8"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/die_n8"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="51dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="8dp">
+
+                <ImageView
+                    android:id="@+id/sel_d10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/selected_die"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/btn_d10"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:src="@drawable/dice_eight_ten_twelve_twenty_side"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd_d10"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/die_n10"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="51dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="8dp">
+
+                <ImageView
+                    android:id="@+id/sel_d12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/selected_die"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/btn_d12"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:src="@drawable/dice_eight_ten_twelve_twenty_side"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd_d12"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/die_n12"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="51dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="8dp">
+
+                <ImageView
+                    android:id="@+id/sel_d20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/selected_die"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/btn_d20"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:src="@drawable/dice_eight_ten_twelve_twenty_side"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd_d20"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/die_n20"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="51dp"
+                android:layout_height="58dp">
+
+                <ImageView
+                    android:id="@+id/sel_d100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/selected_die"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/btn_d100"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:src="@drawable/dice_hundred_side"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd_d100"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/die_n100"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/separator_bottom"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#BEB688"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/row_quick_scroll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/row_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/separator_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/text_die_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dice_current_die_default"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"/>
+
+        <EditText
+            android:id="@+id/input_count"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/dice_count_hint"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:paddingVertical="8dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#80FFFFFF"
+            android:backgroundTint="#BEB688"
+            android:importantForAutofill="no"/>
+
+        <Button
+            android:id="@+id/btn_roll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dice_roll"
+            android:layout_marginStart="12dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
