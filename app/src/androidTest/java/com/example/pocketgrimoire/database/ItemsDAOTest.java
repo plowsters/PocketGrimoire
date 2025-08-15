@@ -27,17 +27,7 @@ import io.reactivex.rxjava3.schedulers.TestScheduler;
 public class ItemsDAOTest extends TestCase {
 
     ItemsDAO itemsDAO = null;
-    private PocketGrimoireRepository db;
     private TestScheduler testScheduler;
-
-//    public void setUp() throws Exception {
-//        super.setUp();
-//    }
-//
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
 
     @Before
     public void testSetup() {
@@ -49,6 +39,11 @@ public class ItemsDAOTest extends TestCase {
 
         //set up rxjava for testing
         testScheduler = new TestScheduler();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
     @Test
