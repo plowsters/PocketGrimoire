@@ -26,11 +26,12 @@
         app:layout_constraintTop_toTopOf="@+id/addItemDialogFrag" />
 
     <TextView
+        android:id="@+id/itemFragmentTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/inknut_antiqua_regular"
-        android:text="ADDING NEW ITEM"
+        android:text="ADD NEW ITEM"
         android:textColor="#BEB688"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="@id/itemTitleImageView"
