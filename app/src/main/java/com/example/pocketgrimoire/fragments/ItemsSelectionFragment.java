@@ -47,8 +47,13 @@ public class ItemsSelectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_items_fragment, container, false);
         recyclerView = view.findViewById(R.id.itemListDisplayRecycleView);
 
-        //display list of items based on userID
-        adapter = new ItemsListAdapter(new ItemsListAdapter.ItemsListDiff());
+        //display the updated list of items from database and the addItemDialogFragment
+        adapter = new ItemsListAdapter(new ItemsListAdapter.ItemsListDiff(),
+        item -> {
+            AddItemDialogFragment dialog = AddItemDialogFragment.newInstance(item);
+            dialog.show(getChildFragmentManager(), "AddItemDialog");
+        });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -26,5 +26,5 @@ public interface CharacterSheetDAO {
     @Delete
     Completable delete(CharacterSheet characterSheet);
 
-    @Query(" DELETE from " + PocketGrimoireDatabase.CHARACTER_SHEET_TABLE) void deleteAll();
+    @Query(" DELETE FROM " + PocketGrimoireDatabase.CHARACTER_SHEET_TABLE) void deleteAll();
 }

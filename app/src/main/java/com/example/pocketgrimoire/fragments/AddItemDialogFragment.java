@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.pocketgrimoire.R;
+import com.example.pocketgrimoire.adapter.ItemsListAdapter;
 import com.example.pocketgrimoire.database.ItemsDAO;
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 import com.example.pocketgrimoire.database.PocketGrimoireRepository;
@@ -80,4 +81,21 @@ public class AddItemDialogFragment extends DialogFragment {
             dismiss();
         }
     }
+
+    //For editing
+    //Should probably implement isEdit, similar to character creation
+    public static AddItemDialogFragment newInstance(Items item) {
+        AddItemDialogFragment fragment = new AddItemDialogFragment();
+        Bundle bundle = new Bundle();
+        int itemID = item.getItemID();
+        bundle.putInt("itemName", itemID);
+        //display item name on editText
+        //edit item name to new item name
+//        bundle.putString("itemName", item.setName(itemID));
+        fragment.setArguments(bundle);
+        //save new item name
+        return fragment;
+    }
+
+    //TODO: exit button
 }
