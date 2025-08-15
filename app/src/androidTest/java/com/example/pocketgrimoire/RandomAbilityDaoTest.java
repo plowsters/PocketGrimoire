@@ -2,6 +2,7 @@ package com.example.pocketgrimoire;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 
@@ -44,16 +45,38 @@ public class RandomAbilityDaoTest {
     @Test
     public void testInsertAndRetrieveRandomAbility() {
         Abilities ability = new Abilities();
-        ability.setName("Darkvision");
+        ability.setName("TestAbilityOne");
         ability.setTraitOrFeat(true);
-        ability.setAvailableToClass(Collections.singletonList("Rogue"));
-        ability.setAvailableToRace(Collections.singletonList("Elf"));
-
+        ability.setAvailableToClass(Collections.singletonList("TestClass"));
+        ability.setAvailableToRace(Collections.singletonList("TestRace"));
         abilitiesDAO.insertSync(ability);
 
         List<Abilities> all = abilitiesDAO.getAllAbilities().blockingFirst();
         assertNotNull(all);
         assertEquals(1, all.size());
-        assertEquals("Darkvision", all.get(0).getName());
+        assertEquals("TestAbilityOne", all.get(0).getName());
+    }
+
+    @Test
+    public void testGetRandomAbilityReturnsOneOfInserted() {
+        Abilities a1 = new Abilities();
+        a1.setName("TestAbilityOne");
+        a1.setTraitOrFeat(true);
+
+        Abilities a2 = new Abilities();
+        a2.setName("TestAbilityTwo");
+        a2.setTraitOrFeat(false);
+
+        abilitiesDAO.insertSync(a1);
+        abilitiesDAO.insertSync(a2);
+
+        Abilities random = abilitiesDAO.getRandomAbility().blockingGet();
+
+        assertNotNull(random);
+        String n = random.getName();
+        assertTrue(
+                "Random ability should be one of the inserted names",
+                "TestAbilityOne".equals(n) || "TestAbilityTwo".equals(n)
+        );
     }
 }
