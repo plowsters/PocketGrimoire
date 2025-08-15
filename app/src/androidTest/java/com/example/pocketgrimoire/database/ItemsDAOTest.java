@@ -1,5 +1,7 @@
 package com.example.pocketgrimoire.database;
 
+import static org.junit.Assert.assertNotEquals;
+
 import android.app.Application;
 
 import androidx.room.Room;
@@ -63,6 +65,18 @@ public class ItemsDAOTest extends TestCase {
         assertEquals(1, result.size());
         assertEquals("new item", result.get(0).getName());
 
+        Items newItem2 = new Items();
+        newItem2.setName("another item");
+        itemsDAO.insert(newItem2).blockingAwait();
+
+        List<Items> result2 = itemsDAO.getAllItems()
+                .subscribeOn(Schedulers.trampoline()) //use trampoline to force synchronous execution
+                .observeOn(Schedulers.trampoline())
+                .blockingFirst(); //use blockingFirst to force test to wait for result
+
+        assertEquals(2, result2.size());
+        assertNotEquals("another item", result2.get(0).getName());
+        assertEquals("another item", result2.get(1).getName());
     }
 
     @Test
@@ -88,14 +102,49 @@ public class ItemsDAOTest extends TestCase {
         newItem.setName("new item");
         itemsDAO.insert(newItem).blockingAwait();
 
-        int itemID = newItem.getItemID();
+        List<Items> result = itemsDAO.getAllItems()
+                .subscribeOn(Schedulers.trampoline()) //use trampoline to force synchronous execution
+                .observeOn(Schedulers.trampoline())
+                .blockingFirst(); //use blockingFirst to force test to wait for result
+
+        newItem = result.get(0);
 
         itemsDAO.deleteItem(newItem).blockingAwait();
 
-        @NonNull List<Items> result = itemsDAO.getAllItems()
+        @NonNull List<Items> deleteResult = itemsDAO.getAllItems()
                 .firstOrError()
                 .blockingGet(); //waits until Single signals success or exception
 
-        assertEquals(0, result.size());
+        assertEquals(0, deleteResult.size());
+    }
+
+    //This test only works if insert is an upsert - OnConflictStrategy.REPLACE
+    //Is this intended?
+    @Test
+    public void updateInsertTest() {
+        Items newItem = new Items();
+        newItem.setName("new item");
+        newItem.setCategory("category");
+        newItem.setItemID(2);
+        itemsDAO.insert(newItem).blockingAwait();
+
+        List<Items> result = itemsDAO.getAllItems()
+                .subscribeOn(Schedulers.trampoline()) //use trampoline to force synchronous execution
+                .observeOn(Schedulers.trampoline())
+                .blockingFirst(); //use blockingFirst to force test to wait for result
+
+        newItem = result.get(0);
+        assertEquals("new item", newItem.getName());
+
+        newItem.setCategory("updated category");
+        itemsDAO.insert(newItem).blockingAwait();
+
+        List<Items> result2 = itemsDAO.getAllItems()
+                .subscribeOn(Schedulers.trampoline()) //use trampoline to force synchronous execution
+                .observeOn(Schedulers.trampoline())
+                .blockingFirst(); //use blockingFirst to force test to wait for result
+
+        assertEquals("updated category", result2.get(0).getCategory());
+        assertEquals(false, result2.get(0).isEquippable());
     }
 }
