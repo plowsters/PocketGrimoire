@@ -168,5 +168,6 @@
     <string name="abilities">Abilities</string>
     <string name="add_new_ability">ADD NEW ABILITY</string>
     <string name="item_name">item name</string>
-
+    <string name="dice_lowercase">dice</string>
+    <string name="random_ability">Random Ability</string>
 </resources>

@@ -1,9 +1,11 @@
 package com.example.pocketgrimoire.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.pocketgrimoire.database.entities.Items;
 import com.example.pocketgrimoire.database.entities.Spells;
@@ -40,4 +42,10 @@ public interface SpellsDAO {
 
     @Query("DELETE FROM " + PocketGrimoireDatabase.SPELLS_TABLE)
     Completable clearSpells();
+
+    @Update
+    Completable update(Spells spell);
+
+    @Delete
+    Completable delete(Spells spell);
 }

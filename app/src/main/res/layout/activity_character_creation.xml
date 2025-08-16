@@ -55,11 +55,12 @@
         app:itemPaddingTop="28dp"
         app:itemTextAppearanceActive="@style/BottomNav.Active"
         app:itemTextAppearanceInactive="@style/BottomNav.Inactive"
+        app:itemActiveIndicatorStyle="@style/BottomNavHighlight"
         app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/player_bottom_nav_menu" />
 
     <ImageView
         android:id="@+id/lineDecoratorImageView"

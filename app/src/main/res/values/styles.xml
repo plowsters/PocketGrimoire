@@ -14,4 +14,14 @@
         <item name="android:textColor">@color/gold</item>
     </style>
 
+    <style name="BottomNavHighlight">
+        <item name="android:background">@color/pg_green</item>
+        <item name="shapeAppearanceOverlay">@style/BottomNavHighlight_Shape</item>
+    </style>
+
+    <style name="BottomNavHighlight_Shape" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">4dp</item>
+    </style>
+
 </resources>

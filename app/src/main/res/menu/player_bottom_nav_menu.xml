@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
-        android:id="@+id/navigation_random_ability"
-        android:icon="@drawable/ic_dice_black_24dp"
-        android:title="@string/random_ability" />
+        android:id="@+id/navigation_dice"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="@string/dice_lowercase" />
 
     <item
         android:id="@+id/navigation_account"

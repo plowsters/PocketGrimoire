@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.databinding.ActivityCharacterSheetBinding;
+import com.example.pocketgrimoire.fragments.AccountDialogFragment;
 import com.example.pocketgrimoire.fragments.DiceRollerFragment;
 
 import java.io.Serializable;
@@ -28,13 +29,19 @@ public class CharacterSheetActivity extends AppCompatActivity {
 
         createBindings();
 
-//        // Only show Dice Roller Fragment for now (bottom half)
-//        // Team can add Character Sheet UI later
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_container_dice_roller, new DiceRollerFragment())
-//                    .commit();
-//        }
+        binding.navView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_account) {
+                AccountDialogFragment dialog = new AccountDialogFragment();
+                dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
+                return true;
+            } else if (itemId == R.id.navigation_dice) {
+                DiceRollerFragment diceRollerFragment = new DiceRollerFragment();
+                diceRollerFragment.show(getSupportFragmentManager(), diceRollerFragment.getTag());
+                return true;
+            }
+            return false;
+        });
     }
 
     private void createBindings() {
