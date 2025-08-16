@@ -48,7 +48,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".database.RandomAbilityActivity"
+            android:name=".RandomAbilityActivity"
             android:exported="false" />
 
         <meta-data

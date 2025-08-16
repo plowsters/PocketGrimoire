@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.pocketgrimoire.database.AbilitiesDAO;
+import com.example.pocketgrimoire.database.PocketGrimoireRepository;
 import com.example.pocketgrimoire.database.entities.Abilities;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -18,9 +19,7 @@ public class RandomAbilityViewModel extends ViewModel {
     private final MutableLiveData<Abilities> ability = new MutableLiveData<>();
     private final MutableLiveData<String> error = new MutableLiveData<>();
 
-    public RandomAbilityViewModel(AbilitiesDAO dao) {
-        this.dao = dao;
-    }
+    public RandomAbilityViewModel(PocketGrimoireRepository repository) { this.dao = repository.getAbilitiesDAO(); }
 
     public LiveData<Abilities> ability() { return ability; }
     public LiveData<String> error() { return error; }

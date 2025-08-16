@@ -55,6 +55,7 @@
         app:itemPaddingTop="28dp"
         app:itemTextAppearanceActive="@style/BottomNav.Active"
         app:itemTextAppearanceInactive="@style/BottomNav.Inactive"
+        app:itemActiveIndicatorStyle="@style/BottomNavHighlight"
         app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

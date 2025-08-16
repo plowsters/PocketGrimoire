@@ -67,6 +67,11 @@ public class AdminNavbarActivity extends AppCompatActivity {
                     AccountDialogFragment dialog = new AccountDialogFragment();
                     dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
                     return true;
+                } else if (item.getItemId() == R.id.navigation_random_ability) {
+                    // ADDED: Logic to start the RandomAbilityActivity
+                    Intent intent = new Intent(AdminNavbarActivity.this, RandomAbilityActivity.class);
+                    startActivity(intent);
+                    return true;
                 }
                 // Handle other navigation items if you have them
                 return NavigationUI.onNavDestinationSelected(item, navController);

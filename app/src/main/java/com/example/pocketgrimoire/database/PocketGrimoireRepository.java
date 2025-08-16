@@ -62,6 +62,10 @@ public class PocketGrimoireRepository {
         );
     }
 
+    public AbilitiesDAO getAbilitiesDAO() {
+        return abilitiesDAO;
+    }
+
     /**
      * Retrieves all Users from the DB as a "reactive stream", allowing  the "Subscriber"
      * (module requesting data, typically a LiveData/ViewModel object) to tell the "Publisher"

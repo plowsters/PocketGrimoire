@@ -1,4 +1,4 @@
-package com.example.pocketgrimoire.database;
+package com.example.pocketgrimoire;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.pocketgrimoire.R;
+import com.example.pocketgrimoire.database.PocketGrimoireRepository;
 import com.example.pocketgrimoire.database.entities.Abilities;
 import com.example.pocketgrimoire.viewmodel.RandomAbilityViewModel;
 
@@ -30,14 +30,14 @@ public class RandomAbilityActivity extends AppCompatActivity {
         Button btnNext = findViewById(R.id.btnNext);
         Button btnShare = findViewById(R.id.btnShare);
 
-        AbilitiesDAO dao = PocketGrimoireDatabase.getDatabase(getApplicationContext()).abilitiesDAO();
+        final PocketGrimoireRepository repository = new PocketGrimoireRepository(getApplication());
 
         vm = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull
             @Override
             @SuppressWarnings("unchecked")
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new RandomAbilityViewModel(dao);
+                return (T) new RandomAbilityViewModel(repository);
             }
         }).get(RandomAbilityViewModel.class);
 
