@@ -5,8 +5,10 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.pocketgrimoire.database.entities.Items;
+import com.example.pocketgrimoire.database.entities.Spells;
 
 import java.util.List;
 
@@ -42,4 +44,7 @@ public interface ItemsDAO {
 
     @Delete
     Completable deleteItem(Items item);
+
+    @Update
+    Completable update(Items items);
 }

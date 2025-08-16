@@ -6,11 +6,12 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /** Items table: (itemID PK, name UNIQUE, category). */
 @Entity(tableName = PocketGrimoireDatabase.ITEMS_TABLE)
-public class Items {
+public class Items implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int itemID;
 
@@ -19,6 +20,13 @@ public class Items {
     private String category;
 
     private boolean isEquippable;
+
+    public Items(int itemID, @NonNull String name, String category, boolean isEquippable) {
+        this.itemID = itemID;
+        this.name = name;
+        this.category = category;
+        this.isEquippable = isEquippable;
+    }
 
     public Items() {
       // no argument constructor for RoomDB initialization

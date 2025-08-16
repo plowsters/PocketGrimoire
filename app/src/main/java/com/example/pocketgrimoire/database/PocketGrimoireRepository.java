@@ -165,6 +165,10 @@ public class PocketGrimoireRepository {
        return itemsDAO.insert(items).subscribeOn(Schedulers.io());
     }
 
+    public Completable updateItems(Items items) {
+        return itemsDAO.update(items).subscribeOn(Schedulers.io());
+    }
+
     public Flowable<List<Spells>> getAllSpellsList() {
         return spellsDAO.getAllSpells().subscribeOn(Schedulers.io());
     }

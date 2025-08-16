@@ -369,14 +369,11 @@ public class CharacterCreationActivity extends AppCompatActivity {
         eyeColorSpinner.setSelection(eyePosition);
     }
 
-    //skin color
-
     /**
      * Dropdown for multiple item selections
      */
     private void createLanguageDropdown(){
         //Languages language_array
-//        List<String> chosenLanguages = character.getLanguagesArray();
         binding.languageTextView.setText(character.getLanguages());
 
         //load language array
@@ -388,7 +385,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(CharacterCreationActivity.this);
         TextView languageChoices = findViewById(R.id.languageTextView);
 
-        // preload chosen languages (need condition for null)
+        // preload chosen languages
         if (languageChoices != null && character.getLanguages() != null && !character.getLanguages().isEmpty()) {
             for (int i = 0; i < languagesArray.length; i++) {
                 if (character.getLanguages().contains(languagesArray[i])) {
