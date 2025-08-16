@@ -98,11 +98,8 @@ public class CharacterSheetDAOTest extends TestCase {
         assertEquals(2, result2.size());
         assertNotEquals("another character name", result2.get(0).getCharacterName());
         assertEquals("another character name", result2.get(1).getCharacterName());
-<<<<<<< Updated upstream
-=======
 
         //test changing name and see if name changed
->>>>>>> Stashed changes
     }
 
     @Test
@@ -115,10 +112,7 @@ public class CharacterSheetDAOTest extends TestCase {
         newUser.setHashedPassword("password");
         userDAO.insert(newUser).blockingAwait();
 
-<<<<<<< Updated upstream
-=======
         //get username and userID
->>>>>>> Stashed changes
         User insertedUser = userDAO.getUserByUsername("newusername").blockingGet();
         int userID = insertedUser.getUserID();
 

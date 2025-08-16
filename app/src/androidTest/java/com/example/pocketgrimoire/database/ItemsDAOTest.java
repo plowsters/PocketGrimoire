@@ -113,10 +113,8 @@ public class ItemsDAOTest extends TestCase {
         assertEquals(0, deleteResult.size());
     }
 
-    //This test only works if insert is an upsert - OnConflictStrategy.REPLACE
-    //Is this intended?
     @Test
-    public void updateInsertTest() {
+    public void updateTest() {
         Items newItem = new Items();
         newItem.setName("new item");
         newItem.setCategory("category");
@@ -132,7 +130,7 @@ public class ItemsDAOTest extends TestCase {
         assertEquals("new item", newItem.getName());
 
         newItem.setCategory("updated category");
-        itemsDAO.insert(newItem).blockingAwait();
+        itemsDAO.update(newItem).blockingAwait();
 
         List<Items> result2 = itemsDAO.getAllItems()
                 .subscribeOn(Schedulers.trampoline()) //use trampoline to force synchronous execution
