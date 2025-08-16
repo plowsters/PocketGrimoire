@@ -175,4 +175,9 @@
     <string name="spellbook">Spellbook</string>
     <string name="abilities_capital">Abilities</string>
     <string name="items">Items</string>
+    <string name="register">register</string>
+    <string name="email">email</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="return_to_login_screen"><u>return to login screen</u></string>
+    <string name="sign_up">SIGN UP</string>
 </resources>

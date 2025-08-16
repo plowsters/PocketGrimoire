@@ -92,14 +92,34 @@ public class PocketGrimoireRepository {
     }
 
     /**
-     * Retrieves a user by their ID from the database.
-     * @param userId The ID of the user to retrieve.
-     * @return A Maybe that will emit the User if found, or complete otherwise.
+     * Retrieves a user by their ID from the database
+     * @param userId The ID of the user to retrieve
+     * @return A Maybe that will emit the User if found, or complete otherwise
      */
     public Maybe<User> getUserById(int userId) {
         return userDAO.getUserById(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Checks if a username already exists in the database
+     * @param username The username to check
+     * @return A Single that emits 1 if the username exists, 0 otherwise
+     */
+    public Single<Integer> checkUsernameExists(String username) {
+        return userDAO.countUsersByUsername(username)
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * Checks if an email already exists in the database
+     * @param email The email to check
+     * @return A Single that emits 1 if the email exists, 0 otherwise
+     */
+    public Single<Integer> checkEmailExists(String email) {
+        return userDAO.countUsersByEmail(email)
+                .subscribeOn(Schedulers.io());
     }
 
     /**
