@@ -170,4 +170,9 @@
     <string name="item_name">item name</string>
     <string name="dice_lowercase">dice</string>
     <string name="random_ability">Random Ability</string>
+    <string name="utilities">utilities</string>
+    <string name="inventory">Inventory</string>
+    <string name="spellbook">Spellbook</string>
+    <string name="abilities_capital">Abilities</string>
+    <string name="items">Items</string>
 </resources>

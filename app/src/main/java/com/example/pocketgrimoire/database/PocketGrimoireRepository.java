@@ -92,6 +92,17 @@ public class PocketGrimoireRepository {
     }
 
     /**
+     * Retrieves a user by their ID from the database.
+     * @param userId The ID of the user to retrieve.
+     * @return A Maybe that will emit the User if found, or complete otherwise.
+     */
+    public Maybe<User> getUserById(int userId) {
+        return userDAO.getUserById(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
      * Inserts a new user into the DB using RxJava instead of Executor
      * It defers execution of the userDAO.insert() method to the background threads handled by
      * Schedulers.io(), and the DAO method returns type "Completable" to track a successful or

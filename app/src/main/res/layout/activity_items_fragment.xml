@@ -57,13 +57,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/inknut_antiqua_regular"
-        android:text="items list"
+        android:text="@string/items"
         android:textColor="#BEB688"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/lineDecoratorImageView"
         app:layout_constraintLeft_toLeftOf="@+id/contentImageView"
         app:layout_constraintRight_toRightOf="@+id/contentImageView"
-        app:layout_constraintTop_toTopOf="@+id/contentImageView"/>
+        app:layout_constraintTop_toTopOf="@+id/contentImageView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemListDisplayRecycleView"

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +23,8 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private CharacterSheet character;
     private ActivityCharacterSheetBinding binding;
 
+    private View utilitiesPopupMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +32,48 @@ public class CharacterSheetActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         character = (CharacterSheet) getIntent().getSerializableExtra(CHARACTER_SHEET_ACTIVITY_CHARACTER_KEY);
 
+        // Find the popup menu and its buttons
+        utilitiesPopupMenu = findViewById(R.id.utilities_popup);
+        TextView inventoryButton = findViewById(R.id.button_inventory);
+        TextView spellbookButton = findViewById(R.id.button_spellbook);
+        TextView abilitiesButton = findViewById(R.id.button_abilities);
+
+        // Set onClick listeners for the popup menu items
+        inventoryButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Inventory Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
+        spellbookButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Spellbook Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
+        abilitiesButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Abilities Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
         createBindings();
 
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+
+            if (itemId == R.id.navigation_player_menu) {
+                // Toggle the visibility of the popup menu
+                if (utilitiesPopupMenu.getVisibility() == View.VISIBLE) {
+                    utilitiesPopupMenu.setVisibility(View.GONE);
+                } else {
+                    utilitiesPopupMenu.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+
+            // Hide the popup menu if any other nav item is clicked
+            if (utilitiesPopupMenu != null) {
+                utilitiesPopupMenu.setVisibility(View.GONE);
+            }
+
             if (itemId == R.id.navigation_account) {
                 AccountDialogFragment dialog = new AccountDialogFragment();
                 dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
@@ -86,7 +129,9 @@ public class CharacterSheetActivity extends AppCompatActivity {
      */
     private void calculateArmorClass() {
         int currArmor = 0;
-        int armorClassValue = 10 + character.getDexterity() + currArmor;
+        // AC = 10 + Dexterity Modifier
+        int dexMod = (character.getDexterity() - 10) / 2;
+        int armorClassValue = 10 + dexMod + currArmor;
         character.setArmorClass(armorClassValue);
         binding.armorClassValueTextView.setText(String.valueOf(character.getArmorClass()));
     }
@@ -166,11 +211,11 @@ public class CharacterSheetActivity extends AppCompatActivity {
         int maxHP = character.getMaxHP();
         int currLevel = character.getLevel();
         int hitDie = findHitDie();
+        int conMod = (character.getConstitution() - 10) / 2;
 
         //level 1
         if (currLevel == 1) {
-            int con = character.getConstitution();
-            currHP = hitDie + con;
+            currHP = hitDie + conMod;
             character.setCurrentHP(currHP);
             character.setMaxHP(currHP);
             binding.currentHPTextView.setText(String.valueOf(currHP));

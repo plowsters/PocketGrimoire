@@ -62,6 +62,15 @@ public interface UserDAO {
     Maybe<User> getUserByUsername(String username);
 
     /**
+     * Attempts to find a user by their userId
+     * @param userId the unique ID of the user
+     * @return a Maybe that will return the User object if found, or complete without an
+     * item if no user with that userId exists.
+     */
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.USER_TABLE + " WHERE userID = :userId")
+    Maybe<User> getUserById(int userId);
+
+    /**
      * Checks if a specific username already exists in the database. Prevents duplicate usernames.
      * @param username The username to check.
      * @return A Single that emits the number of users with the given username (0 or 1).
