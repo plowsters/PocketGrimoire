@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +27,8 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private ActivityCharacterSheetBinding binding;
     private PocketGrimoireRepository repository;
 
+    private View utilitiesPopupMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +38,48 @@ public class CharacterSheetActivity extends AppCompatActivity {
 
         repository = new PocketGrimoireRepository(getApplication());
 
+        // Find the popup menu and its buttons
+        utilitiesPopupMenu = findViewById(R.id.utilities_popup);
+        TextView inventoryButton = findViewById(R.id.button_inventory);
+        TextView spellbookButton = findViewById(R.id.button_spellbook);
+        TextView abilitiesButton = findViewById(R.id.button_abilities);
+
+        // Set onClick listeners for the popup menu items
+        inventoryButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Inventory Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
+        spellbookButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Spellbook Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
+        abilitiesButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Abilities Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
         createBindings();
 
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+
+            if (itemId == R.id.navigation_player_menu) {
+                // Toggle the visibility of the popup menu
+                if (utilitiesPopupMenu.getVisibility() == View.VISIBLE) {
+                    utilitiesPopupMenu.setVisibility(View.GONE);
+                } else {
+                    utilitiesPopupMenu.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+
+            // Hide the popup menu if any other nav item is clicked
+            if (utilitiesPopupMenu != null) {
+                utilitiesPopupMenu.setVisibility(View.GONE);
+            }
+
             if (itemId == R.id.navigation_account) {
                 AccountDialogFragment dialog = new AccountDialogFragment();
                 dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
@@ -51,7 +94,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
     }
 
     private void createBindings() {
-        //display character data top card - getTopCard()
+        //display character data top card
         binding.characterNameTextView.setText(character.getCharacterName());
         binding.currentHPTextView.setText(String.valueOf(character.getCurrentHP()));
         binding.raceTextView.setText(character.getRace());
@@ -64,7 +107,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         setLevelListener();
         currentCharXP(); //displays current character xp
         calculateCurrHP(); //displays current character hp
-        //attributes - getAttributes()
+        //attributes
         binding.strValueTextView.setText(String.valueOf(character.getStrength()));
         binding.dexValueTextView.setText(String.valueOf(character.getDexterity()));
         binding.intValueTextView.setText(String.valueOf(character.getIntelligence()));
@@ -74,7 +117,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         binding.wisValueTextView.setText(String.valueOf(character.getWisdom()));
         //stat modifiers
         getStatModifiers();
-        //characteristics - getCharacteristics()
+        //characteristics
         binding.backgroundTextView.setText(character.getBackground());
         binding.eyeColorTextView.setText(character.getEyeColor());
         binding.hairColorTextView.setText(character.getHairColor());
@@ -94,7 +137,9 @@ public class CharacterSheetActivity extends AppCompatActivity {
      */
     private void calculateArmorClass() {
         int currArmor = 0;
-        int armorClassValue = 10 + character.getDexterity() + currArmor;
+        // AC = 10 + Dexterity Modifier
+        int dexMod = (character.getDexterity() - 10) / 2;
+        int armorClassValue = 10 + dexMod + currArmor;
         character.setArmorClass(armorClassValue);
         binding.armorClassValueTextView.setText(String.valueOf(character.getArmorClass()));
     }
@@ -161,11 +206,10 @@ public class CharacterSheetActivity extends AppCompatActivity {
      * calculateMaxXP calculates max XP for each class depending on their level
      * Starting max xp is 300
      * The calculation is based on 300 * current character level
-     * @param
+     * @param currLevel
      */
     private void calculateMaxXP(int currLevel) {
         int maxXP = 300 * currLevel;
-        System.out.println("current max xp: " + maxXP);
         binding.maxXPTextView.setText(String.valueOf(maxXP));
     }
 
@@ -210,12 +254,11 @@ public class CharacterSheetActivity extends AppCompatActivity {
         int maxHP = character.getMaxHP();
         int currLevel = character.getLevel();
         int hitDie = findHitDie();
-
+        int conMod = (character.getConstitution() - 10) / 2;
 
         //level 1
         if (currLevel == 1) {
-            int con = character.getConstitution();
-            currHP = hitDie + con;
+            currHP = hitDie + conMod;
             character.setCurrentHP(currHP);
             character.setMaxHP(currHP);
             binding.currentHPTextView.setText(String.valueOf(currHP));

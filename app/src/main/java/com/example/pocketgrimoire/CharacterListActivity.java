@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,6 +31,8 @@ public class CharacterListActivity extends AppCompatActivity {
     private int userID;
     public static final int LOGGED_OUT = -1;
 
+    private View utilitiesPopupMenu;
+
     @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,28 @@ public class CharacterListActivity extends AppCompatActivity {
         //display CharacterListActivity and create binding for buttons
         binding = ActivityCharacterListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Find the popup menu and its buttons
+        utilitiesPopupMenu = findViewById(R.id.utilities_popup);
+        TextView inventoryButton = findViewById(R.id.button_inventory);
+        TextView spellbookButton = findViewById(R.id.button_spellbook);
+        TextView abilitiesButton = findViewById(R.id.button_abilities);
+
+        // Set onClick listeners for the popup menu items
+        inventoryButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Inventory Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
+        spellbookButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Spellbook Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
+
+        abilitiesButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Abilities Clicked", Toast.LENGTH_SHORT).show(); // Placeholder
+            utilitiesPopupMenu.setVisibility(View.GONE); // Hide menu after click
+        });
 
         //database
         characterListViewModel = new ViewModelProvider(this).get(com.example.pocketgrimoire.viewmodel.CharacterListViewModel.class);
@@ -71,6 +98,22 @@ public class CharacterListActivity extends AppCompatActivity {
 
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+
+            if (itemId == R.id.navigation_player_menu) {
+                // Toggle the visibility of the popup menu
+                if (utilitiesPopupMenu.getVisibility() == View.VISIBLE) {
+                    utilitiesPopupMenu.setVisibility(View.GONE);
+                } else {
+                    utilitiesPopupMenu.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+
+            // Hide the popup menu if any other nav item is clicked
+            if (utilitiesPopupMenu != null) {
+                utilitiesPopupMenu.setVisibility(View.GONE);
+            }
+
             if (itemId == R.id.navigation_account) {
                 AccountDialogFragment dialog = new AccountDialogFragment();
                 dialog.show(getSupportFragmentManager(), "AccountDialogFragment");

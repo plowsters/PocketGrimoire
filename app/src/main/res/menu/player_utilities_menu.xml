@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_inventory"
+        android:icon="@drawable/ic_player_inventory"
+        android:title="@string/inventory" />
+    <item
+        android:id="@+id/navigation_spellbook"
+        android:icon="@drawable/ic_player_spellbook"
+        android:title="@string/spellbook" />
+    <item
+        android:id="@+id/navigation_abilities"
+        android:icon="@drawable/ic_player_abilities"
+        android:title="@string/abilities_capital" />
+</menu>

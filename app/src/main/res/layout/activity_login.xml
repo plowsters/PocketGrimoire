@@ -107,10 +107,10 @@
         android:id="@+id/imageView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="45dp"
         android:contentDescription="@string/sign_in_container"
         android:scaleType="centerInside"
-        android:src="@drawable/rectangle_291"
+        android:src="@drawable/sign_in_display"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
@@ -120,14 +120,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="25dp"
-        android:paddingTop="45dp"
+        android:paddingTop="30dp"
         android:paddingEnd="182dp"
         android:fontFamily="@font/inknut_antiqua"
         android:text="@string/sign_in"
         android:textColor="#D9D9D9"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -159,6 +159,7 @@
         android:textSize="13sp"
         android:inputType="text"
         android:maxLines="1"
+        android:nextFocusForward="@+id/password_text_input_edit_text"
         app:layout_constraintBottom_toTopOf="@+id/username_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/username_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/username_text_input_layout"
@@ -197,6 +198,7 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:imeOptions="actionDone"
+        android:nextFocusForward="@+id/login_button_navigate_image_view"
         app:layout_constraintBottom_toTopOf="@+id/password_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/password_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/password_text_input_layout"
@@ -222,6 +224,7 @@
         android:contentDescription="@string/login"
         android:paddingTop="10dp"
         android:src="@drawable/login_button"
+        android:nextFocusForward="@+id/make_account_navigation_text_view"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view" />
@@ -237,28 +240,6 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/login_button_navigate_image_view" />
-
-    <TextView
-        android:id="@+id/or_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inder"
-        android:text="@string/or"
-        android:textColor="#767575"
-        android:textSize="11sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/make_account_navigation_text_view" />
-
-    <ImageView
-        android:id="@+id/oauth_navigate_login_button_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:src="@drawable/continue_with_different"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/or_text_view" />
 
     <ImageView
         android:id="@+id/end_top_background_curve_image_view"
