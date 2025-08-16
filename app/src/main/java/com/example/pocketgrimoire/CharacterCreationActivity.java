@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pocketgrimoire.database.PocketGrimoireRepository;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.databinding.ActivityCharacterCreationBinding;
+import com.example.pocketgrimoire.fragments.AccountDialogFragment;
+import com.example.pocketgrimoire.fragments.DiceRollerFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,6 +95,20 @@ public class CharacterCreationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
             }
+        });
+
+        binding.navView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_account) {
+                AccountDialogFragment dialog = new AccountDialogFragment();
+                dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
+                return true;
+            } else if (itemId == R.id.navigation_dice) {
+                DiceRollerFragment diceRollerFragment = new DiceRollerFragment();
+                diceRollerFragment.show(getSupportFragmentManager(), diceRollerFragment.getTag());
+                return true;
+            }
+            return false;
         });
 
     }
