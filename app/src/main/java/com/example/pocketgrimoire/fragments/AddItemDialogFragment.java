@@ -64,11 +64,17 @@ public class AddItemDialogFragment extends DialogFragment {
                 if (!isEdit) {
                     addItem(view);
                 } else {
-                    //TODO: make editItem method
                     editItem(view);
                 }
             }
 
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
         });
 
     }
@@ -141,4 +147,5 @@ public class AddItemDialogFragment extends DialogFragment {
     }
 
     //TODO: exit button
+
 }
