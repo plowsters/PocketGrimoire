@@ -53,8 +53,8 @@ public class AddItemDialogFragment extends DialogFragment {
         isEdit =  getArguments() != null;
         if (isEdit) {
             titleText.setText("EDIT ITEM");
-            String editItemName = getArguments().getString("itemName");
-            editText.setText(editItemName);
+            Items editItem = (Items) getArguments().getSerializable("item");
+            editText.setText(editItem.getName());
         }
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +65,7 @@ public class AddItemDialogFragment extends DialogFragment {
                     addItem(view);
                 } else {
                     //TODO: make editItem method
+                    editItem(view);
                 }
             }
 
@@ -110,15 +111,33 @@ public class AddItemDialogFragment extends DialogFragment {
         //create an instance of bundle to pass data between different Android components (hashmap)
         Bundle bundle = new Bundle();
 
-        int itemID = item.getItemID();
-        String itemName = item.getName();
-
-        bundle.putInt("itemID", itemID);
-        bundle.putString("itemName",itemName);
+        bundle.putSerializable("item", item); //putSerializable allows us to put objects in a bundle
         //pass bundle we just created above into the fragment
         fragment.setArguments(bundle);
         //save new item name
         return fragment;
+    }
+
+    private void editItem(View view) {
+        EditText itemEditText = view.findViewById(R.id.itemEditText);
+        String itemInput = String.valueOf(itemEditText.getText());
+
+        if (itemInput.isEmpty()) {
+            Toast.makeText(getContext(), "Please enter item name", Toast.LENGTH_SHORT).show();
+        }
+        if (!itemInput.isEmpty()) {
+            //get current item
+            Items editItem = (Items) getArguments().getSerializable("item");
+
+            //set new item name to newItems
+            editItem.setName(itemInput);
+
+            //add item into object database
+            repository.updateItems(editItem).blockingAwait();
+
+            //return to previous activity
+            dismiss();
+        }
     }
 
     //TODO: exit button
