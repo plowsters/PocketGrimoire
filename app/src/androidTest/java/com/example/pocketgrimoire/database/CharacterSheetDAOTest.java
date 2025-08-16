@@ -74,7 +74,7 @@ public class CharacterSheetDAOTest extends TestCase {
 
         CharacterSheet newCharacter = new CharacterSheet(); //make new character
         newCharacter.setUserID(userID);
-        newCharacter.setCharacterName("new character name");
+        newCharacter.setCharacterName("characterName1");
         characterSheetDAO.insert(newCharacter).blockingGet();
 
         List<CharacterSheet> result = characterSheetDAO.getAllCharacterSheetByUserID(userID)
@@ -83,11 +83,11 @@ public class CharacterSheetDAOTest extends TestCase {
                 .blockingFirst(); //use blockingFirst to force test to wait for result
 
         assertEquals(1, result.size());
-        assertEquals("new character name", result.get(0).getCharacterName());
+        assertEquals("characterName1", result.get(0).getCharacterName());
 
         CharacterSheet newCharacter2 = new CharacterSheet(); //make another new character
         newCharacter2.setUserID(userID);
-        newCharacter2.setCharacterName("another character name");
+        newCharacter2.setCharacterName("characterName2");
         characterSheetDAO.insert(newCharacter2).blockingGet();
 
         List<CharacterSheet> result2 = characterSheetDAO.getAllCharacterSheetByUserID(userID)
@@ -96,8 +96,8 @@ public class CharacterSheetDAOTest extends TestCase {
                 .blockingFirst(); //use blockingFirst to force test to wait for result
 
         assertEquals(2, result2.size());
-        assertNotEquals("another character name", result2.get(0).getCharacterName());
-        assertEquals("another character name", result2.get(1).getCharacterName());
+        assertNotEquals("characterName2", result2.get(0).getCharacterName());
+        assertEquals("characterName2", result2.get(1).getCharacterName());
     }
 
     @Test
@@ -110,6 +110,7 @@ public class CharacterSheetDAOTest extends TestCase {
         newUser.setHashedPassword("password");
         userDAO.insert(newUser).blockingAwait();
 
+        //get username and userID
         User insertedUser = userDAO.getUserByUsername("newusername").blockingGet();
         int userID = insertedUser.getUserID();
 
