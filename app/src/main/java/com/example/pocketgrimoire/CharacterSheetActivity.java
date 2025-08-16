@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pocketgrimoire.database.PocketGrimoireRepository;
 import com.example.pocketgrimoire.database.entities.CharacterSheet;
 import com.example.pocketgrimoire.databinding.ActivityCharacterSheetBinding;
 import com.example.pocketgrimoire.fragments.AccountDialogFragment;
@@ -19,6 +22,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private static final String CHARACTER_SHEET_ACTIVITY_CHARACTER_KEY = "CHARACTER_SHEET_ACTIVITY_CHARACTER_KEY";
     private CharacterSheet character;
     private ActivityCharacterSheetBinding binding;
+    private PocketGrimoireRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,8 @@ public class CharacterSheetActivity extends AppCompatActivity {
         binding = ActivityCharacterSheetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         character = (CharacterSheet) getIntent().getSerializableExtra(CHARACTER_SHEET_ACTIVITY_CHARACTER_KEY);
+
+        repository = new PocketGrimoireRepository(getApplication());
 
         createBindings();
 
@@ -52,8 +58,10 @@ public class CharacterSheetActivity extends AppCompatActivity {
         binding.classTextView.setText(character.getClazz());
         binding.genderTextView.setText(character.getGender());
         calculateArmorClass(); //calculates and display armor class
-        int currLevel = showCurrLevel(); //displays current level
+        showCurrLevel(); //displays current level
+        int currLevel = showCurrLevel();
         calculateMaxXP(currLevel); //displays current max xp depending on level
+        setLevelListener();
         currentCharXP(); //displays current character xp
         calculateCurrHP(); //displays current character hp
         //attributes - getAttributes()
@@ -91,6 +99,31 @@ public class CharacterSheetActivity extends AppCompatActivity {
         binding.armorClassValueTextView.setText(String.valueOf(character.getArmorClass()));
     }
 
+    private void setLevelListener() {
+        binding.currLevelEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int currLevel = 1;
+                if(charSequence.length() != 0) {
+                    currLevel = Integer.parseInt(charSequence.toString());
+                }
+                calculateMaxXP(currLevel);
+                character.setLevel(currLevel);
+                repository.insertCharacterSheet(character).blockingGet();
+            }
+        });
+    }
+
     /**
      * Displays current level
      * Every character will always start with level 1
@@ -98,10 +131,20 @@ public class CharacterSheetActivity extends AppCompatActivity {
      * @return
      */
     private int showCurrLevel() {
-        character.setLevel(1);
-        int currLevel = character.getLevel();
-        binding.currLevelEditText.setText(String.valueOf(currLevel));
-        return currLevel;
+        int currLevel = 0;
+        System.out.println("Current level1: " + character.getLevel());
+
+        if(character.getLevel() == 0) {
+            currLevel = 1;
+            character.setLevel(currLevel);
+            binding.currLevelEditText.setText(String.valueOf(1));
+            System.out.println("Current level2: " + character.getLevel());
+            return currLevel;
+        } else {
+            currLevel = character.getLevel();
+            binding.currLevelEditText.setText(String.valueOf(currLevel));
+            return currLevel;
+        }
     }
 
     /**
@@ -118,10 +161,11 @@ public class CharacterSheetActivity extends AppCompatActivity {
      * calculateMaxXP calculates max XP for each class depending on their level
      * Starting max xp is 300
      * The calculation is based on 300 * current character level
-     * @param currLevel
+     * @param
      */
     private void calculateMaxXP(int currLevel) {
         int maxXP = 300 * currLevel;
+        System.out.println("current max xp: " + maxXP);
         binding.maxXPTextView.setText(String.valueOf(maxXP));
     }
 
@@ -166,6 +210,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         int maxHP = character.getMaxHP();
         int currLevel = character.getLevel();
         int hitDie = findHitDie();
+
 
         //level 1
         if (currLevel == 1) {
