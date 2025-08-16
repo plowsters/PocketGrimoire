@@ -47,4 +47,7 @@ public interface AbilitiesDAO {
 
     @Query("DELETE FROM " + PocketGrimoireDatabase.ABILITIES_TABLE)
     Completable clearAbilities();
+
+    @Query("SELECT * FROM " + PocketGrimoireDatabase.ABILITIES_TABLE + " ORDER BY RANDOM() LIMIT 1")
+    io.reactivex.rxjava3.core.Single<com.example.pocketgrimoire.database.entities.Abilities> getRandomAbility();
 }
