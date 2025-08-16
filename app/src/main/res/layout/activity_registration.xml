@@ -160,6 +160,7 @@
         android:textSize="13sp"
         android:inputType="text"
         android:maxLines="1"
+        android:nextFocusForward="@+id/username_text_input_edit_text"
         app:layout_constraintBottom_toTopOf="@+id/email_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/email_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/email_text_input_layout"
@@ -195,6 +196,7 @@
         android:textSize="13sp"
         android:inputType="text"
         android:maxLines="1"
+        android:nextFocusForward="@+id/password_text_input_edit_text"
         app:layout_constraintBottom_toTopOf="@+id/username_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/username_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/username_text_input_layout"
@@ -233,6 +235,7 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:imeOptions="actionDone"
+        android:nextFocusForward="@+id/confirm_password_text_input_edit_text"
         app:layout_constraintBottom_toTopOf="@+id/password_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/password_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/password_text_input_layout"
@@ -269,6 +272,7 @@
         android:textSize="13sp"
         android:inputType="textPassword"
         android:maxLines="1"
+        android:nextFocusForward="@+id/registration_button_navigate_image_view"
         app:layout_constraintBottom_toTopOf="@+id/confirm_password_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/confirm_password_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/confirm_password_text_input_layout"
@@ -276,12 +280,13 @@
 
 
     <ImageView
-        android:id="@+id/login_button_navigate_image_view"
+        android:id="@+id/registration_button_navigate_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/register"
         android:paddingTop="20dp"
         android:src="@drawable/register_button"
+        android:nextFocusForward="@+id/login_navigation_text_view"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/confirm_password_text_graphic" />
@@ -296,7 +301,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/login_button_navigate_image_view" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_button_navigate_image_view" />
 
     <ImageView
         android:id="@+id/end_top_background_curve_image_view"

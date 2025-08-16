@@ -25,7 +25,7 @@ public class RegistrationActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(RegistrationViewModel.class);
 
         // Set OnClickListener for the registration button
-        binding.loginButtonNavigateImageView.setOnClickListener(v -> {
+        binding.registrationButtonNavigateImageView.setOnClickListener(v -> {
             String email = binding.emailTextInputEditText.getText().toString().trim();
             String username = binding.usernameTextInputEditText.getText().toString().trim();
             String password = binding.passwordTextInputEditText.getText().toString().trim();

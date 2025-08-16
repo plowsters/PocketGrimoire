@@ -159,6 +159,7 @@
         android:textSize="13sp"
         android:inputType="text"
         android:maxLines="1"
+        android:nextFocusForward="@+id/password_text_input_edit_text"
         app:layout_constraintBottom_toTopOf="@+id/username_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/username_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/username_text_input_layout"
@@ -197,6 +198,7 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:imeOptions="actionDone"
+        android:nextFocusForward="@+id/login_button_navigate_image_view"
         app:layout_constraintBottom_toTopOf="@+id/password_text_input_layout"
         app:layout_constraintEnd_toEndOf="@+id/password_text_input_layout"
         app:layout_constraintStart_toStartOf="@+id/password_text_input_layout"
@@ -222,6 +224,7 @@
         android:contentDescription="@string/login"
         android:paddingTop="10dp"
         android:src="@drawable/login_button"
+        android:nextFocusForward="@+id/make_account_navigation_text_view    "
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view" />
