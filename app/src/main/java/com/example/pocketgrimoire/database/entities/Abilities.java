@@ -9,6 +9,7 @@ import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /** Abilities table with unique (name, traitOrFeat). */
 @Entity(tableName = PocketGrimoireDatabase.ABILITIES_TABLE)
@@ -50,4 +51,16 @@ public class Abilities {
 
     public List<String> getAvailableToRace() { return availableToRace; }
     public void setAvailableToRace(List<String> availableToRace) { this.availableToRace = availableToRace; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Abilities)) return false;
+        Abilities abilities = (Abilities) o;
+        return getAbilityID() == abilities.getAbilityID() && isTraitOrFeat() == abilities.isTraitOrFeat() && Objects.equals(getName(), abilities.getName()) && Objects.equals(getAvailableToClass(), abilities.getAvailableToClass()) && Objects.equals(getAvailableToRace(), abilities.getAvailableToRace());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAbilityID(), getName(), isTraitOrFeat(), getAvailableToClass(), getAvailableToRace());
+    }
 }

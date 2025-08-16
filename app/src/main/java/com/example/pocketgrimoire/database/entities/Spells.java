@@ -9,6 +9,7 @@ import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /** Spells table: (spellID PK, name UNIQUE, level, school, availableToClass). */
 @Entity(tableName = PocketGrimoireDatabase.SPELLS_TABLE)
@@ -50,4 +51,16 @@ public class Spells {
 
     public List<String> getAvailableToClass() { return availableToClass; }
     public void setAvailableToClass(List<String> availableToClass) { this.availableToClass = availableToClass; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Spells)) return false;
+        Spells spells = (Spells) o;
+        return getSpellID() == spells.getSpellID() && getLevel() == spells.getLevel() && Objects.equals(getName(), spells.getName()) && Objects.equals(getSchool(), spells.getSchool()) && Objects.equals(getAvailableToClass(), spells.getAvailableToClass());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSpellID(), getName(), getLevel(), getSchool(), getAvailableToClass());
+    }
 }

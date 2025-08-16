@@ -24,18 +24,6 @@ public class Items {
       // no argument constructor for RoomDB initialization
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Items items = (Items) o;
-        return itemID == items.itemID && isEquippable == items.isEquippable && Objects.equals(name, items.name) && Objects.equals(category, items.category);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(itemID, name, category, isEquippable);
-    }
-
     @Ignore
     public Items(@NonNull String name, String category) {
         this.name = name;
@@ -57,5 +45,17 @@ public class Items {
     }
     public void setIsEquippable(boolean equippable) {
         isEquippable = equippable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Items)) return false;
+        Items items = (Items) o;
+        return getItemID() == items.getItemID() && isEquippable() == items.isEquippable() && Objects.equals(getName(), items.getName()) && Objects.equals(getCategory(), items.getCategory());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getItemID(), getName(), getCategory(), isEquippable());
     }
 }

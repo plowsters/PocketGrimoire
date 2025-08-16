@@ -165,6 +165,10 @@ public class PocketGrimoireRepository {
        return itemsDAO.insert(items).subscribeOn(Schedulers.io());
     }
 
+    public Flowable<List<Spells>> getAllSpellsList() {
+        return spellsDAO.getAllSpells().subscribeOn(Schedulers.io());
+    }
+
     /**
      * Inserts a new Spell into the database
      * @param spell The Spell object to insert
@@ -174,6 +178,18 @@ public class PocketGrimoireRepository {
         return spellsDAO.insert(spell).subscribeOn(Schedulers.io());
     }
 
+    public Completable updateSpell(Spells spell) {
+        return spellsDAO.update(spell).subscribeOn(Schedulers.io());
+    }
+
+    public Completable deleteSpell(Spells spell) {
+        return spellsDAO.delete(spell).subscribeOn(Schedulers.io());
+    }
+
+    public Flowable<List<Abilities>> getAllAbilitiesList() {
+        return abilitiesDAO.getAllAbilities().subscribeOn(Schedulers.io());
+    }
+
     /**
      * Inserts a new Ability into the database
      * @param ability The Ability object to insert
@@ -181,5 +197,13 @@ public class PocketGrimoireRepository {
      */
     public Completable insertAbility(Abilities ability) {
         return abilitiesDAO.insert(ability).subscribeOn(Schedulers.io());
+    }
+
+    public Completable updateAbility(Abilities ability) {
+        return abilitiesDAO.update(ability).subscribeOn(Schedulers.io());
+    }
+
+    public Completable deleteAbility(Abilities ability) {
+        return abilitiesDAO.delete(ability).subscribeOn(Schedulers.io());
     }
 }

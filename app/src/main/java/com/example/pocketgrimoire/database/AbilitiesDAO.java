@@ -1,9 +1,11 @@
 package com.example.pocketgrimoire.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.pocketgrimoire.database.entities.Abilities;
 
@@ -50,4 +52,11 @@ public interface AbilitiesDAO {
 
     @Query("SELECT * FROM " + PocketGrimoireDatabase.ABILITIES_TABLE + " ORDER BY RANDOM() LIMIT 1")
     io.reactivex.rxjava3.core.Single<com.example.pocketgrimoire.database.entities.Abilities> getRandomAbility();
+
+    @Update
+    Completable update(Abilities ability);
+
+    @Delete
+    Completable delete(Abilities ability);
+
 }
