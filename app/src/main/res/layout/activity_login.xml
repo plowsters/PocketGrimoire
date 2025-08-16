@@ -224,7 +224,7 @@
         android:contentDescription="@string/login"
         android:paddingTop="10dp"
         android:src="@drawable/login_button"
-        android:nextFocusForward="@+id/make_account_navigation_text_view    "
+        android:nextFocusForward="@+id/make_account_navigation_text_view"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view" />
