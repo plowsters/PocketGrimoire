@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketgrimoire.databinding.ActivityCharacterListBinding;
 import com.example.pocketgrimoire.adapter.CharacterListAdapter;
+import com.example.pocketgrimoire.fragments.AccountDialogFragment;
+import com.example.pocketgrimoire.fragments.DiceRollerFragment;
 import com.example.pocketgrimoire.viewmodel.CharacterListViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -65,6 +67,20 @@ public class CharacterListActivity extends AppCompatActivity {
         binding.addCharacterImageButton.setOnClickListener(view -> {
             Intent intent = CharacterCreationActivity.characterAddActivityIntentFactory(getApplicationContext(), userID);
             startActivity(intent);
+        });
+
+        binding.navView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_account) {
+                AccountDialogFragment dialog = new AccountDialogFragment();
+                dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
+                return true;
+            } else if (itemId == R.id.navigation_dice) {
+                DiceRollerFragment diceRollerFragment = new DiceRollerFragment();
+                diceRollerFragment.show(getSupportFragmentManager(), diceRollerFragment.getTag());
+                return true;
+            }
+            return false;
         });
 
     }

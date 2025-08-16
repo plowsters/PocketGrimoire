@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.pocketgrimoire.databinding.ActivityAdminNavbarBinding;
@@ -53,7 +54,9 @@ public class AdminNavbarActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.userTypeSelectionFragment) // Add your top-level destinations here
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_admin_navbar);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_admin_navbar);
+        NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         navView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -63,6 +66,11 @@ public class AdminNavbarActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.navigation_account) {
                     AccountDialogFragment dialog = new AccountDialogFragment();
                     dialog.show(getSupportFragmentManager(), "AccountDialogFragment");
+                    return true;
+                } else if (item.getItemId() == R.id.navigation_random_ability) {
+                    // ADDED: Logic to start the RandomAbilityActivity
+                    Intent intent = new Intent(AdminNavbarActivity.this, RandomAbilityActivity.class);
+                    startActivity(intent);
                     return true;
                 }
                 // Handle other navigation items if you have them

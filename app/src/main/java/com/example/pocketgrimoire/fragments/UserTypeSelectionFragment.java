@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,14 +52,11 @@ public class UserTypeSelectionFragment extends Fragment {
             }
         });
 
-        //dungeon master button functionality
+        //dungeon master admin button functionality, uses fragment navigation instead of an Intent
         ImageView gameMasterButton = view.findViewById(R.id.gameMasterButton);
-        gameMasterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v) {Intent intent = AdminPageActivity.adminPageIntentFactory(requireContext().getApplicationContext());
-                startActivity(intent);
-            }
-        });
+        gameMasterButton.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_userTypeSelectionFragment_to_adminPageFragment)
+        );
     }
 
     @Override

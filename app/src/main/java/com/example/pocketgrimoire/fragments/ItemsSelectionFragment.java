@@ -1,5 +1,6 @@
 package com.example.pocketgrimoire.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class ItemsSelectionFragment extends Fragment {
     return new ItemsSelectionFragment();
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                       @Nullable Bundle savedInstanceState) {
