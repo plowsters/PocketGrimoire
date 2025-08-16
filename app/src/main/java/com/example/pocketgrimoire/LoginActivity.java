@@ -41,6 +41,12 @@ public class LoginActivity extends AppCompatActivity {
             viewModel.login(username, password);
         });
 
+        // Set up the registration navigation intent
+        binding.makeAccountNavigationTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+            startActivity(intent);
+        });
+
         // Observe the LiveData from the ViewModel
         observeViewModel();
     }
