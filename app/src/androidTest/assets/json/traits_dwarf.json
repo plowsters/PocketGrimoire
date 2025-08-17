@@ -1,0 +1,30 @@
+{
+  "count": 5,
+  "results": [
+    {
+      "index": "dwarven-resilience",
+      "name": "Dwarven Resilience",
+      "url": "/api/2014/traits/dwarven-resilience"
+    },
+    {
+      "index": "stonecunning",
+      "name": "Stonecunning",
+      "url": "/api/2014/traits/stonecunning"
+    },
+    {
+      "index": "darkvision",
+      "name": "Darkvision",
+      "url": "/api/2014/traits/darkvision"
+    },
+    {
+      "index": "dwarven-combat-training",
+      "name": "Dwarven Combat Training",
+      "url": "/api/2014/traits/dwarven-combat-training"
+    },
+    {
+      "index": "tool-proficiency",
+      "name": "Tool Proficiency",
+      "url": "/api/2014/traits/tool-proficiency"
+    }
+  ]
+}

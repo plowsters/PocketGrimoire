@@ -1,0 +1,15 @@
+{
+  "count": 2,
+  "results": [
+    {
+      "index": "adventuring-gear",
+      "name": "Adventuring Gear",
+      "url": "/api/2014/equipment-categories/adventuring-gear"
+    },
+    {
+      "index": "heavy-armor",
+      "name": "Heavy Armor",
+      "url": "/api/2014/equipment-categories/heavy-armor"
+    }
+  ]
+}

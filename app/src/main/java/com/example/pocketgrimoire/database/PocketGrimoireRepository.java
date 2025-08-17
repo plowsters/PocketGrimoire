@@ -129,16 +129,13 @@ public class PocketGrimoireRepository {
      * failed completion of the task
      * @param user
      */
-    // Ignore the linter error "Result of .subscribe() never used", not important for DB inserts
-    @SuppressLint("CheckResult")
-    public void insertUser(User user) {
-        // subscribing to this method triggers the Scheduler to execute this operation
-        userDAO.insert(user)
+    public Completable insertUser(User user) {
+        return userDAO.insert(user)
                 .subscribeOn(Schedulers.io())
-                .subscribe(
-                        () -> Log.i(LoginActivity.TAG, "Insert successful for user: " + user.getUsername()),
-                        error -> Log.e(LoginActivity.TAG, "Insert failed for user: " + user.getUsername(), error)
-                );
+                .doOnComplete(() ->
+                        Log.i(LoginActivity.TAG, "Insert successful for user: " + user.getUsername()))
+                .doOnError(e ->
+                        Log.e(LoginActivity.TAG, "Insert failed for user: " + user.getUsername(), e));
     }
 
     public Flowable<List<CharacterSheet>> getAllCharacterSheetByUserId(int loggedInUserId) {

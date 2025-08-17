@@ -24,7 +24,7 @@ public interface UserDAO {
      * @param user The User to be inserted.
      * @return A Completable that signals completion or error.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     Completable insert(User user);
 
     /**

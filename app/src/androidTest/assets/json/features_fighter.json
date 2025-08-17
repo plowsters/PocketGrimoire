@@ -1,0 +1,170 @@
+{
+  "count": 33,
+  "results": [
+    {
+      "index": "fighter-fighting-style",
+      "name": "Fighting Style",
+      "url": "/api/2014/features/fighter-fighting-style"
+    },
+    {
+      "index": "fighter-fighting-style-archery",
+      "name": "Fighting Style: Archery",
+      "url": "/api/2014/features/fighter-fighting-style-archery"
+    },
+    {
+      "index": "fighter-fighting-style-defense",
+      "name": "Fighting Style: Defense",
+      "url": "/api/2014/features/fighter-fighting-style-defense"
+    },
+    {
+      "index": "fighter-fighting-style-dueling",
+      "name": "Fighting Style: Dueling",
+      "url": "/api/2014/features/fighter-fighting-style-dueling"
+    },
+    {
+      "index": "fighter-fighting-style-great-weapon-fighting",
+      "name": "Fighting Style: Great Weapon Fighting",
+      "url": "/api/2014/features/fighter-fighting-style-great-weapon-fighting"
+    },
+    {
+      "index": "fighter-fighting-style-protection",
+      "name": "Fighting Style: Protection",
+      "url": "/api/2014/features/fighter-fighting-style-protection"
+    },
+    {
+      "index": "fighter-fighting-style-two-weapon-fighting",
+      "name": "Fighting Style: Two-Weapon Fighting",
+      "url": "/api/2014/features/fighter-fighting-style-two-weapon-fighting"
+    },
+    {
+      "index": "second-wind",
+      "name": "Second Wind",
+      "url": "/api/2014/features/second-wind"
+    },
+    {
+      "index": "action-surge-1-use",
+      "name": "Action Surge (1 use)",
+      "url": "/api/2014/features/action-surge-1-use"
+    },
+    {
+      "index": "improved-critical",
+      "name": "Improved Critical",
+      "url": "/api/2014/features/improved-critical"
+    },
+    {
+      "index": "martial-archetype",
+      "name": "Martial Archetype",
+      "url": "/api/2014/features/martial-archetype"
+    },
+    {
+      "index": "fighter-ability-score-improvement-1",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/fighter-ability-score-improvement-1"
+    },
+    {
+      "index": "extra-attack-1",
+      "name": "Extra Attack",
+      "url": "/api/2014/features/extra-attack-1"
+    },
+    {
+      "index": "fighter-ability-score-improvement-2",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/fighter-ability-score-improvement-2"
+    },
+    {
+      "index": "martial-archetype-improvement-1",
+      "name": "Martial Archetype feature",
+      "url": "/api/2014/features/martial-archetype-improvement-1"
+    },
+    {
+      "index": "remarkable-athlete",
+      "name": "Remarkable Athlete",
+      "url": "/api/2014/features/remarkable-athlete"
+    },
+    {
+      "index": "fighter-ability-score-improvement-3",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/fighter-ability-score-improvement-3"
+    },
+    {
+      "index": "indomitable-1-use",
+      "name": "Indomitable (1 use)",
+      "url": "/api/2014/features/indomitable-1-use"
+    },
+    {
+      "index": "additional-fighting-style",
+      "name": "Additional Fighting Style",
+      "url": "/api/2014/features/additional-fighting-style"
+    },
+    {
+      "index": "martial-archetype-improvement-2",
+      "name": "Martial Archetype feature",
+      "url": "/api/2014/features/martial-archetype-improvement-2"
+    },
+    {
+      "index": "extra-attack-2",
+      "name": "Extra Attack (2)",
+      "url": "/api/2014/features/extra-attack-2"
+    },
+    {
+      "index": "fighter-ability-score-improvement-4",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/fighter-ability-score-improvement-4"
+    },
+    {
+      "index": "indomitable-2-uses",
+      "name": "Indomitable (2 uses)",
+      "url": "/api/2014/features/indomitable-2-uses"
+    },
+    {
+      "index": "fighter-ability-score-improvement-5",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/fighter-ability-score-improvement-5"
+    },
+    {
+      "index": "martial-archetype-improvement-3",
+      "name": "Martial Archetype feature",
+      "url": "/api/2014/features/martial-archetype-improvement-3"
+    },
+    {
+      "index": "superior-critical",
+      "name": "Superior Critical",
+      "url": "/api/2014/features/superior-critical"
+    },
+    {
+      "index": "fighter-ability-score-improvement-6",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/fighter-ability-score-improvement-6"
+    },
+    {
+      "index": "action-surge-2-uses",
+      "name": "Action Surge (2 uses)",
+      "url": "/api/2014/features/action-surge-2-uses"
+    },
+    {
+      "index": "indomitable-3-uses",
+      "name": "Indomitable (3 uses)",
+      "url": "/api/2014/features/indomitable-3-uses"
+    },
+    {
+      "index": "martial-archetype-improvement-4",
+      "name": "Martial Archetype feature",
+      "url": "/api/2014/features/martial-archetype-improvement-4"
+    },
+    {
+      "index": "survivor",
+      "name": "Survivor",
+      "url": "/api/2014/features/survivor"
+    },
+    {
+      "index": "fighter-ability-score-improvement-7",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/fighter-ability-score-improvement-7"
+    },
+    {
+      "index": "extra-attack-3",
+      "name": "Extra Attack (3)",
+      "url": "/api/2014/features/extra-attack-3"
+    }
+  ]
+}

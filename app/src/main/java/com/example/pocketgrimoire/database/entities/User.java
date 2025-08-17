@@ -3,13 +3,18 @@ package com.example.pocketgrimoire.database.entities;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.pocketgrimoire.database.PocketGrimoireDatabase;
 
 import java.util.Objects;
 
-@Entity(tableName = PocketGrimoireDatabase.USER_TABLE)
+@Entity(tableName = PocketGrimoireDatabase.USER_TABLE,
+        indices = {
+                @Index(value = {"username"}, unique = true)
+        }
+        )
 public class User {
 
     @PrimaryKey(autoGenerate = true)
