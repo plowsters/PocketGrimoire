@@ -1,0 +1,140 @@
+{
+  "count": 27,
+  "results": [
+    {
+      "index": "barbarian-unarmored-defense",
+      "name": "Unarmored Defense",
+      "url": "/api/2014/features/barbarian-unarmored-defense"
+    },
+    {
+      "index": "rage",
+      "name": "Rage",
+      "url": "/api/2014/features/rage"
+    },
+    {
+      "index": "danger-sense",
+      "name": "Danger Sense",
+      "url": "/api/2014/features/danger-sense"
+    },
+    {
+      "index": "reckless-attack",
+      "name": "Reckless Attack",
+      "url": "/api/2014/features/reckless-attack"
+    },
+    {
+      "index": "frenzy",
+      "name": "Frenzy",
+      "url": "/api/2014/features/frenzy"
+    },
+    {
+      "index": "primal-path",
+      "name": "Primal Path",
+      "url": "/api/2014/features/primal-path"
+    },
+    {
+      "index": "barbarian-ability-score-improvement-1",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/barbarian-ability-score-improvement-1"
+    },
+    {
+      "index": "barbarian-extra-attack",
+      "name": "Extra Attack",
+      "url": "/api/2014/features/barbarian-extra-attack"
+    },
+    {
+      "index": "fast-movement",
+      "name": "Fast Movement",
+      "url": "/api/2014/features/fast-movement"
+    },
+    {
+      "index": "mindless-rage",
+      "name": "Mindless Rage",
+      "url": "/api/2014/features/mindless-rage"
+    },
+    {
+      "index": "primal-path-improvement-1",
+      "name": "Path feature",
+      "url": "/api/2014/features/primal-path-improvement-1"
+    },
+    {
+      "index": "feral-instinct",
+      "name": "Feral Instinct",
+      "url": "/api/2014/features/feral-instinct"
+    },
+    {
+      "index": "barbarian-ability-score-improvement-2",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/barbarian-ability-score-improvement-2"
+    },
+    {
+      "index": "brutal-critical-1-die",
+      "name": "Brutal Critical (1 die)",
+      "url": "/api/2014/features/brutal-critical-1-die"
+    },
+    {
+      "index": "intimidating-presence",
+      "name": "Intimidating Presence",
+      "url": "/api/2014/features/intimidating-presence"
+    },
+    {
+      "index": "primal-path-improvement-2",
+      "name": "Path feature",
+      "url": "/api/2014/features/primal-path-improvement-2"
+    },
+    {
+      "index": "relentless-rage",
+      "name": "Relentless Rage",
+      "url": "/api/2014/features/relentless-rage"
+    },
+    {
+      "index": "barbarian-ability-score-improvement-3",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/barbarian-ability-score-improvement-3"
+    },
+    {
+      "index": "brutal-critical-2-dice",
+      "name": "Brutal Critical (2 dice)",
+      "url": "/api/2014/features/brutal-critical-2-dice"
+    },
+    {
+      "index": "primal-path-improvement-3",
+      "name": "Path feature",
+      "url": "/api/2014/features/primal-path-improvement-3"
+    },
+    {
+      "index": "retaliation",
+      "name": "Retaliation",
+      "url": "/api/2014/features/retaliation"
+    },
+    {
+      "index": "persistent-rage",
+      "name": "Persistent Rage",
+      "url": "/api/2014/features/persistent-rage"
+    },
+    {
+      "index": "barbarian-ability-score-improvement-4",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/barbarian-ability-score-improvement-4"
+    },
+    {
+      "index": "brutal-critical-3-dice",
+      "name": "Brutal Critical (3 dice)",
+      "url": "/api/2014/features/brutal-critical-3-dice"
+    },
+    {
+      "index": "indomitable-might",
+      "name": "Indomitable Might",
+      "url": "/api/2014/features/indomitable-might"
+    },
+    {
+      "index": "barbarian-ability-score-improvement-5",
+      "name": "Ability Score Improvement",
+      "url": "/api/2014/features/barbarian-ability-score-improvement-5"
+    },
+    {
+      "index": "primal-champion",
+      "name": "Primal Champion",
+      "url": "/api/2014/features/primal-champion"
+    }
+  ]
+}

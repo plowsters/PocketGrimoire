@@ -76,17 +76,28 @@ public class RegistrationViewModel extends AndroidViewModel {
     }
 
     private void createNewUser(String email, String username, String password) {
-        // Generate salt and hash the password
         String salt = PasswordUtils.generateSalt();
-        String hashedPassword = PasswordUtils.hashPassword(password, salt);
+        String hash = PasswordUtils.hashPassword(password, salt);
+        User newUser = new User(email, username, salt, hash);
 
-        // Create new User object
-        User newUser = new User(email, username, salt, hashedPassword);
-        // By default, isAdmin is false
+        disposable.add(
+                repository.insertUser(newUser)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> {
+                                    // onComplete on main thread
+                                    registrationSuccess.setValue(true);
+                                },
+                                throwable -> errorMessage.setValue(mapRegistrationError(throwable))
+                        )
+        );
+    }
 
-        // Insert the user into the database
-        repository.insertUser(newUser);
-        registrationSuccess.setValue(true);
+    private String mapRegistrationError(Throwable t) {
+        String m = t.getMessage();
+        if (m != null && m.contains("UNIQUE") && m.contains("email")) return "Email is already registered.";
+        if (m != null && m.contains("UNIQUE") && m.contains("username")) return "Username is already taken.";
+        return "Registration failed. Please try again.";
     }
 
     @Override

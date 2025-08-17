@@ -1,0 +1,17 @@
+{
+  "count": 2,
+  "results": [
+    {
+      "index": "fire-bolt",
+      "name": "Fire Bolt",
+      "level": 0,
+      "url": "/api/2014/spells/fire-bolt"
+    },
+    {
+      "index": "magic-missile",
+      "name": "Magic Missile",
+      "level": 1,
+      "url": "/api/2014/spells/magic-missile"
+    }
+  ]
+}
